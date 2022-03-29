@@ -5,9 +5,11 @@
      "direnv"
      "git-lfs"
      "jq"
+     "golang"
      "ripgrep"
      "units"
      "vim"
+     "fzf"
      "zsh" -}}
 {{ $classicSnaps := list -}}
 
@@ -41,19 +43,34 @@
 
 #!/bin/bash
 
-echo "Installing things"
-
 set -eufo pipefail
 
 {{ $sudo }}apt-get update
 {{ $sudo }}apt-get install -y {{ $packages | join " " }}
 
+## Install antibody
+{{ if eq .chezmoi.os "darwin" }}
+brew install antibody
+{{ else if eq .chezmoi.os "linux" }}
+curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
+{{- end }}
+
+## Installing rust
+{{ if eq .chezmoi.os "darwin"}}
+ ## Install rust
+{{ else if eq .chezmoi.os "linux" }}
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+{{- end }}
+
+if [[ ! -d "$HOME/.oh-my-zsh/themes/spaceship-prompt" ]]; then
+git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/.oh-my-zsh/themes/spaceship-prompt" --depth=1
+fi
+
+source $HOME/.cargo/env
+
 {{ range $classicSnaps }}
 {{ $sudo }}snap install --classic {{ . }}
 {{ end }}
 
-if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
 
 {{ end -}}

@@ -91,12 +91,7 @@
     kubernetes = {{ $kubernetes }}
     personal = {{ $personal }}
     osid = {{ $osID | quote }}
-{{- if $isovalent }}
-    vault = "hlnmluqkhsy4qcululpgt6uzvu"
-{{- end }}
 [diff]
     exclude = ["externals"]
-{{- if eq $hostname "elitedesk" }}
 [onepassword]
     command = "op2"
-{{- end }}

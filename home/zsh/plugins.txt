@@ -1,0 +1,24 @@
+# Plugins I use: https://wiki.nikitavoloboev.xyz/unix/shell/zsh/zsh-plugins.html
+
+mafredri/zsh-async
+rupa/z
+Tarrasch/zsh-bd
+zsh-users/zsh-completions
+# marzocchi/zsh-notify
+zsh-users/zsh-autosuggestions
+junegunn/fzf
+
+zsh-users/zsh-history-substring-search
+zsh-users/zsh-syntax-highlighting
+spwhitt/nix-zsh-completions
+
+zdharma/fast-syntax-highlighting
+
+# THEMES
+denysdovhan/spaceship-prompt
+#romkatv/powerlevel10k
+spaceship-prompt/spaceship-prompt
+
+robbyrussell/oh-my-zsh path:plugins/aws/aws.plugin.zsh
+robbyrussell/oh-my-zsh path:plugins/asdf
+xorkevin/code-review-zsh

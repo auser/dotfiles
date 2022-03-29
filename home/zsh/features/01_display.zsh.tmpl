@@ -1,0 +1,29 @@
+{{ if eq .chezmoi.os "linux" }}
+{{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+
+export LIBGL_ALWAYS_INDIRECT=1
+
+# set DISPLAY to use X terminal in WSL
+# in WSL2 the localhost and network interfaces are not the same than windows
+if grep -q WSL2 /proc/version; then
+    export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+    # execute route.exe in the windows to determine its IP address
+    # export DISPLAY=$(route print | grep 0.0.0.0 | head -1 | awk '{print $4}'):0.0
+
+else
+    # In WSL1 the DISPLAY can be the localhost address
+    if grep -q icrosoft /proc/version; then
+        export DISPLAY=127.0.0.1:0.0
+    fi
+
+fi
+
+# Weird
+export GDK_BACKEND=x11
+
+start_dbus() {
+  sudo /etc/init.d/dbus start &> /dev/null
+}
+
+{{end}}
+{{- end }}
