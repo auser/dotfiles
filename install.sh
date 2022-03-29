@@ -1,6 +1,6 @@
 #!/bin/bash
 
-branch=$({environment:-main)
+branch=${environment:-main}
 
 while [ $# -gt 0 ]; do
 	if [[ $1 == *"--"* ]]; then
@@ -18,7 +18,7 @@ done
 
 nixInstallType=0;
 
-shopt - s nocasematch;
+shopt -s nocasematch;
 
 unameA="$(uname -a)";
 unameS="$(uname -s)";
@@ -37,19 +37,20 @@ fi
 
 NIX_INSTALLER_NO_MODIFY_PROFILE=true
 
+echo "install type: $nixInstallType"
 
 case $nixInstallType in
 	0)
 		echo "Unknown OS setting";
 		exit -1;
 		;;
-	1) 
+	1)
 		curl -L https://nixos.org/nix/install | sh -s -- --daemon;
 		;;
-	2) 
+	2)
 		curl -L https://nixos.org/nix/install | sh -s -- --no-daemon;
 		;;
-	3) 
+	3)
 		curl -L https://nixos.org/nix/install | sh -s -- --darwin-use-unencrypted-nix-store-volume --daemon;
 		;;
 esac
@@ -65,23 +66,10 @@ fi
 
 NIX_HOME_DIR="$HOME/.config/nixpkgs";
 NIX_HOME_FILE="$NIX_HOME_DIR/home.nix";
-NIX_HOME_BOOTSTRAP="{ config, pkgs, ... }:
-
-
-{
-	programs.home-manager.enable = true;
-
-	# Basic packages for the rest
-	home.packages = [
-		pkgs.chezmoi
-		pkgs.git
-		pkgs.openssh
-		pkgs.zsh
-	];
-}";
+NIX_HOME_BOOTSTRAP=$(cat $HOME/.dotfiles/dot_config/nixpkgs/home.nix);
 
 mkdir -p $NIX_HOME_DIR;
-echo "$NIX_HOME_BOOTSTRAP > $NIX_HOME_FILE;
+echo "$NIX_HOME_BOOTSTRAP" > $NIX_HOME_FILE;
 
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
 nix-channel --update;
@@ -91,7 +79,7 @@ export NIX_PATH=$HOME/.nix-defexpr/channels/${NIX_PATH:+:}$NIX_PATH;
 nix-shell '<home-manager>' -A install;
 
 # chezmoi is installed but not yet configured, so let's run it
-. $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh";
+. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh";
 
 echo "Setting up Chezmoi from branch '$branch'";
 chezmoi init --apply auser --branch $branch;

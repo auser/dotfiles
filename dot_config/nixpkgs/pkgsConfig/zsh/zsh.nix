@@ -17,6 +17,10 @@ in
             # cd into a directory by just typing it into shell
             autocd = true;
 
+            # autosuggestions
+            enableAutoSuggestions = true;
+            enableCompletion = true;
+
             history = {
                 save = 10000;
                 size = config.programs.zsh.history.save;
@@ -43,7 +47,7 @@ in
                             inherit (config.programs.zsh) dotDir;
                     in "${homeDirectory}/${dotDir}/.zsh_history";
             };
-            #TODO: look into adding compiling to the plugins
+            environment.etc.zshenv.text = "# Text"
         };
     };
 }
