@@ -8,6 +8,7 @@
      "golang"
      "docker.io"
      "docker-compose"
+     "libssl-dev"
      "ripgrep"
      "units"
      "vim"
@@ -65,7 +66,7 @@ curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
 {{- end }}
 
 if [[ ! -d "$HOME/.oh-my-zsh/themes/spaceship-prompt" ]]; then
-git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/.oh-my-zsh/themes/spaceship-prompt" --depth=1
+  git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/.oh-my-zsh/themes/spaceship-prompt" --depth=1
 fi
 
 # Install nvm
@@ -80,6 +81,8 @@ source $HOME/.cargo/env
 {{ $sudo }}snap install --classic {{ . }}
 {{ end }}
 
+## Install cargo-edit
+cargo install cargo-edit
 
 {{ if eq .chezmoi.os "darwin"}}
  ## Install just
