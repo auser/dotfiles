@@ -1,0 +1,48 @@
+" https://github.com/VundleVim/Vundle.vim
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plug 'VundleVim/Vundle.vim'
+
+" =======================================================
+" Load Plugins Start
+" =======================================================
+" GUI Related
+Plug 'itchyny/lightline.vim'
+Plug 'machakann/vim-highlightedyank'
+Plug 'andymass/vim-matchup'
+
+" fzf
+Plug 'airblade/vim-rooter'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" Syntax checking generic
+Plug 'vim-syntastic/syntastic'
+
+" Autocomplete
+Plug 'neoclide/coc.nvim'
+
+" Rust
+Plug 'rust-lang/rust.vim'
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+" =======================================================
+" Load Plugins End
+" =======================================================
+
+" Rust formatting
+let g:rustfmt_autosave = 1
+
+
+" =======================================================
+" # Editor settings
+" =======================================================
+filetype Plug indent on    " required
+set autoindent
+set encoding=utf-8
