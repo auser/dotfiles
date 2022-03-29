@@ -14,7 +14,7 @@
   <h3 align="center">dotfiles</h3>
 
   <p align="center">A single source for all my dotfiles to be applied to my machines.<br /></p>
-  <p align="center">Ideas started from [https://github.com/PartemImperium/dotfiles](https://github.com/PartemImperium/dotfiles)</p>
+  <p align="center">Ideas started from <a href="https://github.com/PartemImperium/dotfiles">https://github.com/PartemImperium/dotfiles</a></p>
 </p>
 
 <!-- TABLE OF CONTENTS -->
