@@ -1,0 +1,10 @@
+# These are set here and not just directly using the module options because
+# using a var from a module option in a import it causes infinite recursion
+{
+    # System Info
+    isDarwin = {{ if eq "darwin" .chezmoi.os }}true{{ else }}false{{ end }};
+    isWsl = {{ if and (eq .chezmoi.os "linux") (.chezmoi.kernel) }}{{ if ( .chezmoi.kernel.osrelease | lower | contains "microsoft") }}true{{ else }}false{{ end }}{{ else }}false{{ end }};
+    isLinux = {{ if (eq .chezmoi.os "linux") }}true{{ else }}false{{ end }};
+    isGui = true;#TODO: Figure out a way to set this with chezmoi
+    isWork = true;#TODO: Move this??? Or figure out a way to this here and not have to change the value here....
+}

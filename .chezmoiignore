@@ -1,0 +1,20 @@
+{{ if ne .chezmoi.os "darwin" }}
+## MAC specific things here
+{{ end }}
+{{ if ne .chezmoi.os "linux" }}
+## Linux specific things
+{{ end }}
+
+# Don'y apply images to ~
+images
+
+# Don't apply testing dockerfiles to ~
+dockerfiles
+
+readme.md
+install.sh
+
+.vscode
+
+# Don't move example files
+.example

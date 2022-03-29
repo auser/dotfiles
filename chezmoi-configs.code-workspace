@@ -1,0 +1,14 @@
+{
+	"folders": [{
+		"path": ".local/share/chezmoi"
+	}],
+	"settings": {
+		"files.associations": {
+			"dot_gitconfig.tmpl": "properties",
+			"dot_aliases": "shellscript",
+			"dot_zshrc": "shellscript",
+			".chezmoiignore": "ignore",
+			"*.nix.tmpl":"nix"
+		}
+	}
+}
