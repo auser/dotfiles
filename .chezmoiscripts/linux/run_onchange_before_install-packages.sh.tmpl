@@ -1,0 +1,59 @@
+{{ if eq .osid "linux-debian" "linux-ubuntu" -}}
+
+{{ $packages := list
+     "curl"
+     "direnv"
+     "git-lfs"
+     "jq"
+     "ripgrep"
+     "units"
+     "vim"
+     "zsh" -}}
+{{ $classicSnaps := list -}}
+
+{{ if .isovalent -}}
+{{   $packages = concat $packages (list
+       "build-essential"
+       "clang"
+       "libelf-dev"
+       "llvm"
+       "protobuf-compiler"
+       "python3-pip"
+       "vagrant"
+       "virtualbox") -}}
+{{   $classicSnaps = concat $classicSnaps (list
+       "google-cloud-sdk") -}}
+{{ end -}}
+
+{{ if not .headless -}}
+{{   $packages = mustAppend $packages "vim-gtk" -}}
+{{   $classicSnaps = mustAppend $classicSnaps "code" -}}
+{{ end -}}
+
+{{ if .personal -}}
+{{   $classicSnaps = mustAppend $classicSnaps "goreleaser" -}}
+{{ end -}}
+
+{{ $sudo := "sudo " -}}
+{{ if eq .chezmoi.username "root" -}}
+{{   $sudo = "" -}}
+{{ end -}}
+
+#!/bin/bash
+
+echo "Installing things"
+
+set -eufo pipefail
+
+{{ $sudo }}apt-get update
+{{ $sudo }}apt-get install -y {{ $packages | join " " }}
+
+{{ range $classicSnaps }}
+{{ $sudo }}snap install --classic {{ . }}
+{{ end }}
+
+if [[ ! -d $HOME/.tmux/plugins/tpm ]]; then
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
+{{ end -}}
