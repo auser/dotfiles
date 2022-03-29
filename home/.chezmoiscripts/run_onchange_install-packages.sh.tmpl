@@ -6,6 +6,8 @@
      "git-lfs"
      "jq"
      "golang"
+     "docker.io"
+     "docker-compose"
      "ripgrep"
      "units"
      "vim"
@@ -79,4 +81,12 @@ source $HOME/.cargo/env
 {{ end }}
 
 
-{{ end -}}
+{{ if eq .chezmoi.os "darwin"}}
+ ## Install just
+ brew install just
+{{ else if eq .chezmoi.os "linux" }}
+  cargo install just
+{{- end }}
+
+
+{{ end }}
