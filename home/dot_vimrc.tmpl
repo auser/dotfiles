@@ -1,48 +1,403 @@
-" https://github.com/VundleVim/Vundle.vim
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" -For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plug 'VundleVim/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 
-" =======================================================
-" Load Plugins Start
-" =======================================================
-" GUI Related
-Plug 'itchyny/lightline.vim'
-Plug 'machakann/vim-highlightedyank'
-Plug 'andymass/vim-matchup'
+" Make sure you use single quotes
 
-" fzf
-Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+Plug 'rafi/awesome-vim-colorschemes'
+
+" Any valid git URL is allowed
+Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+
+" Multiple Plug commands can be written in a single line using | separators
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+Plug 'mileszs/ack.vim'
+Plug 'tomlion/vim-solidity'
+
+" Plugin options
+Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+
+Plug 'prettier/vim-prettier', {
+			\ 'do': 'yarn install',
+			\ 'branch': 'release/0.x'
+			\ }
+
+" Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-" Syntax checking generic
-Plug 'vim-syntastic/syntastic'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'mattn/emmet-vim'
+Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'maxmellon/vim-jsx-pretty'
 
-" Autocomplete
-Plug 'neoclide/coc.nvim'
-
-" Rust
+Plug 'powerman/vim-plugin-viewdoc'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'tomtom/tcomment_vim'
+Plug 'davidhalter/jedi-vim'
+Plug 'ludovicchabant/vim-lawrencium'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'tpope/vim-unimpaired'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'tpope/vim-repeat'
+Plug 'gregsexton/MatchTag'
+Plug 'chriskempson/base16-vim'
+Plug 'tomasr/molokai'
+Plug 'edkolev/tmuxline.vim'
+Plug 'fatih/vim-go'
+Plug 'dense-analysis/ale'
 Plug 'rust-lang/rust.vim'
+Plug 'prabirshrestha/vim-lsp'
+
+Plug 'Quramy/tsuquyomi'
+Plug 'machakann/vim-highlightedyank'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'godlygeek/tabular'
+Plug 'tpope/vim-surround'
 
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-" =======================================================
-" Load Plugins End
-" =======================================================
+" Over 70 language packs
+Plug 'sheerun/vim-polyglot'
 
-" Rust formatting
-let g:rustfmt_autosave = 1
+if v:version >= 800
+    " Vim 8.0: Alternative async-completor plugin
+    " built-in support for python (jedi), java, etc.
+"    Plug 'maralla/completor.vim'
+    Plug 'w0rp/ale'
+else
+    Plug 'scrooloose/syntastic'
+endif
 
 
-" =======================================================
-" # Editor settings
-" =======================================================
-filetype Plug indent on    " required
-set autoindent
-set encoding=utf-8
+" Initialize plugin system
+call plug#end()
+
+    "must be last
+    filetype plugin indent on " load filetype plugins/indent settings
+    colorscheme molokai
+    syntax on                      " enable syntax
+
+    let mapleader = "," " map leader to comma
+
+" Settings
+set title                " show title in console title bar
+set ttyfast              " smoother changes
+"set modeline             " last lines in document sets vim mode
+set shortmess=atI        " Abbreviate messages
+set nostartofline        " don't jump to first character when paging
+set backspace=indent,eol,start
+set matchpairs+=<:>      " show matching <> (html mainly) as well
+set showmatch
+set matchtime=3
+set sm                   " show matching braces, somewhat annoying...
+set mouse=a
+set ttymouse=xterm2
+set history=500          " larger history
+set noshowmode           " Hide the default mode text (e.g. -- INSERT -- below the statusline)
+set timeout ttimeoutlen=50
+
+syntax on
+set synmaxcol=200        " Syntax highlight only the first 200 chars"
+filetype plugin on
+filetype indent plugin on
+
+if version >= 703        " Columns and lines, only from vim >= 7.3
+    set colorcolumn=80
+endif
+
+if has('linebreak')      " Break indent wrapped lines
+  set breakindent
+  let &showbreak = '↳ '
+  set cpo+=n
+end
+
+if has("gui_running")
+    set lines=80
+    set columns=180
+endif
+
+" ==================================================
+" Tab expanded to 2 spaces
+" ==================================================
+set tabstop=2            " numbers of spaces of tab character
+set shiftwidth=2         " numbers of spaces to (auto)indent
+set expandtab		     " Tab to spaces by default
+set softtabstop=2
+
+" ==================================================
+" Search settings
+" ==================================================
+set hlsearch             " highlight searches
+set incsearch            " do incremental searching
+set ignorecase           " ignore case when searching
+set infercase            " smarter completions that will be case aware when ignorecase is on
+set smartcase            " if searching and search contains upper case, make case sensitive search
+
+" ==================================================
+" No modlines for security
+" ==================================================
+set modelines=0
+set nomodeline
+
+" ==================================================
+" Color scheme and fonts
+" ==================================================
+let g:rehash256 = 1
+set background=dark
+colorscheme molokai
+
+if has("gui_running")
+    set guifont=Droid\ Sans\ Mono\ 10,Andale\ Mono\ Regular\ 10,\ Liberation\ Mono\ 9
+    set guioptions-=T   " Toolbars off (icons on top of the screen)
+else
+    set t_Co=256
+    let g:solarized_termtrans=1
+endif
+
+let g:solarized_contrast="high"
+let g:solarized_visibility="high"
+
+let base16colorspace=256
+
+" Turn off highlighting
+noremap <silent><leader>h :set hlsearch! hlsearch?<CR>
+
+" Setup NERDTree
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+
+nnoremap <silent><leader>1 :source ~/.vimrc \| :PlugInstall<CR>
+
+" Start NERDTree when Vim is opened and leave the cursor in it.
+"autocmd VimEnter * NERDTree
+
+" Start NERDTree when Vim is opened and put the cursor back in the other window.
+"autocmd VimEnter * NERDTree | wincmd p
+
+" Open the existing NERDTree on each new tab.
+"autocmd BufWinEnter * silent NERDTreeMirror
+
+" Exit Vim if NERDTree is the only window left.
+"autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+"  \ quit | endif
+
+" Setup Emmet
+let g:user_emmet_mode='n'    "only enable normal mode functions.
+let g:user_emmet_mode='inv'  "enable all functions, which is equal to
+let g:user_emmet_mode='a'    "enable all function in all mode.
+
+" only enable Emmet for certain file types
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
+" redefine the trigger key (you still need to enter the trailing ,)
+let g:user_emmet_leader_key='<C-Z>'
+
+" Setup keys
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+"nnoremap <c-s> :w<cr>
+nnoremap <C-L> <Esc>
+
+" PLUGIN: FZF
+nnoremap <silent> <Leader>b :Buffers<CR>
+nnoremap <silent> <C-f> :Files<CR>
+"nnoremap <silent> <C-f> :GFiles<CR>
+nnoremap <silent> <Leader>f :Rg<CR>
+nnoremap <silent> <Leader>/ :BLines<CR>
+nnoremap <silent> <Leader>' :Marks<CR>
+nnoremap <silent> <Leader>g :Commits<CR>
+nnoremap <silent> <Leader>H :Helptags<CR>
+nnoremap <silent> <Leader>hh :History<CR>
+nnoremap <silent> <Leader>h: :History:<CR>
+nnoremap <silent> <Leader>h/ :History/<CR>
+
+" +++ Shortcuts +++
+" Open Buffer
+nnoremap <silent><leader>l :Buffers<CR>
+" Open test file for a current file
+nnoremap <silent><leader>s :A<CR>
+" Open test file for a current file in a vertical window
+nnoremap <silent><leader>v :AV<CR>
+" Vertically split screen
+nnoremap <silent><leader>\ :vs<CR>
+" Split screen
+nnoremap <silent><leader>/ :split<CR>
+
+" Faster saving and exiting
+nnoremap <silent><leader>w :w!<CR>
+nnoremap <silent><leader>q :q!<CR>
+nnoremap <silent><leader>x :x<CR>
+" Open Vim configuration file for editing
+nnoremap <silent><leader>2 :e ~/.vimrc<CR>
+
+" ==================================================
+" vimrc handling
+" ==================================================
+
+" ,v loads .vimrc
+" ,V reloads .vimrc -- activating changes (needs save)
+map <leader>v :sp ~/.vimrc<CR><C-W>_
+map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+
+" Source Vim configuration file and install plugins
+nnoremap <silent><leader>1 :source ~/.vimrc \| :PlugInstall<CR>
+
+" ==================================================
+" Window navigation
+" ==================================================
+
+" control + vim direction key to navigate windows
+noremap <C-J> <C-W>j
+noremap <C-K> <C-W>k
+noremap <C-H> <C-W>h
+noremap <C-L> <C-W>l
+
+" control + arrow key to navigate windows
+noremap <C-Down> <C-W>j
+noremap <C-Up> <C-W>k
+noremap <C-Left> <C-W>h
+noremap <C-Right> <C-W>l
+
+" ==================================================
+" Splits handling
+" ==================================================
+
+" Make these all work in insert mode
+imap <C-W> <C-O><C-W>
+
+" - and + to resize horizontal splits
+map - <C-W>-
+map + <C-W>+
+
+" alt-< or alt-> for vertical splits
+map <m-,> <C-W>>
+map <m-.> <C-W><
+
+" F2 close current split (window)
+"noremap <Esc>:close<CR><Esc>
+
+" Deleter buffer, keep the split (switch to prev buf, delete now prev buf)
+nmap <leader>d :b#<bar>bd#<CR>
+
+" Toggle relative line numbers
+nnoremap <leader>rn :set relativenumber!<cr>
+
+" If fzf installed using git
+set rtp+=~/.fzf
+" Map fzf search to CTRL P
+"nnoremap <C-p> :GFiles<Cr>
+" Map fzf + ag search to CTRL P
+nnoremap <C-g> :Ag <Cr>
+
+" vim-test shortcut for running tests
+nnoremap <silent><leader>; :TestNearest<CR>
+nnoremap <silent><leader>' :TestFile<CR>
+
+" Extra <CR> is for disabling /"Press ENTER or type command to continue/"
+nnoremap <silent><leader>e :Exp<CR><CR>
+
+" Easier movement between split windows CTRL + {h, j, k, l}
+nnoremap <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
+
+" tcomment_vim
+let g:tcomment#blank_lines = 0
+
+map <C-_> :TComment<cr>
+imap <C-_> <C-o>:TComment<cr>i
+vmap <C-_> :TComment<cr>gv
+map <C-/> :TComment<cr>
+imap <C-/> <C-o>:TComment<cr>i
+vmap <C-/> :TComment<cr>gv
+
+autocmd User VimrcGUIEnter map <D-/> :TComment<cr>
+autocmd User VimrcGUIEnter imap <D-/> <C-o>:TComment<cr>i
+autocmd User VimrcGUIEnter vmap <D-/> :TComment<cr>gv
+
+" PLUGIN: ack
+nnoremap \ :Ag<SPACE>
+
+" Language: Rust
+if executable('rust-analyzer')
+  au User lsp_setup call lsp#register_server({
+        \   'name': 'Rust Language Server',
+        \   'cmd': {server_info->['rust-analyzer']},
+        \   'whitelist': ['rust'],
+        \ })
+endif
+
+" As-you-type autocomplete
+set completeopt=menu,menuone,preview,noselect,noinsert
+let g:ale_completion_enabled = 1
+nnoremap <C-LeftMouse> :ALEGoToDefinition<CR>
+let g:ale_fixers = { 'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines'] }
+" Required, explicitly enable Elixir LS
+let g:ale_linters = {
+\  'rust': ['analyzer'],
+\}
+
+" PLUGIN: coc
+" CoC extensions
+let g:coc_global_extensions = ['coc-solargraph', 'coc-tsserver', 'coc-json']
+
+" Add CoC Prettier if prettier is installed
+if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+  let g:coc_global_extensions += ['coc-prettier']
+endif
+
+" Add CoC ESLint if ESLint is installed
+if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+  let g:coc_global_extensions += ['coc-eslint']
+endif
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Format
+nmap <leader>f   :CocCommand prettier.formatFile<CR>
+
+" Typescript
+autocmd FileType typescript setlocal formatprg=prettier\ --parser\ typescript
+
+nmap <leader>i :CocCommand tsserver.organizeImports<cr>
+
+" Reload vimrc
+nnoremap <Leader>ve :e $MYVIMRC<CR>
+nnoremap <Leader>vr :source $MYVIMRC<CR>
+
+" Fix syntax highlight for Coc plugin floating errors
+hi CocErrorFloat guifg=Magenta guibg=Magenta
+
+" Use templates https://vimtricks.com/p/automated-file-templates/
