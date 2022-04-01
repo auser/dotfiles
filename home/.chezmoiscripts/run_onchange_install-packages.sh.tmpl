@@ -11,8 +11,6 @@
      "libssl-dev"
      "ripgrep"
      "units"
-     "nodejs"
-     "npm"
      "vim"
      "fzf"
      "zsh" -}}
@@ -52,6 +50,11 @@ set -eufo pipefail
 
 {{ $sudo }}apt-get update
 {{ $sudo }}apt-get install -y {{ $packages | join " " }}
+
+## Install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+nvm install v16.4.2
+nvm alias default v16.4.2
 
 ## Install antibody
 {{ if eq .chezmoi.os "darwin" }}
