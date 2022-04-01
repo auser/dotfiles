@@ -322,3 +322,10 @@ alias g=git
 alias gnp="git --no-pager"
 alias k=kubectl
 alias ks="kubectl --namespace=kube-system"
+
+# Tmux
+alias mux='pgrep -vx tmux > /dev/null && \
+		tmux new -d -s delete-me && \
+		tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh && \
+		tmux kill-session -t delete-me && \
+		tmux attach || tmux attach'
