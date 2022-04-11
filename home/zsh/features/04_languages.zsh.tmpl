@@ -78,7 +78,7 @@ function change_node_version {
 	nvmrc="./.node-version"
 	if [ -f "$nvmrc" ]; then
 		version="$(cat "$nvmrc")"
-    nvm use $version 2>&1>/dev/null
+    nvm use $version 
 	fi
 }
 
