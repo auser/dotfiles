@@ -53,8 +53,30 @@ set -eufo pipefail
 
 ## Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-nvm install v16.4.2
-nvm alias default v16.4.2
+#nvm install v16.4.2 
+#nvm alias default v16.4.2 
+
+# Install NVM
+nvm_dir="$HOME/.nvm"
+nvm_url=https://github.com/nvm-sh/nvm.git
+if [ -d "$nvm_dir" ]; then
+  nvm_existing_remote=$(git -C "$nvm_dir" remote get-url origin)
+  if [ "$nvm_existing_remote" != "$nvm_url" ]; then
+    echo "NVM already exists in $nvm_dir but its remote is set incorrectly"
+    exit 1
+  else
+    git -C "$nvm_dir" fetch
+  fi
+else
+  git -C "$nvm_dir" clone https://github.com/nvm-sh/nvm.git "$nvm_dir"
+fi
+git -C "$nvm_dir" checkout "$(git -C "$nvm_dir" describe --abbrev=0 --tags --match "v[0-9]*" "$(git -C "$nvm_dir" rev-list --tags -1)")"
+
+# Install LTS NodeJS
+set +x
+\. "$nvm_dir/nvm.sh" > /dev/null
+nvm install --lts
+set -x
 
 ## Install antibody
 {{ if eq .chezmoi.os "darwin" }}
