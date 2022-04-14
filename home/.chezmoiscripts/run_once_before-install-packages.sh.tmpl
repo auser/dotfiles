@@ -110,9 +110,9 @@ npm i -g corepack
 
 source $HOME/.cargo/env
 
-{{ range $classicSnaps }}
-{{ $sudo }}snap install --classic {{ . }}
-{{ end }}
+#{{ range $classicSnaps }}
+#{{ $sudo }}snap install --classic {{ . }}
+#{{ end }}
 
 ## Install cargo-edit
 cargo install cargo-edit
