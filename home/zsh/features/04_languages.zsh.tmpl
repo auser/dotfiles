@@ -78,7 +78,7 @@ function change_node_version {
 	nvmrc="./.node-version"
 	if [ -f "$nvmrc" ]; then
 		version="$(cat "$nvmrc")"
-    nvm use $version 
+    nvm use $version
 	fi
 }
 
@@ -87,7 +87,7 @@ chpwd_functions=(change_node_version)
 #######################################################################
 # NIX
 #######################################################################
-. /home/auser/.nix-profile/etc/profile.d/nix.sh
+#. /home/auser/.nix-profile/etc/profile.d/nix.sh
 
 #######################################################################
 # NODE
