@@ -18,68 +18,8 @@
 {{-   $headless = true -}}
 {{- end -}}
 
-{{/* work around unreliable hostname on darwin */}}
-{{- $hostname := .chezmoi.hostname -}}
-{{- if eq .chezmoi.os "darwin" -}}
-{{-   $computerName := output "scutil" "--get" "ComputerName" | trim -}}
-{{-   if eq $computerName "Tom’s MacBook Air" -}}
-{{-     $hostname = "toms-mba" -}}
-{{-   else if eq $computerName "Tom’s MacBook Pro 16" -}}
-{{-     $hostname = "toms-mbp-16" -}}
-{{-   else -}}
-{{-     $hostname = $computerName -}}
-{{-   end -}}
-{{- end -}}
-
 {{- if eq .chezmoi.os "windows" -}}
 {{-   $ephemeral = true -}}
-{{- end -}}
-
-{{- if not $ephemeral -}}
-{{-   if eq $hostname "raspberrypi4" -}}
-{{-     $headless = true -}}
-{{-     $personal = true -}}
-{{-   else if eq $hostname "elitedesk" -}}
-{{-     $docker = true -}}
-{{-     $headless = true -}}
-{{-     $isovalent = true -}}
-{{-     $kubernetes = true -}}
-{{-     $personal = true -}}
-{{-   else if eq $hostname "thinkpad" -}}
-{{-     $docker = true -}}
-{{-     $personal = true -}}
-{{-   else if eq $hostname "toms-mba" -}}
-{{-     $personal = true -}}
-{{-   else if eq $hostname "toms-mbp-16" -}}
-{{-     $isovalent = true -}}
-{{-     $kubernetes = true -}}
-{{-   else if stdinIsATTY -}}
-{{-     if hasKey . "headless" -}}
-{{-       $headless = .headless -}}
-{{-     else -}}
-{{-       $headless = promptBool "headless" -}}
-{{-     end -}}
-{{-     if hasKey . "ephemeral" -}}
-{{-       $ephemeral = .ephemeral -}}
-{{-     else -}}
-{{-       $ephemeral = promptBool "ephemeral" -}}
-{{-     end -}}
-{{-     if not $ephemeral -}}
-{{-       if hasKey . "docker" -}}
-{{-         $docker = .docker -}}
-{{-       else -}}
-{{-         $docker = promptBool "docker" -}}
-{{-       end -}}
-{{-       if hasKey . "kubernetes" -}}
-{{-         $kubernetes = .kubernetes -}}
-{{-       else -}}
-{{-         $kubernetes = promptBool "kubernetes" -}}
-{{-       end -}}
-{{-     end -}}
-{{-   else -}}
-{{-     $ephemeral = true -}}
-{{-     $headless = true -}}
-{{-   end -}}
 {{- end -}}
 
 [data]
@@ -94,4 +34,4 @@
 [diff]
     exclude = ["externals"]
 [onepassword]
-    command = "op2"
+    command = "op"
