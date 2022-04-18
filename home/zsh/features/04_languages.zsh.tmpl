@@ -90,7 +90,22 @@ chpwd_functions=(change_node_version)
 #. /home/auser/.nix-profile/etc/profile.d/nix.sh
 
 #######################################################################
-# NODE
+# WASMER
 #######################################################################
 export WASMER_DIR="/home/auser/.wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+
+#######################################################################
+# NODE
+#######################################################################
+export ANDROID=$HOME/work/android
+export PATH=$ANDROID/cmdline-tools/bin:$PATH
+export PATH=$ANDROID/flutter/bin:$PATH
+
+# Android SDK
+export ANDROID_SDK=$ANDROID
+export PATH=$ANDROID_SDK:$PATH
+
+# Flutter
+export FLUTTER=$HOME/work/android/flutter
+export PATH=$FLUTTER/bin:$PATH
