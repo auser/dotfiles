@@ -131,9 +131,18 @@ DISPLAY= pip3 install --user pynvim
 curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
 chmod u+x nvim.appimage
 mv nvim.appimage /usr/local/bin
-#./nvim.appimage --appimage-extract
-#./squashfs-root/AppRun --version
-#sudo mv squashfs-root / && ln -s /squashfs-root/AppRun $HOME/.local/bin/nvim
+
+echo "Installing: lunarvim ******************"
+{{ if (eq .chezmoi.os "linux" "darwin") }}
+wget -O /tmp/install_lvim.sh https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh
+chmod u+x /tmp/install_lvim.sh
+DISPLAY= /tmp/install_lvim.sh -y
+{{ end -}}
+
+echo "Installing nerd fonts ****************"
+git clone https://github.com/ronniedroid/getnf.git /tmp/getnf
+cd /tmp/getnf
+./install.sh
 
 echo "Setting up zsh ******************************"
 sudo chsh -s /bin/zsh $(whoami)
