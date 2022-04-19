@@ -1,7 +1,8 @@
--- Bootstrap packer if not installed
 local fn = vim.fn
+
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
+	---@diagnostic disable-next-line: lowercase-global
 	packer_bootstrap = fn.system({
 		"git",
 		"clone",
@@ -12,213 +13,119 @@ if fn.empty(fn.glob(install_path)) > 0 then
 	})
 end
 
--- Automatically PackerCompile when this file is changed
+-- Auto compile when there are changes in lua
 vim.cmd([[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+    autocmd BufWritePost lua source <afile> | PackerCompile
   augroup end
 ]])
 
-return require("packer").startup(function(use)
-	use("wbthomason/packer.nvim")
-	use("lewis6991/impatient.nvim")
+require("packer").startup(function(use)
+	-- Packer can manage itself
+	use({ "wbthomason/packer.nvim" })
 
-	-- Themes
-	use("ayu-theme/ayu-vim")
-	use("navarasu/onedark.nvim")
-	use("folke/tokyonight.nvim")
-
-	-- File Management
+	-- Telescope
 	use({
-		"kyazdani42/nvim-tree.lua",
-		requires = "kyazdani42/nvim-web-devicons",
-		config = function()
-			require("plugins.tree")
-		end,
+		"nvim-telescope/telescope.nvim",
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "fhill2/telescope-ultisnips.nvim" },
+			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+		},
 	})
 
 	-- Git
+	use({ "tpope/vim-fugitive" }) -- Git wrapper for vim
+	use({ "lewis6991/gitsigns.nvim" }) -- Git signs
+	use({ "rhysd/git-messenger.vim", event = "VimEnter" }) -- Show Git info in a popup
 	use({
-		"lewis6991/gitsigns.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("plugins.gitsigns")
-		end,
-	})
-	use("tpope/vim-fugitive") -- It should be illegal
-	use("tpope/vim-rhubarb") -- Github support
-	use("junegunn/gv.vim") -- Commit Browser
-	use("APZelos/blamer.nvim")
-    use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
-
-	-- Search
-	use({
-		"nvim-telescope/telescope.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("plugins.telescope")
-		end,
-	})
-	use({
-		"nvim-telescope/telescope-fzf-native.nvim",
-		run = "make",
-	})
-
-	-- LSP & Snippet Engine
-	use({
-		"neovim/nvim-lspconfig",
-        requires = { "nvim-lua/lsp-status.nvim" },
-		config = function()
-			require("plugins.lsp")
-		end,
-	})
-	use("liuchengxu/vista.vim") -- LSP symbol and tags viewer
-	use({
-		"folke/trouble.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
-		config = function()
-			require("trouble").setup({})
-		end,
-	})
-	use({
-		"jose-elias-alvarez/null-ls.nvim",
-		requires = "nvim-lua/plenary.nvim",
-		config = function()
-			require("plugins.null-ls")
-		end,
-	})
-
-	-- Completion Engine
-	use({
-		"hrsh7th/nvim-cmp",
+		"pwntester/octo.nvim",
 		requires = {
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-cmdline",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-vsnip",
-			"hrsh7th/vim-vsnip",
-			"ray-x/cmp-treesitter",
-			"onsails/lspkind-nvim",
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+			"kyazdani42/nvim-web-devicons",
 		},
-		config = function()
-			require("plugins.cmp")
-		end,
 	})
 
-	-- Programming
+	-- Appearance and themes
+	use({ "hoob3rt/lualine.nvim" }) -- Statusline
+	use({ "kyazdani42/nvim-web-devicons" }) -- Dev icons
+	use({ "akinsho/nvim-bufferline.lua" }) -- Better nvim buffers
+	use({ "lukas-reineke/indent-blankline.nvim" }) -- Indenting
+	use({ "rebelot/kanagawa.nvim" })
+
+	-- Autocompletion, formatting, linting & intellisense
+	use({ "neovim/nvim-lspconfig" })
+	use({ "tami5/lspsaga.nvim" })
+	use({ "SirVer/ultisnips" }) -- Snippets engine
+	use({ "jose-elias-alvarez/null-ls.nvim" })
+	use({ "ms-jpq/coq_nvim", branch = "coq" })
+	use({ "ms-jpq/coq.artifacts", branch = "artifacts" })
+	use({ "ray-x/lsp_signature.nvim" })
+
+	-- Treesitter
 	use({
 		"nvim-treesitter/nvim-treesitter",
-		config = function()
-			require("plugins.treesitter")
-		end,
 		run = ":TSUpdate",
-	})
-	use({
-		"windwp/nvim-autopairs",
-		config = function()
-			require("nvim-autopairs").setup({})
-		end,
-	})
-	use({
-		"numToStr/Comment.nvim",
-		config = function()
-			require("plugins.comment")
-		end,
-	})
-	use("JoosepAlviste/nvim-ts-context-commentstring")
-	use({
-		"folke/todo-comments.nvim",
-		requires = "nvim-lua/plenary.nvim",
-		config = function()
-			require("todo-comments").setup({})
-		end,
-	})
-	use("tpope/vim-surround")
-
-	-- Rust
-	use({
-		"simrat39/rust-tools.nvim",
-		config = function()
-			require("plugins.rust-tools")
-		end,
-	})
-	use({
-		"Saecki/crates.nvim",
-		event = { "BufRead Cargo.toml" },
-		requires = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("crates").setup()
-		end,
+		requires = {
+			{ "nvim-treesitter/nvim-treesitter-textobjects" },
+		},
 	})
 
-	-- Editor Config
-	use("editorconfig/editorconfig-vim")
+	-- Utilities
+	use({ "romainl/vim-qf" }) -- Quick fix settings, commands and mappings
+	use({ "moll/vim-bbye" }) -- Delete buffers without closing windows
+	use({ "windwp/nvim-autopairs" }) -- Insert or delete brackets, parens, quotes in pair.
+	use({ "mattn/emmet-vim", event = "VimEnter", ft = { "html", "markdown", "css", "scss" } }) -- Shortcuts for writing HTML and CSS
+	use({ "norcalli/nvim-colorizer.lua", ft = { "html", "css", "scss", "javascript", "lua" } }) -- Colour highlighting
+	use({ "tpope/vim-surround" }) -- Mappings for surroundings like brackets, quotes, e.t.c.
+	use({ "numtostr/comment.nvim" }) -- Comment stuff out easily
+	use({ "tpope/vim-repeat" }) -- Enhance the dot command
+	use({ "godlygeek/tabular" }) -- Text alignment
+	use({ "tpope/vim-unimpaired" }) -- Custom mappings for some ex commands
+	use({ "p00f/nvim-ts-rainbow" }) -- Use different colours for parenthesis levels
 
-	-- Statusline
-	use({
-		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-		config = function()
-			require("plugins.lualine")
-		end,
-	})
-	use({
-		"akinsho/bufferline.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-		config = function()
-			require("plugins.bufferline")
-		end,
-	})
-	use({
-		"famiu/bufdelete.nvim",
-		after = "bufferline.nvim",
-	})
+	use({ "ludovicchabant/vim-gutentags" }) -- Manage tag files automatically
 
-	-- Other
-	use({ "nvim-lua/popup.nvim", requires = "nvim-lua/plenary.nvim" })
-	use("mfussenegger/nvim-dap") -- Debugging
-	use("mbbill/undotree") -- Visualize undo tree
-	use("airblade/vim-rooter") -- Set the working directory to the project root
-	use({ "iamcco/markdown-preview.nvim", run = "cd app & yarn install" }) -- Markdown support
-	use("christoomey/vim-tmux-navigator") -- Tmux navigator integration
-	use({
-		-- Discord Presence
-		"andweeb/presence.nvim",
-        disable = true,
-		config = function()
-			require("plugins.presence")
-		end,
-	})
-    use("wakatime/vim-wakatime")
-	use({
-		"karb94/neoscroll.nvim",
-		config = function()
-			require("neoscroll").setup()
-		end,
-	})
-	use({
-		"max397574/better-escape.nvim",
-		config = function()
-			require("better_escape").setup()
-		end,
-	})
-    use({
-        "rcarriga/nvim-notify",
-        config = function()
-            require("plugins.notify")
-        end,
-    })
-    use({
-        "norcalli/nvim-colorizer.lua",
-        config = function()
-            require("colorizer").setup()
-        end,
-    })
+	use({ "miyakogi/conoline.vim" }) -- Highlight the line of the cusor in the current window
+	use({ "airblade/vim-rooter" }) -- Change vim working directory to project directory
+	use({ "andymass/vim-matchup", event = "VimEnter" }) -- Highlight, navigate, and operate on sets of matching text
+	use({ "lewis6991/impatient.nvim" }) -- Speed up startup time
+	use({ "folke/todo-comments.nvim" }) -- Highlight and search for TODO comments
+	use({ "folke/trouble.nvim" }) -- Diagnostics
+	use({ "folke/which-key.nvim" }) -- Key bindings
 
-	-- Automatically set up your configuration after cloning packer.nvim
 	if packer_bootstrap then
 		require("packer").sync()
 	end
 end)
+
+-- Config
+require("config/conoline")
+require("config/emmet-vim")
+require("config/gitsigns")
+require("config/indent-blankline")
+require("config/lualine")
+require("config/nvim-autopairs")
+require("config/nvim-bufferline")
+require("config/nvim-lspconfig")
+require("config/lspsaga")
+require("config/null-ls")
+require("config/comment")
+require("config/nvim-ts-rainbow")
+require("config/telescope")
+require("config/ultisnips")
+require("config/vim-bbye")
+require("config/vim-fugitive")
+require("config/vim-qf")
+require("config/vim-rooter")
+require("config/todo-comments")
+require("config/trouble")
+require("config/which-key")
+require("config/octo")
+require("config/lsp_signature")
+require("config/nvim-colorizer")
+require("config/vim-gutentags")
+require("config/coq")
+require("config/treesitter")
