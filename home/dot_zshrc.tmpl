@@ -113,9 +113,7 @@ source $HOME/zsh/functions/fzf-functions.zsh
 source $HOME/zsh/functions/git-functions.zsh
 source $HOME/zsh/bindings.zsh
 source $HOME/zsh/alias.zsh
-
-source <(antibody init)
-antibody bundle < $HOME/zsh/plugins.txt
+source $HOME/zsh/ohmy.zsh
 
 for file in $HOME/zsh/features/*.zsh; do
   source $file

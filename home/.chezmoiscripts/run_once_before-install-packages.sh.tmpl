@@ -46,9 +46,9 @@
 {{   $sudo = "" -}}
 {{ end -}}
 
-#!/bin/bash
+#!/bin/sh
 
-set -eufo pipefail
+#set -eufo pipefail
 
 {{ $sudo }}apt-get update
 {{ $sudo }}apt-get install -y {{ $packages | join " " }}
@@ -80,11 +80,11 @@ set +x
 nvm install --lts
 set -x
 
-## Install antibody
+## Install antigen
 {{ if eq .chezmoi.os "darwin" }}
-brew install antibody
+brew install antigen
 {{ else if eq .chezmoi.os "linux" }}
-curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
+curl -L git.io/antigen > ~/.config/zsh/antigen.zsh
 {{- end }}
 
 ## Installing rust
@@ -143,6 +143,21 @@ echo "Installing nerd fonts ****************"
 git clone https://github.com/ronniedroid/getnf.git /tmp/getnf
 cd /tmp/getnf
 ./install.sh
+
+# Install fzf
+if [ ! -d "$HOME/.fzf" ] 
+then
+    echo "fzf could not be found, installing now"
+    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+    $HOME/.fzf/install --bin
+fi
+
+# Install oh my zsh
+if [ ! -d "$HOME/.oh-my-zsh" ] 
+then
+    echo "Oh-My-Zsh is not installed, installing now" 
+    git clone https://github.com/ohmyzsh/ohmyzsh.git $HOME/.oh-my-zsh
+fi
 
 echo "Setting up zsh ******************************"
 sudo chsh -s /bin/zsh $(whoami)

@@ -6,7 +6,10 @@
 #sudo rm -f -- ~/Library/Fonts/*
 
 # installing PowerLine fonts
+if [ ! -d "/tmp/vendor/fonts" ]; then
 git clone https://github.com/powerline/fonts.git --depth=1 /tmp/vendor/fonts
+fi
+
 /tmp/vendor/fonts/install.sh
 
 {{ else if (eq .chezmoi.os "linux")  -}}
@@ -15,3 +18,5 @@ git clone https://github.com/powerline/fonts.git --depth=1 /tmp/vendor/fonts
 sudo apt install -y --no-install-recommends fonts-powerline
 
 {{ end -}}
+
+
