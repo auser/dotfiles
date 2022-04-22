@@ -6,10 +6,8 @@
 #sudo rm -f -- ~/Library/Fonts/*
 
 # installing PowerLine fonts
-./vendor/font-powerline/install.sh
-
-# installing JetBrains Mono fonts
-cp ./vendor/font-jetbrains/fonts/otf/*.otf ~/Library/Fonts
+git clone https://github.com/powerline/fonts.git --depth=1 /tmp/vendor/fonts
+/tmp/vendor/fonts/install.sh
 
 {{ else if (eq .chezmoi.os "linux")  -}}
 
