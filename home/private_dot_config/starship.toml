@@ -154,3 +154,4 @@ format = "[$symbol]($style)"
 [swift]
 symbol = "ﯣ "
 format = "[$symbol]($style)"
+
