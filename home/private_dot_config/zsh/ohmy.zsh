@@ -4,13 +4,12 @@ ZSH_THEME="robbyrussell"
 
 plugins=(
     git
- git-extras 
- docker 
- vi-mode 
+ git-extras
+ docker
+ vi-mode
  marked2
  rust
- fzf 
- emoji
+ fzf
  dotenv
  tmux
  macos
