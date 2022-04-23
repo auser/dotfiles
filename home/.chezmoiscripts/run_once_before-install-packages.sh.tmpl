@@ -2,7 +2,6 @@
 
 {{ $packages := list
      "curl"
-     "direnv"
      "git-lfs"
      "jq"
      "golang"
@@ -27,7 +26,7 @@
        "protobuf-compiler"
        "python3-pip"
        "vagrant"
-       "virtualbox") -}}
+       ) -}}
 {{   $classicSnaps = concat $classicSnaps (list
        "google-cloud-sdk") -}}
 {{ end -}}
@@ -145,7 +144,7 @@ cd /tmp/getnf
 ./install.sh
 
 # Install fzf
-if [ ! -d "$HOME/.fzf" ] 
+if [ ! -d "$HOME/.fzf" ]
 then
     echo "fzf could not be found, installing now"
     git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
@@ -153,9 +152,9 @@ then
 fi
 
 # Install oh my zsh
-if [ ! -d "$HOME/.oh-my-zsh" ] 
+if [ ! -d "$HOME/.oh-my-zsh" ]
 then
-    echo "Oh-My-Zsh is not installed, installing now" 
+    echo "Oh-My-Zsh is not installed, installing now"
     git clone https://github.com/ohmyzsh/ohmyzsh.git $HOME/.oh-my-zsh
 fi
 
