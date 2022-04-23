@@ -23,3 +23,4 @@ plugins=(
 zstyle ':omz:update' mode auto
 ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
+
