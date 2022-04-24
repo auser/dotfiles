@@ -9,6 +9,8 @@ for path_candidate in /opt/local/sbin \
   /Applications/Xcode.app/Contents/Developer/usr/bin \
   /opt/local/bin \
   /usr/local/share/npm/bin \
+  ~/Library/Python/3.8/lib/python/site-packages \
+  /opt/homebrew/Caskroom/miniconda/base/lib/python3.9/site-packages \
   ~/.cabal/bin \
   ~/.cargo/bin \
   ~/.rbenv/bin \

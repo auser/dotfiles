@@ -61,6 +61,14 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+## Install poetry
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
+
+## Install starship
+{{ if eq .chezmoi.os "darwin" }}
+curl -sS https://starship.rs/install.sh | sh
+{{ end -}}
+
 ## Install antigen
 {{ if eq .chezmoi.os "darwin" }}
 brew install antigen
