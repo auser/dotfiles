@@ -15,6 +15,7 @@ fi
 {{ else if (eq .chezmoi.os "linux")  -}}
 
 # installing fonts from package manager
+sudo apt update
 sudo apt install -y --no-install-recommends fonts-powerline
 
 {{ end -}}

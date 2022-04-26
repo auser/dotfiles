@@ -129,9 +129,11 @@ DISPLAY= /tmp/install_lvim.sh -y
 {{ end -}}
 
 echo "Installing nerd fonts ****************"
+{{ if (eq .chezmoi.os "darwin") }}
 git clone https://github.com/ronniedroid/getnf.git /tmp/getnf
 cd /tmp/getnf
 ./install.sh
+{{ end -}}
 
 # Install fzf
 if [ ! -d "$HOME/.fzf" ]
