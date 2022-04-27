@@ -1,0 +1,83 @@
+# COMPILED #
+############
+*.com
+*.class
+*.dll
+*.so
+*.pyc
+*.pyo
+
+# PACKAGES #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.msi
+
+# vi #
+######
+*~
+
+# LOGS/DB #
+######################
+log/
+*.log
+*.sql
+*.sqlite
+
+# OPERATING SYSTEM(OS) #
+########################
+{{ if (eq .chezmoi.os "darwin") }}
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+{{ end -}}
+._*
+.Trashes
+.Thumbs.db
+
+# TEMP files
+###################
+*.bak
+*.swp
+*.swo
+*~
+*#
+
+# IDE #
+#######
+.vscode
+.idea
+.iml
+*.sublime-workspace
+.history
+yarn-error.log
+
+# JS/NODE #
+##########
+node_modules
+npm-debug.log
+
+# PYTHON #
+##########
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Li]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+venv/
+
+# TERRAFORM #
+#############
+.terraform
+*.tfstate
+*.tfstate.backup
