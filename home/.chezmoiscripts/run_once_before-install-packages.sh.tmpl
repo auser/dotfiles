@@ -119,7 +119,9 @@ echo "Installing: nvim ********************"
 DISPLAY= pip3 install --user pynvim
 curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
 chmod u+x nvim.appimage
-mv nvim.appimage /usr/local/bin
+mv nvim.appimage /usr/local/bin/nvm
+nvm install 16
+nvm alias default 16
 
 echo "Installing: lunarvim ******************"
 {{ if (eq .chezmoi.os "linux" "darwin") }}
