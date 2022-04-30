@@ -5,6 +5,13 @@ export EDITOR='nvim'
 export SUDO_EDITOR='nvim'
 
 # PATH
+if command -v pyenv 1>/dev/null 2>&1; then
+    export PATH="~/.pyenv/bin:$PATH"
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+fi
+
 export PATH=$PATH:~/.dotfiles/bin # Scripts & utilities
 export PATH=$PATH:~/.cargo/bin # Rust
 export GOPATH="$(go env GOPATH)" # Go
