@@ -1,14 +1,17 @@
-pcall(require, "impatient")
--- require'impatient'.enable_profile()
-
-if require("auser.first_load")() then
-  return
+if vim.fn.has('nvim-0.7') == 0 then
+  error('Need Neovim v0.7+ in order to run Cosmic!')
 end
 
--- Leader Key
-vim.g.mapleader = " "
+do
+  local ok, _ = pcall(require, 'impatient')
 
-require("auser.globals")
-require("auser.lsp")
-require("auser.telescope").setup()
-require("auser.statusline").setup()
+  if not ok then
+    vim.notify('impatient.nvim not installed', vim.log.levels.WARN)
+  end
+end
+
+local ok, err = pcall(require, 'cosmic')
+
+if not ok then
+  error(('Error loading core...\n\n%s'):format(err))
+end
