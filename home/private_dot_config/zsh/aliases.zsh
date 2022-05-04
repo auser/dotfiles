@@ -310,6 +310,9 @@ alias gss='git show --word-diff=color' # See changes made
 # Emacs
 
 alias emacs-osx="open /Applications/Emacs.app $@"
+alias emacs='/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs'
+alias emacsclient='/Applications/MacPorts/Emacs.app/Contents/MacOS/bin/emacsclient'
+
 
 
 # Ruby

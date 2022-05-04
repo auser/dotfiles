@@ -38,7 +38,7 @@ local options = user_plugin_opts("options", {
     timeoutlen = 300, -- Length of time to wait for a mapped sequence
     undofile = true, -- Enable persistent undo
     updatetime = 300, -- Length of time to wait before triggering the plugin
-    wrap = false, -- Disable wrapping of lines longer than the width of window
+    wrap = true, -- Disable wrapping of lines longer than the width of window
     writebackup = false, -- Disable making a backup before overwriting a file
   },
   g = {
