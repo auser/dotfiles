@@ -1,17 +1,41 @@
-if vim.fn.has('nvim-0.7') == 0 then
-  error('Need Neovim v0.7+ in order to run Cosmic!')
+vim.opt.rtp:append(vim.fn.stdpath "config" .. "/../astronvim")
+
+local impatient_ok, impatient = pcall(require, "impatient")
+if impatient_ok then
+  impatient.enable_profile()
 end
 
-do
-  local ok, _ = pcall(require, 'impatient')
+local utils = require "core.utils"
 
-  if not ok then
-    vim.notify('impatient.nvim not installed', vim.log.levels.WARN)
+utils.bootstrap()
+
+local sources = {
+  "core.options",
+  "core.plugins",
+  "core.autocmds",
+  "core.mappings",
+  "configs.which-key-register",
+}
+
+for _, source in ipairs(sources) do
+  local status_ok, fault = pcall(require, source)
+  if not status_ok then
+    error("Failed to load " .. source .. "\n\n" .. fault)
+  elseif source == "core.plugins" then
+    utils.compiled()
   end
 end
 
-local ok, err = pcall(require, 'cosmic')
+local status_ok, ui = pcall(require, "core.ui")
+if status_ok then
+  for ui_addition, enabled in pairs(utils.user_settings().ui) do
+    if enabled and type(ui[ui_addition]) == "function" then
+      ui[ui_addition]()
+    end
+  end
+end
 
-if not ok then
-  error(('Error loading core...\n\n%s'):format(err))
+local polish = utils.user_plugin_opts "polish"
+if type(polish) == "function" then
+  polish()
 end
