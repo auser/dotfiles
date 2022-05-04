@@ -120,6 +120,9 @@ cargo install cargo-edit
   cargo install just
 {{- end }}
 
+echo "Installing: powerlevel10k"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
 echo "Installing: nvim ********************"
 DISPLAY= pip3 install --user pynvim
 curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
