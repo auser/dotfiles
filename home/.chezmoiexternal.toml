@@ -7,3 +7,7 @@
     type = "file"
     url = "https://raw.githubusercontent.com/fnune/base16-fzf/master/bash/base16-gruvbox-dark-hard.config"
 
+[".zsh/spaceship-theme.zsh"]
+    type = "git-repo"
+    url = "https://github.com/spaceship-prompt/spaceship-prompt.git"
+    refreshPeriod = "168h"
