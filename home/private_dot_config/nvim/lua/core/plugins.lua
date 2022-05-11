@@ -1,10 +1,5 @@
-local M = {}
-
 local packer_status_ok, packer = pcall(require, "packer")
 if packer_status_ok then
-  local utils = require "core.utils"
-  local config = utils.user_settings()
-
   local astro_plugins = {
     -- Plugin manager
     {
@@ -15,7 +10,7 @@ if packer_status_ok then
     { "lewis6991/impatient.nvim" },
 
     -- Lua functions
-    { "nvim-lua/plenary.nvim" },
+    { "nvim-lua/plenary.nvim", module = "plenary" },
 
     -- Popup API
     { "nvim-lua/popup.nvim" },
@@ -32,16 +27,14 @@ if packer_status_ok then
     -- Notification Enhancer
     {
       "rcarriga/nvim-notify",
+      event = "VimEnter",
       config = function()
         require("configs.notify").config()
       end,
     },
 
     -- Neovim UI Enhancer
-    {
-      "MunifTanjim/nui.nvim",
-      module = "nui",
-    },
+    { "MunifTanjim/nui.nvim", module = "nui" },
 
     -- Cursorhold fix
     {
@@ -64,6 +57,7 @@ if packer_status_ok then
     -- Icons
     {
       "kyazdani42/nvim-web-devicons",
+      event = "VimEnter",
       config = function()
         require("configs.icons").config()
       end,
@@ -76,14 +70,10 @@ if packer_status_ok then
       config = function()
         require("configs.bufferline").config()
       end,
-      disable = not config.enabled.bufferline,
     },
 
     -- Better buffer closing
-    {
-      "famiu/bufdelete.nvim",
-      cmd = { "Bdelete", "Bwipeout" },
-    },
+    { "famiu/bufdelete.nvim", cmd = { "Bdelete", "Bwipeout" } },
 
     -- File explorer
     {
@@ -91,11 +81,13 @@ if packer_status_ok then
       branch = "v2.x",
       module = "neo-tree",
       cmd = "Neotree",
-      requires = "MunifTanjim/nui.nvim",
+      requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+      setup = function()
+        require("configs.neo-tree").setup()
+      end,
       config = function()
         require("configs.neo-tree").config()
       end,
-      disable = not config.enabled.neo_tree,
     },
 
     -- Statusline
@@ -104,28 +96,16 @@ if packer_status_ok then
       config = function()
         require("configs.lualine").config()
       end,
-      disable = not config.enabled.lualine,
     },
 
     -- Parenthesis highlighting
-    {
-      "p00f/nvim-ts-rainbow",
-      after = "nvim-treesitter",
-      disable = not config.enabled.ts_rainbow,
-    },
+    { "p00f/nvim-ts-rainbow", after = "nvim-treesitter" },
 
     -- Autoclose tags
-    {
-      "windwp/nvim-ts-autotag",
-      after = "nvim-treesitter",
-      disable = not config.enabled.ts_autotag,
-    },
+    { "windwp/nvim-ts-autotag", after = "nvim-treesitter" },
 
     -- Context based commenting
-    {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-      after = "nvim-treesitter",
-    },
+    { "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" },
 
     -- Syntax highlighting
     {
@@ -148,10 +128,7 @@ if packer_status_ok then
     },
 
     -- Snippet collection
-    {
-      "rafamadriz/friendly-snippets",
-      after = "nvim-cmp",
-    },
+    { "rafamadriz/friendly-snippets", event = "InsertEnter" },
 
     -- Snippet engine
     {
@@ -165,7 +142,7 @@ if packer_status_ok then
     -- Completion engine
     {
       "hrsh7th/nvim-cmp",
-      event = "InsertEnter",
+      after = "LuaSnip",
       config = function()
         require("configs.cmp").config()
       end,
@@ -230,10 +207,8 @@ if packer_status_ok then
     -- LSP symbols
     {
       "stevearc/aerial.nvim",
-      opt = true,
-      setup = function()
-        require("core.utils").defer_plugin "aerial.nvim"
-      end,
+      module = "aerial",
+      cmd = { "AerialToggle", "AerialOpen", "AerialInfo" },
       config = function()
         require("configs.aerial").config()
       end,
@@ -244,7 +219,7 @@ if packer_status_ok then
       "jose-elias-alvarez/null-ls.nvim",
       event = { "BufRead", "BufNewFile" },
       config = function()
-        local null_ls = require("core.utils").user_plugin_opts "null-ls"
+        local null_ls = require("core.utils").user_plugin_opts("null-ls", nil, false)
         if type(null_ls) == "function" then
           null_ls()
         end
@@ -281,12 +256,13 @@ if packer_status_ok then
       config = function()
         require("configs.gitsigns").config()
       end,
-      disable = not config.enabled.gitsigns,
     },
 
     -- Start screen
     {
       "goolord/alpha-nvim",
+      cmd = "Alpha",
+      module = "alpha",
       config = function()
         require("configs.alpha").config()
       end,
@@ -299,7 +275,6 @@ if packer_status_ok then
       config = function()
         require("configs.colorizer").config()
       end,
-      disable = not config.enabled.colorizer,
     },
 
     -- Autopairs
@@ -319,58 +294,55 @@ if packer_status_ok then
       config = function()
         require("configs.toggleterm").config()
       end,
-      disable = not config.enabled.toggle_term,
     },
 
     -- Commenting
     {
       "numToStr/Comment.nvim",
-      event = { "BufRead", "BufNewFile" },
+      keys = { "gc", "gb", "g<", "g>" },
       config = function()
         require("configs.Comment").config()
       end,
-      disable = not config.enabled.comment,
     },
 
     -- Indentation
     {
       "lukas-reineke/indent-blankline.nvim",
+      event = "BufRead",
       config = function()
         require("configs.indent-line").config()
       end,
-      disable = not config.enabled.indent_blankline,
     },
 
     -- Keymaps popup
     {
       "folke/which-key.nvim",
+      module = "which-key",
       config = function()
         require("configs.which-key").config()
       end,
-      disable = not config.enabled.which_key,
     },
 
     -- Smooth scrolling
     {
-      "karb94/neoscroll.nvim",
+      "declancm/cinnamon.nvim",
       event = { "BufRead", "BufNewFile" },
       config = function()
-        require("configs.neoscroll").config()
+        require("configs.cinnamon").config()
       end,
-      disable = not config.enabled.neoscroll,
     },
 
     -- Smooth escaping
     {
       "max397574/better-escape.nvim",
-      event = { "InsertEnter" },
+      event = "InsertCharPre",
       config = function()
         require("configs.better_escape").config()
       end,
     },
 
     -- Get extra JSON schemas
-    { "b0o/SchemaStore.nvim" },
+    { "b0o/SchemaStore.nvim", module = "schemastore" },
 
     -- Session manager
     {
@@ -396,7 +368,7 @@ if packer_status_ok then
       end
     end,
     config = require("core.utils").user_plugin_opts("plugins.packer", {
-      compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
+      compile_path = require("core.utils").default_compile_path,
       display = {
         open_fn = function()
           return require("packer.util").float { border = "rounded" }
@@ -417,5 +389,3 @@ if packer_status_ok then
     }),
   }
 end
-
-return M

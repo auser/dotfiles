@@ -11,3 +11,9 @@
     type = "git-repo"
     url = "https://github.com/spaceship-prompt/spaceship-prompt.git"
     refreshPeriod = "168h"
+["$HOME/.emacs.d"]
+    type = "git-repo"
+    refreshPeriod = "168h"
+    url = "https://github.com/doomemacs/doomemacs"
+    ["$HOME/.emacs.d" .pull]
+        args = ["--depth 1"]
