@@ -324,13 +324,13 @@ if packer_status_ok then
     },
 
     -- Smooth scrolling
-    {
-      "declancm/cinnamon.nvim",
-      event = { "BufRead", "BufNewFile" },
-      config = function()
-        require("configs.cinnamon").config()
-      end,
-    },
+    -- {
+    --   "declancm/cinnamon.nvim",
+    --   event = { "BufRead", "BufNewFile" },
+    --   config = function()
+    --     require("configs.cinnamon").config()
+    --   end,
+    -- },
 
     -- Smooth escaping
     {
