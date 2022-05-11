@@ -133,6 +133,8 @@ return {
       require("hop").setup()
     end,
   },
+  { "rmehri01/onenord.nvim" },
+  { "kyazdani42/nvim-web-devicons", config = require "plugins.configs.icons" },
   {
     "rcarriga/nvim-dap-ui",
     requires = {"nvim-dap", "rust-tools.nvim"},
@@ -176,6 +178,7 @@ return {
       require("telescope").load_extension "hop"
     end,
   },
+  { "aserowy/tmux.nvim", config = require "plugins.configs.tmux" },
   {
     "nvim-telescope/telescope-media-files.nvim",
     after = "telescope.nvim",
