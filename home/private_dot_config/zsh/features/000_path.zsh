@@ -16,6 +16,8 @@ for path_candidate in /opt/local/sbin \
   ~/.rbenv/bin \
   ~/.node/bin \
   ~/.local/bin \
+  ~/.bin/flutter/bin \
+  ~/.bin/android-cmdline-tools/bin \
   ~/.kiex/bin \
   ~/.asdf/bin \
   ~/bin \
