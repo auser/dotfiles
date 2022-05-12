@@ -16,6 +16,17 @@ return {
     },
   },
 
+  plugins = {
+    telescope = {
+      defaults = {
+        file_ignore_patterns = {
+          ".git",
+          "target/**",
+        }
+      }
+    }
+  },
+
   polish = function()
     vim.filetype.add {
       pattern = {

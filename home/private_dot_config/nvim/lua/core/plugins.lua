@@ -82,9 +82,6 @@ if packer_status_ok then
       module = "neo-tree",
       cmd = "Neotree",
       requires = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-      setup = function()
-        require("configs.neo-tree").setup()
-      end,
       config = function()
         require("configs.neo-tree").config()
       end,
@@ -324,13 +321,13 @@ if packer_status_ok then
     },
 
     -- Smooth scrolling
-    -- {
-    --   "declancm/cinnamon.nvim",
-    --   event = { "BufRead", "BufNewFile" },
-    --   config = function()
-    --     require("configs.cinnamon").config()
-    --   end,
-    -- },
+    {
+      "declancm/cinnamon.nvim",
+      event = { "BufRead", "BufNewFile" },
+      config = function()
+        require("configs.cinnamon").config()
+      end,
+    },
 
     -- Smooth escaping
     {

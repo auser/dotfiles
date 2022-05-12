@@ -24,6 +24,10 @@ if status_ok then
           },
         },
       },
+      file_ignore_patterns = {
+        "node_modules",
+        "target"
+      },
       mappings = {
         i = {
           ["<C-h>"] = hop.hop,
