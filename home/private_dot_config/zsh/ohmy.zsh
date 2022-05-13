@@ -4,18 +4,14 @@ export ZSH="$HOME/.oh-my-zsh"
 
 plugins=(
     git
- git-extras
  docker
  vi-mode
- marked2
  rust
  fzf
- dotenv
  tmux
  macos
  python
  npm
- pip
  pyenv
  colored-man-pages
 )

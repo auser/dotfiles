@@ -12,14 +12,14 @@ return function()
     symbol = "▏",
   }
   require("mini.jump").setup()
-  require("mini.surround").setup()
+  -- require("mini.surround").setup()
 
   local disable = {
     "base16",
     "completion",
     "cursorword",
     "doc",
---    "fuzzy",
+   "fuzzy",
     "misc",
     "pairs",
     "sessions",

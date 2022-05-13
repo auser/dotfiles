@@ -258,7 +258,7 @@ return {
 
                 -- Tools
         { "tpope/vim-repeat" },
-        { "tpope/vim-surround" },
+        -- { "tpope/vim-surround" },
         { "tpope/vim-fugitive" },
 
         {

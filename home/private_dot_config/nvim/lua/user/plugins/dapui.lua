@@ -3,7 +3,7 @@ return {
   mappings = {
     expand = "<cr>",
     open = "o",
-    remove = "d",
+    -- remove = "d",
     edit = "e",
     repl = "r",
     toggle = "t",
