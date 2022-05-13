@@ -15,8 +15,8 @@ return function()
         builtins.formatting.shfmt,
         builtins.diagnostics.cue_fmt,
         builtins.diagnostics.shellcheck,
-        formatting.info,
-        diagnostics.rubocop,
+        builtins.formatting.info,
+        builtins.diagnostics.rubocop,
       },
       on_attach = function(client)
         if client.resolved_capabilities.document_formatting then

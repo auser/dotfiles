@@ -208,6 +208,7 @@ return {
   { "ziontee113/syntax-tree-surfer", module = "syntax-tree-surfer" },
 
           -- Rust support
+        -- Rust support
         {
           "simrat39/rust-tools.nvim",
           requires = { "nvim-lspconfig", "nvim-lsp-installer", "nvim-dap", "Comment.nvim", "plenary.nvim" },
@@ -223,7 +224,6 @@ return {
               --   adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
               -- },
               tools = {
-                runables = {},
                 inlay_hints = {
                   parameter_hints_prefix = "  ",
                   other_hints_prefix = "  ",
@@ -259,7 +259,7 @@ return {
 
                 -- Tools
         { "tpope/vim-repeat" },
-        -- { "tpope/vim-surround" },
+        { "tpope/vim-surround" },
         { "tpope/vim-fugitive" },
 
         {
@@ -268,4 +268,7 @@ return {
             require("lightspeed").setup {}
           end,
         },
+
+        -- Text objects
+        { "bkad/CamelCaseMotion" },
 }
