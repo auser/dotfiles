@@ -4,12 +4,12 @@ return {
   ["max397574/better-escape.nvim"] = { disable = false },
   ["lukas-reineke/indent-blankline.nvim"] = { disable = false },
   ["numToStr/Comment.nvim"] = { disable = false },
-  -- {
-  --   "EdenEast/nightfox.nvim",
-  --   config = function()
-  --     require("nightfox").setup(require "user.plugins.nightfox")
-  --   end,
-  -- },
+  {
+    "EdenEast/nightfox.nvim",
+    config = function()
+      require("nightfox").setup(require "user.plugins.nightfox")
+    end,
+  },
   {
     "andymass/vim-matchup",
     opt = true,
@@ -223,6 +223,7 @@ return {
               --   adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
               -- },
               tools = {
+                runables = {},
                 inlay_hints = {
                   parameter_hints_prefix = "  ",
                   other_hints_prefix = "  ",

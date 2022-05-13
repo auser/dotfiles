@@ -10,10 +10,8 @@ plugins=(
  fzf
  tmux
  macos
- python
  npm
- pyenv
- colored-man-pages
+    colored-man-pages
 )
 
 zstyle ':omz:update' mode auto
