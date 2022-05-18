@@ -11,3 +11,8 @@
     type = "git-repo"
     url = "https://github.com/spaceship-prompt/spaceship-prompt.git"
     refreshPeriod = "168h"
+    
+[".local/share/nvim/site/pack/nvim-lspconfig/opt/nvim-lspconfig"]
+    type = "git-repo"
+    url = "https://github.com/neovim/nvim-lspconfig.git"
+    refreshPeriod = "168h"
