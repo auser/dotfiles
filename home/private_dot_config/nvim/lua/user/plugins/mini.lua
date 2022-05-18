@@ -1,6 +1,6 @@
 return function()
   require("mini.bufremove").setup()
-  --require("mini.comment").setup()
+  require("mini.comment").setup()
   require("mini.indentscope").setup {
     draw = {
       delay = 0,
@@ -12,14 +12,15 @@ return function()
     symbol = "▏",
   }
   require("mini.jump").setup()
-  -- require("mini.surround").setup()
-
+  require("mini.surround").setup()
   local disable = {
     "base16",
     "completion",
     "cursorword",
     "doc",
-   "fuzzy",
+    "fuzzy",
+    "jump",
+    "jump2d",
     "misc",
     "pairs",
     "sessions",
@@ -28,7 +29,6 @@ return function()
     "tabline",
     "trailspace",
   }
-
   for _, plugin in ipairs(disable) do
     vim.g["mini" .. plugin .. "_disable"] = true
   end

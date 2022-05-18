@@ -3,20 +3,13 @@ local M = {}
 function M.config()
   local present, alpha = pcall(require, "alpha")
   if present then
-    local utils = require "core.utils"
-    alpha.setup(utils.user_plugin_opts("plugins.alpha", {
+    local alpha_button = astronvim.alpha_button
+    alpha.setup(astronvim.user_plugin_opts("plugins.alpha", {
       layout = {
-        { type = "padding", val = 2 },
+        { type = "padding", val = vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.2) } },
         {
           type = "text",
-          val = utils.user_plugin_opts("header", {
-            " ",
-            " ",
-            " ",
-            " ",
-            " ",
-            " ",
-            " ",
+          val = astronvim.user_plugin_opts("header", {
             " █████  ███████ ████████ ██████   ██████",
             "██   ██ ██         ██    ██   ██ ██    ██",
             "███████ ███████    ██    ██████  ██    ██",
@@ -28,29 +21,21 @@ function M.config()
             "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
             "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
             "    ██   ████   ████   ██ ██      ██",
-            " ",
-            " ",
-            " ",
           }, false),
-          opts = {
-            position = "center",
-            hl = "DashboardHeader",
-          },
+          opts = { position = "center", hl = "DashboardHeader" },
         },
-        { type = "padding", val = 2 },
+        { type = "padding", val = 5 },
         {
           type = "group",
           val = {
-            utils.alpha_button("LDR f f", "  Find File  "),
-            utils.alpha_button("LDR f o", "  Recents  "),
-            utils.alpha_button("LDR f w", "  Find Word  "),
-            utils.alpha_button("LDR f n", "  New File  "),
-            utils.alpha_button("LDR f m", "  Bookmarks  "),
-            utils.alpha_button("LDR S l", "  Last Session  "),
+            alpha_button("LDR f f", "  Find File  "),
+            alpha_button("LDR f o", "  Recents  "),
+            alpha_button("LDR f w", "  Find Word  "),
+            alpha_button("LDR f n", "  New File  "),
+            alpha_button("LDR f m", "  Bookmarks  "),
+            alpha_button("LDR S l", "  Last Session  "),
           },
-          opts = {
-            spacing = 1,
-          },
+          opts = { spacing = 1 },
         },
       },
       opts = {},

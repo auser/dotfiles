@@ -5,7 +5,6 @@ vim.api.nvim_create_autocmd("VimLeave", {
   pattern = "*",
   command = "!autocomp %:p stop",
 })
-
 vim.api.nvim_create_augroup("dapui", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
   desc = "Make q close dap floating windows",
@@ -15,10 +14,9 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "q", "<cmd>close!<cr>")
   end,
 })
-
 vim.api.nvim_create_augroup("mini", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
-  desc = "Disable indent scope for conent types",
+  desc = "Disable indent scope for content types",
   group = "mini",
   callback = function()
     if

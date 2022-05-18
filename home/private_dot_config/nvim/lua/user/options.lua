@@ -1,3 +1,4 @@
+-- Override default options
 return {
   opt = {
     conceallevel = 2, -- enable conceal

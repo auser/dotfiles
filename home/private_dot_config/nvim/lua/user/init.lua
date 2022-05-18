@@ -1,7 +1,5 @@
 return {
   colorscheme = "duskfox",
-  lsp = require "user.lsp",
-  ["which-key"] = require "user.which-key",
 
   cmp = {
     source_priority = {
@@ -16,23 +14,7 @@ return {
     },
   },
 
-  plugins = {
-    telescope = {
-      defaults = {
-        file_ignore_patterns = {
-          ".git",
-          "target/**",
-        }
-      }
-    }
-  },
-
   polish = function()
-    vim.filetype.add {
-      pattern = {
-        ["/tmp/neomutt.*"] = "markdown",
-      },
-    }
     require "user.autocmds"
     require "user.mappings"
   end,

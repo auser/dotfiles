@@ -9,6 +9,8 @@ if cmp_ok and luasnip_ok then
           luasnip.expand()
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
+        elseif cmp.visible() then
+          cmp.select_next_item()
         else
           fallback()
         end
@@ -19,6 +21,8 @@ if cmp_ok and luasnip_ok then
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if luasnip.jumpable(-1) then
           luasnip.jump(-1)
+        elseif cmp.visible() then
+          cmp.select_prev_item()
         else
           fallback()
         end

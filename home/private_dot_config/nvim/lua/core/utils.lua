@@ -1,19 +1,17 @@
-local M = {}
+_G.astronvim = {}
+local stdpath = vim.fn.stdpath
+local tbl_insert = table.insert
 
 local supported_configs = {
-  vim.fn.stdpath "config",
-  vim.fn.stdpath "config" .. "/../astronvim",
+  stdpath "config",
+  stdpath "config" .. "/../astronvim",
 }
-
-local function file_not_empty(path)
-  return vim.fn.empty(vim.fn.glob(path)) == 0
-end
 
 local function load_module_file(module)
   local found_module = nil
   for _, config_path in ipairs(supported_configs) do
     local module_path = config_path .. "/lua/" .. module:gsub("%.", "/") .. ".lua"
-    if file_not_empty(module_path) then
+    if vim.fn.filereadable(module_path) == 1 then
       found_module = module_path
     end
   end
@@ -22,16 +20,16 @@ local function load_module_file(module)
     if status_ok then
       found_module = loaded_module
     else
-      vim.notify("Error loading " .. found_module, "error", M.base_notification)
+      vim.notify("Error loading " .. found_module, "error", astronvim.base_notification)
     end
   end
   return found_module
 end
 
-M.user_settings = load_module_file "user.init"
-M.default_compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua"
-M.base_notification = { title = "AstroNvim" }
-M.user_terminals = {}
+astronvim.user_settings = load_module_file "user.init"
+astronvim.default_compile_path = stdpath "config" .. "/lua/packer_compiled.lua"
+astronvim.base_notification = { title = "AstroNvim" }
+astronvim.user_terminals = {}
 
 local function func_or_extend(overrides, default, extend)
   if extend then
@@ -47,7 +45,7 @@ local function func_or_extend(overrides, default, extend)
 end
 
 local function user_setting_table(module)
-  local settings = M.user_settings or {}
+  local settings = astronvim.user_settings or {}
   for tbl in string.gmatch(module, "([^%.]+)") do
     settings = settings[tbl]
     if settings == nil then
@@ -57,24 +55,30 @@ local function user_setting_table(module)
   return settings
 end
 
-function M.bootstrap()
-  local fn = vim.fn
-  local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-  if fn.empty(fn.glob(install_path)) > 0 then
-    PACKER_BOOTSTRAP = fn.system {
+function astronvim.initialize_packer()
+  local packer_avail, packer = pcall(require, "packer")
+  if not packer_avail then
+    local packer_path = stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+    vim.fn.delete(packer_path, "rf")
+    vim.fn.system {
       "git",
       "clone",
       "--depth",
       "1",
       "https://github.com/wbthomason/packer.nvim",
-      install_path,
+      packer_path,
     }
     print "Cloning packer...\nSetup AstroNvim"
     vim.cmd "packadd packer.nvim"
+    packer_avail, packer = pcall(require, "packer")
+    if not packer_avail then
+      error("Failed to load packer at:" .. packer_path .. "\n\n" .. packer)
+    end
   end
+  return packer
 end
 
-function M.vim_opts(options)
+function astronvim.vim_opts(options)
   for scope, table in pairs(options) do
     for setting, value in pairs(table) do
       vim[scope][setting] = value
@@ -82,10 +86,11 @@ function M.vim_opts(options)
   end
 end
 
-function M.user_plugin_opts(module, default, extend)
+function astronvim.user_plugin_opts(module, default, extend)
   if extend == nil then
     extend = true
   end
+  default = default or {}
   local user_settings = load_module_file("user." .. module)
   if user_settings == nil then
     user_settings = user_setting_table(module)
@@ -96,9 +101,9 @@ function M.user_plugin_opts(module, default, extend)
   return default
 end
 
-function M.compiled()
+function astronvim.compiled()
   local run_me, _ = loadfile(
-    M.user_plugin_opts("plugins.packer", { compile_path = M.default_compile_path }).compile_path
+    astronvim.user_plugin_opts("plugins.packer", { compile_path = astronvim.default_compile_path }).compile_path
   )
   if run_me then
     run_me()
@@ -107,48 +112,19 @@ function M.compiled()
   end
 end
 
-function M.list_registered_providers_names(filetype)
-  local s = require "null-ls.sources"
-  local available_sources = s.get_available(filetype)
-  local registered = {}
-  for _, source in ipairs(available_sources) do
-    for method in pairs(source.methods) do
-      registered[method] = registered[method] or {}
-      table.insert(registered[method], source.name)
-    end
-  end
-  return registered
-end
-
-function M.list_registered_formatters(filetype)
-  local null_ls_methods = require "null-ls.methods"
-  local formatter_method = null_ls_methods.internal["FORMATTING"]
-  local registered_providers = M.list_registered_providers_names(filetype)
-  return registered_providers[formatter_method] or {}
-end
-
-function M.list_registered_linters(filetype)
-  local null_ls_methods = require "null-ls.methods"
-  local formatter_method = null_ls_methods.internal["DIAGNOSTICS"]
-  local registered_providers = M.list_registered_providers_names(filetype)
-  return registered_providers[formatter_method] or {}
-end
-
-function M.url_opener_cmd()
-  local cmd = function()
-    vim.notify("gx is not supported on this OS!", "error", M.base_notification)
-  end
+function astronvim.url_opener()
   if vim.fn.has "mac" == 1 then
-    cmd = '<Cmd>call jobstart(["open", expand("<cfile>")], {"detach": v:true})<CR>'
+    vim.fn.jobstart({ "open", vim.fn.expand "<cfile>" }, { detach = true })
   elseif vim.fn.has "unix" == 1 then
-    cmd = '<Cmd>call jobstart(["xdg-open", expand("<cfile>")], {"detach": v:true})<CR>'
+    vim.fn.jobstart({ "xdg-open", vim.fn.expand "<cfile>" }, { detach = true })
+  else
+    vim.notify("gx is not supported on this OS!", "error", astronvim.base_notification)
   end
-  return cmd
 end
 
 -- term_details can be either a string for just a command or
 -- a complete table to provide full access to configuration when calling Terminal:new()
-function M.toggle_term_cmd(term_details)
+function astronvim.toggle_term_cmd(term_details)
   if type(term_details) == "string" then
     term_details = { cmd = term_details, hidden = true }
   end
@@ -157,36 +133,59 @@ function M.toggle_term_cmd(term_details)
     term_details.count = vim.v.count
     term_key = term_key .. vim.v.count
   end
-  if M.user_terminals[term_key] == nil then
-    M.user_terminals[term_key] = require("toggleterm.terminal").Terminal:new(term_details)
+  if astronvim.user_terminals[term_key] == nil then
+    astronvim.user_terminals[term_key] = require("toggleterm.terminal").Terminal:new(term_details)
   end
-  M.user_terminals[term_key]:toggle()
+  astronvim.user_terminals[term_key]:toggle()
 end
 
-function M.add_cmp_source(source)
+function astronvim.add_cmp_source(source)
   local cmp_avail, cmp = pcall(require, "cmp")
   if cmp_avail then
     local config = cmp.get_config()
-    table.insert(config.sources, source)
+    tbl_insert(config.sources, source)
     cmp.setup(config)
   end
 end
 
-function M.add_user_cmp_source(source)
-  local priority = M.user_plugin_opts("cmp.source_priority", {
+function astronvim.get_user_cmp_source(source)
+  source = type(source) == "string" and { name = source } or source
+  local priority = astronvim.user_plugin_opts("cmp.source_priority", {
     nvim_lsp = 1000,
     luasnip = 750,
     buffer = 500,
     path = 250,
-  })[source]
-  source = type(source) == "string" and { name = source } or source
+  })[source.name]
   if priority then
     source.priority = priority
   end
-  M.add_cmp_source(source)
+  return source
 end
 
-function M.alpha_button(sc, txt)
+function astronvim.add_user_cmp_source(source)
+  astronvim.add_cmp_source(astronvim.get_user_cmp_source(source))
+end
+
+function astronvim.null_ls_providers(filetype)
+  local registered = {}
+  local sources_avail, sources = pcall(require, "null-ls.sources")
+  if sources_avail then
+    for _, source in ipairs(sources.get_available(filetype)) do
+      for method in pairs(source.methods) do
+        registered[method] = registered[method] or {}
+        tbl_insert(registered[method], source.name)
+      end
+    end
+  end
+  return registered
+end
+
+function astronvim.null_ls_sources(filetype, source)
+  local methods_avail, methods = pcall(require, "null-ls.methods")
+  return methods_avail and astronvim.null_ls_providers(filetype)[methods.internal[source]] or {}
+end
+
+function astronvim.alpha_button(sc, txt)
   local sc_ = sc:gsub("%s", ""):gsub("LDR", "<leader>")
   if vim.g.mapleader then
     sc = sc:gsub("LDR", vim.g.mapleader == " " and "SPC" or vim.g.mapleader)
@@ -211,25 +210,11 @@ function M.alpha_button(sc, txt)
   }
 end
 
-function M.label_plugins(plugins)
-  local labelled = {}
-  for _, plugin in ipairs(plugins) do
-    labelled[plugin[1]] = plugin
-  end
-  return labelled
-end
-
-function M.defer_plugin(plugin, timeout)
-  vim.defer_fn(function()
-    require("packer").loader(plugin)
-  end, timeout or 0)
-end
-
-function M.is_available(plugin)
+function astronvim.is_available(plugin)
   return packer_plugins ~= nil and packer_plugins[plugin] ~= nil
 end
 
-function M.delete_url_match()
+function astronvim.delete_url_match()
   for _, match in ipairs(vim.fn.getmatches()) do
     if match.group == "HighlightURL" then
       vim.fn.matchdelete(match.id)
@@ -237,8 +222,8 @@ function M.delete_url_match()
   end
 end
 
-function M.set_url_match()
-  M.delete_url_match()
+function astronvim.set_url_match()
+  astronvim.delete_url_match()
   if vim.g.highlighturl_enabled then
     vim.fn.matchadd(
       "HighlightURL",
@@ -248,26 +233,26 @@ function M.set_url_match()
   end
 end
 
-function M.toggle_url_match()
+function astronvim.toggle_url_match()
   vim.g.highlighturl_enabled = not vim.g.highlighturl_enabled
-  M.set_url_match()
+  astronvim.set_url_match()
 end
 
-function M.update()
+function astronvim.update()
   (require "plenary.job")
     :new({
       command = "git",
       args = { "pull", "--ff-only" },
-      cwd = vim.fn.stdpath "config",
+      cwd = stdpath "config",
       on_exit = function(_, return_val)
         if return_val == 0 then
-          vim.notify("Updated!", "info", M.base_notification)
+          vim.notify("Updated!", "info", astronvim.base_notification)
         else
-          vim.notify("Update failed! Please try pulling manually.", "error", M.base_notification)
+          vim.notify("Update failed! Please try pulling manually.", "error", astronvim.base_notification)
         end
       end,
     })
     :sync()
 end
 
-return M
+return astronvim

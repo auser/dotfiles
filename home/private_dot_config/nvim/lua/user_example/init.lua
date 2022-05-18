@@ -27,6 +27,25 @@ local config = {
       highlights.Normal = { fg = C.fg, bg = C.bg }
       return highlights
     end,
+    plugins = { -- enable or disable extra plugin highlighting
+      aerial = true,
+      beacon = false,
+      bufferline = true,
+      dashboard = true,
+      highlighturl = true,
+      hop = false,
+      indent_blankline = true,
+      lightspeed = false,
+      ["neo-tree"] = true,
+      notify = true,
+      ["nvim-tree"] = false,
+      ["nvim-web-devicons"] = true,
+      rainbow = true,
+      symbols_outline = false,
+      telescope = true,
+      vimwiki = false,
+      ["which-key"] = true,
+    },
   },
 
   -- Disable AstroNvim ui features
@@ -53,6 +72,30 @@ local config = {
       -- },
     },
     -- All other entries override the setup() call for default plugins
+    ["null-ls"] = function(config)
+      local null_ls = require "null-ls"
+      -- Check supported formatters and linters
+      -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
+      -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
+      config.sources = {
+        -- Set a formatter
+        null_ls.builtins.formatting.rufo,
+        -- Set a linter
+        null_ls.builtins.diagnostics.rubocop,
+      }
+      -- set up null-ls's on_attach function
+      config.on_attach = function(client)
+        -- NOTE: You can remove this on attach function to disable format on save
+        if client.resolved_capabilities.document_formatting then
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            desc = "Auto format before save",
+            pattern = "<buffer>",
+            callback = vim.lsp.buf.formatting_sync,
+          })
+        end
+      end
+      return config -- return final config table
+    end,
     treesitter = {
       ensure_installed = { "lua" },
     },
@@ -116,8 +159,8 @@ local config = {
 
     -- override the lsp installer server-registration function
     -- server_registration = function(server, opts)
-    --   require("lspconfig")[server.name].setup(opts)
-    -- end
+    --   require("lspconfig")[server].setup(opts)
+    -- end,
 
     -- Add overrides for LSP server settings, the keys are the name of the server
     ["server-settings"] = {
@@ -141,44 +184,6 @@ local config = {
     virtual_text = true,
     underline = true,
   },
-
-  -- null-ls configuration
-  ["null-ls"] = function()
-    -- Formatting and linting
-    -- https://github.com/jose-elias-alvarez/null-ls.nvim
-    local status_ok, null_ls = pcall(require, "null-ls")
-    if not status_ok then
-      return
-    end
-
-    -- Check supported formatters
-    -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
-    local formatting = null_ls.builtins.formatting
-
-    -- Check supported linters
-    -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
-    local diagnostics = null_ls.builtins.diagnostics
-
-    null_ls.setup {
-      debug = false,
-      sources = {
-        -- Set a formatter
-        formatting.rufo,
-        -- Set a linter
-        diagnostics.rubocop,
-      },
-      -- NOTE: You can remove this on attach function to disable format on save
-      on_attach = function(client)
-        if client.resolved_capabilities.document_formatting then
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            desc = "Auto format before save",
-            pattern = "<buffer>",
-            callback = vim.lsp.buf.formatting_sync,
-          })
-        end
-      end,
-    }
-  end,
 
   -- This function is run last
   -- good place to configure mappings and vim options

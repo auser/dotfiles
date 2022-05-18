@@ -24,10 +24,6 @@ if status_ok then
           },
         },
       },
-      file_ignore_patterns = {
-        "node_modules",
-        "target"
-      },
       mappings = {
         i = {
           ["<C-h>"] = hop.hop,
@@ -42,14 +38,6 @@ if status_ok then
       },
     },
     extensions = {
-      bibtex = {
-        context = true,
-        context_fallback = false,
-      },
-      media_files = {
-        filetypes = { "png", "jpg", "mp4", "webm", "pdf" },
-        find_cmd = "rg",
-      },
       file_browser = {
         mappings = {
           i = {
