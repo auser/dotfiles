@@ -25,6 +25,7 @@ for path_candidate in /opt/local/sbin \
   $HOME/anaconda3/bin \
   $HOME/.bin \
   $HOME/go/bin \
+  $HOME/.gvm/go/bin \
   /usr/local/bin/ \
   $HOME/.dotfiles/bin \
   $HOME/bin \

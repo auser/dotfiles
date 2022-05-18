@@ -3,9 +3,8 @@
 # GOLANG
 #######################################################################
 
-export GOPATH="$HOME/go";
-export GOROOT="$HOME/.go";
-export PATH="$GOPATH/bin:$PATH";
+export GOPATH="$HOME/go"; export GOROOT="$HOME/.go"; export PATH="$GOPATH/bin:$PATH"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
+alias gogo="$GOPATH/bin/g"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
 # g-install: do NOT edit, see https://github.com/stefanmaric/g
 
 #######################################################################
