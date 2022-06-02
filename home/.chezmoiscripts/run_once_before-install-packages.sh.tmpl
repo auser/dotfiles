@@ -5,6 +5,7 @@
      "git-lfs"
      "jq"
      "golang"
+     "gpg"
      "docker"
      "docker-compose"
      "libssl-dev"
@@ -49,8 +50,10 @@
 
 #set -eufo pipefail
 
+{{- if .is_linux -}}
 {{ $sudo }}apt-get update
 {{ $sudo }}apt-get install -y {{ $packages | join " " }}
+{{- end -}}
 
 ## Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
@@ -82,11 +85,16 @@ curl -L git.io/antigen > ~/.config/zsh/antigen.zsh
 {{- end }}
 
 ## Installing rust
-{{ if eq .chezmoi.os "darwin"}}
+{{ if .is_mac -}}
  ## Install rust
-{{ else if eq .chezmoi.os "linux" }}
+{{ else if .is_linux }}
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 {{- end }}
+
+# https://github.com/racer-rust/emacs-racer#installation
+rustup toolchain add nightly
+rustup component add rust-src
+cargo +nightly install racer
 
 echo "Installing: starship ********************"
 sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes

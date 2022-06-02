@@ -1,3 +1,50 @@
+{{/* os & arch */}}
+{{- $is_linux := false -}}
+{{- $is_mac := false -}}
+{{- $is_unix := false -}}
+{{- $is_windows := false -}}
+{{- $is_apple_silicon := false -}}
+
+{{- if eq .chezmoi.os "linux" -}}
+{{-   $is_linux = true -}}
+{{- end -}}
+
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $is_mac = true -}}
+{{-   if eq .chezmoi.arch "arm64" -}}
+{{-     $is_apple_silicon = true -}}
+{{-   end -}}
+{{- end -}}
+
+{{- if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") -}}
+{{-   $is_unix = true -}}
+{{- end -}}
+
+{{- if eq .chezmoi.os "windows" -}}
+{{-   $is_windows = true -}}
+{{- end -}}
+
+{{/* with */}}
+{{- $with_aws := false -}}
+{{- $with_docker := false -}}
+{{- $with_golang := false -}}
+{{- $with_javascript := false -}}
+{{- $with_packer := false -}}
+{{- $with_php := false -}}
+{{- $with_terraform := false -}}
+
+{{/* project */}}
+{{- $project_personal := false -}}
+
+{{- if $project_personal -}}
+{{-   $with_aws = true -}}
+{{-   $with_docker = true -}}
+{{-   $with_golang = true -}}
+{{-   $with_javascript = true -}}
+{{-   $with_packer = true -}}
+{{-   $with_php = false -}}
+{{- end -}}
+
 {{/* boolean feature tags */}}
 {{- $docker := true -}}{{/* true if this machine should have Docker installed */}}
 {{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
@@ -31,6 +78,18 @@
 
 encryption = "gpg"
 [data]
+    is_apple_silicon = {{ $is_apple_silicon }}
+    is_linux = {{ $is_linux }}
+    is_mac = {{ $is_mac }}
+    is_unix = {{ $is_unix }}
+    is_windows = {{ $is_windows }}
+    with_golang = {{ $with_golang }}
+    with_docker = {{ $with_docker }}
+    with_terraform = {{ $with_terraform }}
+    with_aws = {{ $with_aws }}
+    with_javascript = {{ $with_javascript }}
+    project_personal = {{ $project_personal }}
+
     docker = {{ $docker }}
     ephemeral = {{ $ephemeral }}
     headless = {{ $headless }}
