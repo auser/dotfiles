@@ -26,7 +26,6 @@
     "tldr"
     "tmux"
     "tree"
-    "neovim"
     "vim"
     "wget"
     "z"
@@ -38,7 +37,6 @@
     "1password-cli"
     "gpg-suite"
     "insomnia"
-    "iterm2"
     "slack"
     "visual-studio-code"
 -}}
@@ -67,11 +65,9 @@
 
 set -eufo pipefail
 
-export HOMEBREW_CASK_OPTS="--appdir=${HOME}/Applications --fontdir=${HOME}/Library/Fonts --no-binaries"
-export HOMEBREW_NO_ANALYTICS=1
-export HOMEBREW_NO_INSECURE_REDIRECT=1
-
-echo $PATH
+#export HOMEBREW_CASK_OPTS="--appdir=${HOME}/Applications --fontdir=${HOME}/Library/Fonts --no-binaries"
+#export HOMEBREW_NO_ANALYTICS=1
+#export HOMEBREW_NO_INSECURE_REDIRECT=1
 
 brew update
 brew upgrade

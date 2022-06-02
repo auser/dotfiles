@@ -12,7 +12,8 @@ if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init --path)"
 fi
 
-# export PATH=$PATH:~/.emacs.d/bin
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH=$PATH:~/.emacs.d/bin
 export PATH=$PATH:~/.dotfiles/bin # Scripts & utilities
 export PATH=$PATH:~/.cargo/bin # Rust
 export GOPATH="$(go env GOPATH)" # Go
