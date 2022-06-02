@@ -29,6 +29,7 @@
 {{-   $ephemeral = true -}}
 {{- end -}}
 
+encryption = "gpg"
 [data]
     docker = {{ $docker }}
     ephemeral = {{ $ephemeral }}
@@ -40,3 +41,6 @@
     email = {{ $email | quote }}
 [onepassword]
     command = "op"
+    prompt = false
+[gpg]
+    symmetric = true
