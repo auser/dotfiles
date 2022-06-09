@@ -382,6 +382,8 @@ set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @continuum-restore 'on'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-logging'
+set -g @continuum-boot 'on
+set -g @continuum-boot-options 'iterm'
 
 run '~/.tmux/plugins/tpm/tpm'
 
