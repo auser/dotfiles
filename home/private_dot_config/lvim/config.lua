@@ -69,7 +69,7 @@ lvim.builtin.treesitter.ensure_installed = {
   "c",
   "javascript",
   "json",
-  "golang",
+  "go",
   "lua",
   "python",
   "typescript",
@@ -86,7 +86,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- generic LSP settings
 
 -- ---@usage disable automatic installation of servers
--- lvim.lsp.automatic_servers_installation = false
+lvim.lsp.automatic_servers_installation = true
 
 -- ---configure a server manually. !!Requires `:LvimCacheReset` to take effect!!
 -- ---see the full default list `:lua print(vim.inspect(lvim.lsp.automatic_configuration.skipped_servers))`
@@ -154,7 +154,8 @@ lvim.plugins = {
   { "dense-analysis/ale" },
   { "AndrewRadev/tagalong.vim" },
   { "tpope/vim-surround", keys = { "c", "d", "y" } },
-
+  { "wannesm/wmgraphviz.vim" },
+  { "pantharshit00/vim-prisma" },
 }
 
 -- Style
