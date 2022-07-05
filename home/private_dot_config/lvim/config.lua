@@ -151,7 +151,6 @@ lvim.plugins = {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
   },
-  { "dense-analysis/ale" },
   { "AndrewRadev/tagalong.vim" },
   { "tpope/vim-surround", keys = { "c", "d", "y" } },
   { "wannesm/wmgraphviz.vim" },
