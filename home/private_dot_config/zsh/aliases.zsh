@@ -315,8 +315,6 @@ alias emacs='/opt/homebrew/opt/emacs-mac/Emacs.app/Contents/MacOS/Emacs -nw  "$@
 alias emacsclient='/Applications/MacPorts/Emacs.app/Contents/MacOS/bin/emacsclient'
 
 
-
-
 # Ruby
 alias be="bundle exec"
 
@@ -331,3 +329,8 @@ alias mux='pgrep -vx tmux > /dev/null && \
 		tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh && \
 		tmux kill-session -t delete-me && \
 		tmux attach || tmux attach'
+
+{{ if .is_mac -}}
+alias clean_desktop='defaults write com.apple.finder CreateDesktop -bool false && killall Finder'
+alias show_desktop='defaults write com.apple.finder CreateDesktop true && killall Finder'
+{{- end -}}
