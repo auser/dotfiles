@@ -330,7 +330,8 @@ alias mux='pgrep -vx tmux > /dev/null && \
 		tmux kill-session -t delete-me && \
 		tmux attach || tmux attach'
 
-{{ if .is_mac -}}
+{{ if .is_mac }}
 alias clean_desktop='defaults write com.apple.finder CreateDesktop -bool false && killall Finder'
 alias show_desktop='defaults write com.apple.finder CreateDesktop true && killall Finder'
-{{- end -}}
+{{ end }}
+
