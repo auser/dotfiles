@@ -155,6 +155,7 @@ lvim.plugins = {
   { "tpope/vim-surround", keys = { "c", "d", "y" } },
   { "wannesm/wmgraphviz.vim" },
   { "pantharshit00/vim-prisma" },
+  { "github/copilot.vim" }
 }
 
 -- Style
