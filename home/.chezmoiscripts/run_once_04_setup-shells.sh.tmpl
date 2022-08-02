@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Setup fish
+{{- if .is_linux }}
+echo /usr/local/bin/fish | sudo tee -a /etc/shells
+chsh -s /usr/local/bin/fish
+{{ else if .is_mac }}
+echo "/opt/homebrew/bin/fish" sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/fish
+{{ end -}}
