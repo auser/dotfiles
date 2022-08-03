@@ -31,5 +31,7 @@ set -g fish_color_valid_path --underline
 set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
 set -g fish_complete_path $fish_complete_path /opt/homebrew/share/fish/vendor_completions.d
 
+set -Ux fifc_editor "nvim"
+
 # Install Starship
 starship init fish | source
