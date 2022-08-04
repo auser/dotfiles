@@ -33,5 +33,13 @@ set -g fish_complete_path $fish_complete_path /opt/homebrew/share/fish/vendor_co
 
 set -Ux fifc_editor "nvim"
 
+# Conda
+#conda init fish
+
 # Install Starship
 starship init fish | source
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+eval /opt/homebrew/Caskroom/miniconda/base/bin/conda "shell.fish" "hook" $argv | source
+# <<< conda initialize <<<
