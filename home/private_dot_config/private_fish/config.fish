@@ -29,6 +29,7 @@ set -g fish_color_valid_path --underline
 
 # https://gist.github.com/gagarine/cf3f65f9be6aa0e105b184376f765262
 set -U fish_user_paths /opt/homebrew/bin $fish_user_paths
+set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 set -g fish_complete_path $fish_complete_path /opt/homebrew/share/fish/vendor_completions.d
 
 set -Ux fifc_editor "nvim"
