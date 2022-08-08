@@ -39,6 +39,7 @@ set -Ux fifc_editor "nvim"
 
 # Install Starship
 starship init fish | source
+set PATH /opt/homebrew/bin/ /usr/local/bin ./node_modules/.bin ./.venv/bin $PATH 
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
