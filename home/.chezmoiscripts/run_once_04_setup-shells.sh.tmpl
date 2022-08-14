@@ -4,7 +4,7 @@
 {{- if .is_linux }}
 sudo apt-get update -yq && sudo apt-get install fish -yq
 echo /bin/fish | sudo tee -a /etc/shells
-chsh -s /usr/local/bin/fish
+chsh -s /bin/fish
 {{ else if .is_mac }}
 brew install fish
 echo "/opt/homebrew/bin/fish" sudo tee -a /etc/shells
