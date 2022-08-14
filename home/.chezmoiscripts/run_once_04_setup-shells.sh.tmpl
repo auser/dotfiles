@@ -3,7 +3,7 @@
 # Setup fish
 {{- if .is_linux }}
 sudo apt-get update -yq && sudo apt-get install fish -yq
-echo /usr/local/bin/fish | sudo tee -a /etc/shells
+echo /bin/fish | sudo tee -a /etc/shells
 chsh -s /usr/local/bin/fish
 {{ else if .is_mac }}
 brew install fish
