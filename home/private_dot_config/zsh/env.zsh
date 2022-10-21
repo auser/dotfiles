@@ -13,6 +13,7 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 export PATH="/opt/homebrew/bin:$PATH"
+# export PATH="/$HOME/opt/miniconda3/bin:$PATH"
 export PATH=$PATH:~/.emacs.d/bin
 export PATH=$PATH:~/.dotfiles/bin # Scripts & utilities
 export PATH=$PATH:~/.cargo/bin # Rust

@@ -39,9 +39,14 @@ set -Ux fifc_editor "nvim"
 
 # Install Starship
 starship init fish | source
-set PATH /opt/homebrew/bin/ /usr/local/bin ./node_modules/.bin ./.venv/bin $PATH 
+set PATH ~/opt/miniconda3/condabin/bin /usr/local/bin ./node_modules/.bin ./.venv/bin $PATH
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-eval /opt/homebrew/Caskroom/miniconda/base/bin/conda "shell.fish" "hook" $argv | source
+eval /Users/auser/opt/miniconda3/bin/conda "shell.fish" "hook" $argv | source
 # <<< conda initialize <<<
+
+# pnpm
+set -gx PNPM_HOME "/Users/auser/Library/pnpm"
+set -gx PATH "$PNPM_HOME" $PATH
+# pnpm end
