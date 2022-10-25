@@ -1,0 +1,72 @@
+[character]
+success_symbol = "[❯](bold #FF69CC)"
+error_symbol = "[❯](bold #FF4566)"
+vicmd_symbol = "[❮](bold #FF69CC)"
+
+[directory]
+truncation_length = 1
+style = "bold bright-cyan"
+
+[cmd_duration]
+format = "[$duration]($style) "
+
+[time]
+disabled = true
+time_format = "%I:%M %p"
+
+# Change default symbol for some programming languages
+# Since default symbol is really ugly
+[aws]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[git_branch]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[package]
+symbol = " "
+disabled = true
+
+[php]
+symbol = " "
+
+[python]
+symbol = " "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[lua]
+symbol = " "
