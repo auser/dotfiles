@@ -1,1 +1,3 @@
-return { terminal_mappings = false }
+return {
+  terminal_mappings = false,
+}

@@ -1,20 +1,11 @@
-local cmp = require "cmp"
-local luasnip = require "luasnip"
-return {
-  mapping = {
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if luasnip.jumpable(1) then
-        luasnip.jump(1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-  },
-}
+local cmp_ok, cmp = pcall(require, "cmp")
+if cmp_ok then
+  return {
+    mapping = {
+      ["<C-j>"] = cmp.config.disable,
+      ["<C-k>"] = cmp.config.disable,
+    },
+  }
+else
+  return {}
+end

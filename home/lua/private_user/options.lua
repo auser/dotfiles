@@ -1,3 +1,4 @@
+-- Override default options
 return {
   opt = {
     conceallevel = 2, -- enable conceal
@@ -6,14 +7,11 @@ return {
     foldmethod = "expr",
     linebreak = true, -- linebreak soft wrap at words
     list = true, -- show whitespace characters
-    listchars = { tab = "│→", extends = "⟩", precedes = "⟨", trail = "·", nbsp = "␣" },
+    listchars = { tab = "│→", extends = "⟩", precedes = "⟨", trail = "·", nbsp = "␣", eol = "↲" },
     shortmess = vim.opt.shortmess + { I = true },
     showbreak = "↪ ",
-    spellfile = vim.fn.expand "~/.config/nvim/lua/user/spell/en.utf-8.add",
-    thesaurus = vim.fn.expand "~/.config/nvim/lua/user/spell/mthesaur.txt",
+    spellfile = "~/.config/nvim/lua/user/spell/en.utf-8.add",
+    thesaurus = "~/.config/nvim/lua/user/spell/mthesaur.txt",
     wrap = true, -- soft wrap lines
-  },
-  g = {
-    matchup_matchparen_deferred = 1,
   },
 }

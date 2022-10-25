@@ -12,6 +12,10 @@ if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init --path)"
 fi
 
+if command -v pyenv-virtualenv &>/dev/null; then
+    eval "$(pyenv virtualenv-init -)"
+fi
+
 export PATH="/opt/homebrew/bin:$PATH"
 # export PATH="/$HOME/opt/miniconda3/bin:$PATH"
 export PATH=$PATH:~/.emacs.d/bin

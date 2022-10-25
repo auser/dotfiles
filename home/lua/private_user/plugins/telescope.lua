@@ -36,7 +36,6 @@ return {
     },
   },
   extensions = {
-    bibtex = { context = true, context_fallback = false },
     media_files = {
       filetypes = { "png", "jpg", "mp4", "webm", "pdf" },
       find_cmd = "rg",
@@ -50,11 +49,6 @@ return {
           z = fb_actions.toggle_hidden,
         },
       },
-    },
-  },
-  pickers = {
-    find_files = {
-      hidden = true,
     },
   },
 }

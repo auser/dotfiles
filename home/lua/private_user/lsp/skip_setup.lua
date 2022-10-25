@@ -1,1 +1,3 @@
-return { "tsserver", "clangd" }
+return {
+  "rust_analyzer",
+}
