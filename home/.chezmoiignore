@@ -35,3 +35,5 @@ Documents
 .pypirc
 .psqlrc
 {{ end }}
+
+.local/share/nvim/
