@@ -411,3 +411,6 @@ run '~/.tmux/plugins/tpm/tpm'
 #
 # "$@"
 # # /!\ do not remove the previous line
+
+set -g default-command /opt/homebrew/bin/zsh
+set -g default-shell /opt/homebrew/bin/zsh
