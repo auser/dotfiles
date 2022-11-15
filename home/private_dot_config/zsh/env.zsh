@@ -16,7 +16,7 @@ if command -v pyenv-virtualenv &>/dev/null; then
     eval "$(pyenv virtualenv-init -)"
 fi
 
-export PATH="/opt/homebrew/bin:$PATH"
+
 # export PATH="/$HOME/opt/miniconda3/bin:$PATH"
 export PATH=$PATH:~/.emacs.d/bin
 export PATH=$PATH:~/.dotfiles/bin # Scripts & utilities
@@ -26,7 +26,7 @@ export PATH="$PATH:$GOPATH/bin" # Go
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 export PATH=$PATH:./node_modules/.bin
-
+export PATH="/opt/homebrew/bin:$PATH"
 
 # TODO: remove? ask on nix irc or nix darwin
 # . ~/.nix-profile/etc/profile.d/hm-session-vars.sh
