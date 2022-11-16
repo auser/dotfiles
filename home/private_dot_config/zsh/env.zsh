@@ -26,7 +26,7 @@ export PATH="$PATH:$GOPATH/bin" # Go
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 export PATH=$PATH:./node_modules/.bin
-export PATH="/opt/homebrew/bin:$PATH"
+export PATH="$PATH:/opt/homebrew/bin"
 
 # TODO: remove? ask on nix irc or nix darwin
 # . ~/.nix-profile/etc/profile.d/hm-session-vars.sh
