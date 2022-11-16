@@ -2,7 +2,7 @@
 
 # Base PATH
 export PATH=/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin:./node_modules/bin:./node_modules/.bin:./bin:$PATH
-
+export GOPATH="$(go env GOPATH)" # Go
 # Conditional PATH additions
 for path_candidate in /opt/local/sbin \
   ~/.toolbox/bin \
@@ -12,7 +12,12 @@ for path_candidate in /opt/local/sbin \
   ~/Library/Python/3.8/lib/python/site-packages \
   /opt/homebrew/Caskroom/miniconda/base/lib/python3.9/site-packages \
   ~/.cabal/bin \
+  ~/.emacs.d/bin \
+  ~/.dotfiles/bin \
   ~/.cargo/bin \
+  $GOPATH/bin \
+  $HOME/.yarn/bin \
+  $HOME/.config/yarn/global/node_modules/.bin \
   ~/.rbenv/bin \
   ~/.node/bin \
   ~/.local/bin \
@@ -32,7 +37,8 @@ for path_candidate in /opt/local/sbin \
   $HOME/.bin \
   /usr/local/bin \
   $HOME/src/gocode/bin \
-  /Applications/Postgres.app/Contents/Versions/9.4/bin
+  /Applications/Postgres.app/Contents/Versions/9.4/bin \
+  /opt/homebrew/bin
 do
   if [ -d ${path_candidate} ]; then
     export PATH=${PATH}:${path_candidate}
@@ -57,5 +63,9 @@ dedupe_path() {
 
   export PATH=${(j+:+)result}
 }
+
+has_direnv() { if [[ -n $DIRENV_DIFF ]]; then echo in direnv; else echo not; fi }
+
+typeset -U PATH # Remove duplicates in $PATH
 
 autoload bashcompinit
