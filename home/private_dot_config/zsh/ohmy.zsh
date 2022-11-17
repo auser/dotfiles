@@ -26,6 +26,5 @@ plugins=(
 )
 
 zstyle ':omz:update' mode auto      # update automatically without asking
-ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
