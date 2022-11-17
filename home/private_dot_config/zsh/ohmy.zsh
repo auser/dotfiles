@@ -20,9 +20,9 @@ plugins=(
     macos
     npm
     colored-man-pages
-    # zsh-syntax-highlighting
-    # zsh-autosuggestions
-    # zsh-completions
+    zsh-syntax-highlighting
+    zsh-autosuggestions
+    zsh-completions
 )
 
 zstyle ':omz:update' mode auto      # update automatically without asking

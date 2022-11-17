@@ -1,7 +1,6 @@
 # path, the 0 in the filename causes this to load first
 
 # Base PATH
-export PATH=/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin:./node_modules/bin:./node_modules/.bin:./bin:$PATH
 export GOPATH="$(go env GOPATH)" # Go
 # Conditional PATH additions
 for path_candidate in /opt/local/sbin \
@@ -35,15 +34,21 @@ for path_candidate in /opt/local/sbin \
   $HOME/.dotfiles/bin \
   $HOME/bin \
   $HOME/.bin \
-  /usr/local/bin \
   $HOME/src/gocode/bin \
   /Applications/Postgres.app/Contents/Versions/9.4/bin \
-  /opt/homebrew/bin
+  /opt/homebrew/bin \
+  /usr/local/bin \
+  /usr/local/sbin \
+  /sbin \
+  /usr/sbin \
+  /bin \
+  /usr/bin
 do
   if [ -d ${path_candidate} ]; then
     export PATH=${PATH}:${path_candidate}
   fi
 done
+export PATH=$PATH:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin:./node_modules/bin:./node_modules/.bin:./bin
 
 # In case a plugin adds a redundant path entry, remove duplicate entries
 # from PATH
