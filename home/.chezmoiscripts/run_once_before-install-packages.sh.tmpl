@@ -145,14 +145,6 @@ mv nvim.appimage /usr/local/bin/nvm
 nvm install 16
 nvm alias default 16
 
-echo "Installing: lunarvim ******************"
-{{ if (eq .chezmoi.os "linux" "darwin") }}
-wget -O /tmp/install_lvim.sh https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh
-chmod u+x /tmp/install_lvim.sh
-DISPLAY= 
-/tmp/install_lvim.sh -y
-{{ end -}}
-
 echo "Installing nerd fonts ****************"
 {{ if (eq .chezmoi.os "darwin") }}
 git clone https://github.com/ronniedroid/getnf.git /tmp/getnf
