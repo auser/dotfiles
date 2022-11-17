@@ -3,8 +3,8 @@
 # GOLANG
 #######################################################################
 
-export GOPATH="$HOME/go"; export GOROOT="$HOME/.go"; export PATH="$GOPATH/bin:$PATH"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
-alias gogo="$GOPATH/bin/g"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
+#export GOPATH="$HOME/go"; export GOROOT="$HOME/.go"; export PATH="$GOPATH/bin:$PATH"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
+#alias gogo="$GOPATH/bin/g"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
 # g-install: do NOT edit, see https://github.com/stefanmaric/g
 
 #######################################################################
@@ -26,29 +26,20 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-if which pyenv-virtualenv-init > /dev/null; then
-  eval "$(pyenv virtualenv-init -)";
-fi
-
-#######################################################################
-# Python poetry
-#######################################################################
-[ -f $HOME/.poetry/env ] && source $HOME/.poetry/env
-
 #######################################################################
 # RUST
 #######################################################################
-autoload -U is-at-least
+#autoload -U is-at-least
 
 #######################################################################
 # FLUTTER
 #######################################################################
-export PATH=/home/auser/Development/flutter/mine/flutter/bin:$PATH
+#export PATH=/home/auser/Development/flutter/mine/flutter/bin:$PATH
 
 #######################################################################
 # ELIXIR
 #######################################################################
-export PATH=$HOME/.mix/escripts:$PATH
+#export PATH=$HOME/.mix/escripts:$PATH
 
 #######################################################################
 # NODE
@@ -65,20 +56,9 @@ export PNPM_HOME="/home/drew/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
 # compinstall
-zstyle :compinstall filename "$HOME/.zshrc"
-autoload -Uz compinit
-compinit
-
-
-function change_node_version {
-	nvmrc="./.node-version"
-	if [ -f "$nvmrc" ]; then
-		version="$(cat "$nvmrc")"
-    nvm use $version
-	fi
-}
-
-chpwd_functions=(change_node_version)
+#zstyle :compinstall filename "$HOME/.zshrc"
+#autoload -Uz compinit
+#compinit
 
 #######################################################################
 # NIX
@@ -88,8 +68,8 @@ chpwd_functions=(change_node_version)
 #######################################################################
 # WASMER
 #######################################################################
-export WASMER_DIR="/home/auser/.wasmer"
-[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+#export WASMER_DIR="/home/auser/.wasmer"
+#[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
 
 #######################################################################
 # NODE
@@ -103,8 +83,8 @@ export ANDROID_SDK=$ANDROID
 export PATH=$ANDROID_SDK:$PATH
 
 # Flutter
-export FLUTTER=$HOME/work/android/flutter
-export PATH=$FLUTTER/bin:$PATH
+# export FLUTTER=$HOME/work/android/flutter
+# export PATH=$FLUTTER/bin:$PATH
 
 export JAVA_HOME=$(/usr/libexec/java_home)
 export ANDROID_HOME=$HOME/Library/Android/sdk
