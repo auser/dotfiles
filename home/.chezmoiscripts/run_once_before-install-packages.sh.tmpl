@@ -65,13 +65,13 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-## Install pyenv
+## Install miniforge
 {{ if eq .chezmoi.os "darwin" }}
-brew install pyenv
+brew install miniforge
 {{ end -}}
 
 ## Install poetry
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
+# curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
 
 ## Install starship
 {{ if eq .chezmoi.os "darwin" }}
@@ -87,14 +87,14 @@ curl -L git.io/antigen > ~/.config/zsh/antigen.zsh
 
 ## Installing rust
 {{ if .is_mac -}}
- ## Install rust
- brew install fish
+## Install rust
 {{ else if .is_linux }}
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 {{- end }}
 
 ## Install fisher
-curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+# brew install fish
+# curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
 
 # https://github.com/racer-rust/emacs-racer#installation
 rustup toolchain add nightly

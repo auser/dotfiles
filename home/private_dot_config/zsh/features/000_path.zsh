@@ -36,7 +36,6 @@ for path_candidate in /opt/local/sbin \
   $HOME/.bin \
   $HOME/src/gocode/bin \
   /Applications/Postgres.app/Contents/Versions/9.4/bin \
-  /opt/homebrew/bin \
   /usr/local/bin \
   /usr/local/sbin \
   /sbin \

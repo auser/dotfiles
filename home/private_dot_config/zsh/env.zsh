@@ -5,16 +5,16 @@ export EDITOR='nvim'
 export SUDO_EDITOR='nvim'
 
 # PATH
-if command -v pyenv 1>/dev/null 2>&1; then
-    export PATH="~/.pyenv/bin:$PATH"
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init --path)"
-fi
+# if command -v pyenv 1>/dev/null 2>&1; then
+#     export PATH="~/.pyenv/bin:$PATH"
+#     export PYENV_ROOT="$HOME/.pyenv"
+#     export PATH="$PYENV_ROOT/bin:$PATH"
+#     eval "$(pyenv init --path)"
+# fi
 
-if command -v pyenv-virtualenv &>/dev/null; then
-    eval "$(pyenv virtualenv-init -)"
-fi
+# if command -v pyenv-virtualenv &>/dev/null; then
+#     eval "$(pyenv virtualenv-init -)"
+# fi
 
 
 export NVM_DIR="$HOME/.nvm"

@@ -23,7 +23,7 @@ plugins=(
     kubectl
     minikube
     microk8s
-    pyenv
+    # pyenv
     python
     # zsh-syntax-highlighting
     # zsh-autosuggestions
