@@ -23,3 +23,6 @@ export NVM_DIR="$HOME/.nvm"
 
 export PNPM_HOME="/Users/auser/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+
+# ASDF
+. $(brew --prefix asdf)/libexec/asdf.sh
