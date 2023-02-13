@@ -544,6 +544,7 @@ antigen () {
 
   PATH="$PATH:${location:A:h}"
   fpath+=("${location:A:h}")
+  fpath+=~/.zfunc
 }
 
 -antigen-load-source () {
