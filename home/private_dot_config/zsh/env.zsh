@@ -26,6 +26,7 @@ eval "$(nodenv init -)"
 
 export PNPM_HOME="/Users/auser/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+export PATH=~/.mix/escripts:$PATH
 
 # ASDF
 . $(brew --prefix asdf)/libexec/asdf.sh

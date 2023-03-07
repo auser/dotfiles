@@ -225,6 +225,7 @@ local config = {
       -- Add plugins, the packer syntax without the "use"
       { "github/copilot.vim" },
       { 'RaafatTurki/hex.nvim' },
+      { "0xStabby/chatgpt-vim" },
 
       -- { "andweeb/presence.nvim" },
       -- {
