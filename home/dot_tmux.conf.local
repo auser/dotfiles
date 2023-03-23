@@ -344,8 +344,8 @@ set -g history-limit 10000
 #set -g prefix C-a
 #bind C-a send-prefix
 
-bindkey "\e[1;3C" forward-word
-bindkey "\e[1;3D" backward-word
+bind-key "\e[1;3C" forward-word
+bind-key "\e[1;3D" backward-word
 
 # move status line to top
 #set -g status-position top

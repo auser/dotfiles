@@ -99,6 +99,9 @@ alias wfl='alfred link'
 alias wfa='alfred pack -o ~/Desktop'
 alias ws='workflow-install -s workflow' # Symlink `source` directory
 
+# Login to AWS ECR
+alias ecrlogin='aws ecr get-login-password --region us-east-1 --profile ethtrust-dev | docker login --username AWS --password-stdin '
+
 # Docker
 alias c='docker'
 alias cs='docker ps'
