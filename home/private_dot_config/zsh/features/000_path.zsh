@@ -48,6 +48,7 @@ do
   fi
 done
 export PATH=$PATH:/usr/local/sbin:/sbin:/usr/sbin:/bin:/usr/bin:./node_modules/bin:./node_modules/.bin:./bin
+export PATH=/Users/auser/.local/share/ponyup/bin:$PATH
 
 # In case a plugin adds a redundant path entry, remove duplicate entries
 # from PATH

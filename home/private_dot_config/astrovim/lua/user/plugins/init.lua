@@ -56,6 +56,7 @@ return {
     "github/copilot.vim",
     enabled = true
   },
+  { 'codota/tabnine-nvim', build = "./dl_binaries.sh" },
   {
     "karb94/neoscroll.nvim",
     init = function() table.insert(astronvim.file_plugins, "neoscroll.nvim") end,
