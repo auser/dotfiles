@@ -6,6 +6,7 @@ export GOPATH="$(go env GOPATH)" # Go
 for path_candidate in /opt/local/sbin \
   ~/.toolbox/bin \
   /Applications/Xcode.app/Contents/Developer/usr/bin \
+  ~/Library/Android/sdk/cmdline-tools/latest/bin \
   /opt/local/bin \
   /usr/local/share/npm/bin \
   ~/Library/Python/3.8/lib/python/site-packages \
