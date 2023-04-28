@@ -28,6 +28,7 @@ for path_candidate in /opt/local/sbin \
   ~/bin \
   ~/.composer/vendor/bin \
   $HOME/anaconda3/bin \
+  $HOME/.mambaforge3/bin \
   $HOME/.bin \
   $HOME/go/bin \
   $HOME/.gvm/go/bin \
