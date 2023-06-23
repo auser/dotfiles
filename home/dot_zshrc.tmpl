@@ -18,6 +18,7 @@ source $HOME/.config/zsh/aliases.zsh
 
 source $HOME/.config/zsh/features/antigen_setup.zsh
 
+eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
 
 
@@ -39,3 +40,4 @@ autoload -U compinit; compinit
 
 source $HOME/.config/zsh/features/conda.zsh
 source $HOME/.config/zsh/features/kubernate.zsh
+source $HOME/.config/op/plugins.sh
