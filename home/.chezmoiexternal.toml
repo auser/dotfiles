@@ -12,13 +12,13 @@
     url = "https://github.com/spaceship-prompt/spaceship-prompt.git"
     refreshPeriod = "168h"
     
-[".local/share/nvim/site/pack/nvim-lspconfig/opt/nvim-lspconfig"]
-    type = "git-repo"
-    url = "https://github.com/neovim/nvim-lspconfig.git"
-    refreshPeriod = "168h"
+# [".local/share/nvim/site/pack/nvim-lspconfig/opt/nvim-lspconfig"]
+#     type = "git-repo"
+#     url = "https://github.com/neovim/nvim-lspconfig.git"
+#     refreshPeriod = "168h"
     
-[".config/nvim"]
-    type = "git-repo"
-    refreshPeriod = "168h"
-    url = "https://github.com/AstroNvim/AstroNvim.git"
-    exclude = ["nvim/lua/user"]
+# [".config/nvim"]
+#     type = "git-repo"
+#     refreshPeriod = "168h"
+#     url = "https://github.com/AstroNvim/AstroNvim.git"
+#     exclude = ["nvim/lua/user"]
