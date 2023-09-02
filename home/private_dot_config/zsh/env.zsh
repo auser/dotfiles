@@ -22,7 +22,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # place this after nvm initialization!
-eval "$(nodenv init -)"
+#eval "$(nodenv init -)"
 
 export PNPM_HOME="/Users/auser/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
