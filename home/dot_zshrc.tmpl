@@ -32,7 +32,7 @@ export PATH=$PATH:/opt/homebrew/bin
 
 source $HOME/.config/zsh/features/conda.zsh
 source $HOME/.config/zsh/features/kubernate.zsh
-source $HOME/.config/op/plugins.sh
+[[ ! -f $HOME/.config/op/plugins.sh ]] || $HOME/.config/op/plugins.sh
 
 eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
