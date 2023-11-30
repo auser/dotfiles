@@ -29,4 +29,8 @@ export PATH="$PNPM_HOME:$PATH"
 export PATH=~/.mix/escripts:$PATH
 
 # ASDF
-. $(brew --prefix asdf)/libexec/asdf.sh
+# . $(brew --prefix asdf)/libexec/asdf.sh
+
+# RTX
+# eval "$(brew --prefix rtx) activate zsh"
+eval "$(rtx activate zsh)"
