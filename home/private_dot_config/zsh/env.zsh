@@ -34,3 +34,6 @@ export PATH=~/.mix/escripts:$PATH
 # RTX
 # eval "$(brew --prefix rtx) activate zsh"
 # eval "$(rtx activate zsh)"
+
+# mise
+eval "$(~/.local/bin/mise activate zsh)"
