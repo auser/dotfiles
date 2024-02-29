@@ -114,6 +114,9 @@ alias cu='docker-compose up'
 # alias csq='docker ps -q'
 # alias csa='docker ps -a'
 # alias ck='docker kill'
+alias docker_clean_images='docker rmi $(docker images -a -q)'
+alias docker_clean_ps='docker rm $(docker ps --filter=status=exited --filter=status=created -q)'
+
 
 # Kubernetes
 alias k='kubectl'
