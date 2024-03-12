@@ -103,6 +103,11 @@ export TOOLCHAIN_PATH=${HOME}/toolchain_bin
 export IDF_TOOLS_PATH=${TOOLCHAIN_PATH}/esp32
 {{- end }}
 
+# Features
+source $HOME/.config/zsh/features/00_path.zsh
+source $HOME/.config/zsh/features/mise.zsh
+
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
