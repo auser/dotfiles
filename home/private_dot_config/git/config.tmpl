@@ -1,8 +1,7 @@
 [user]
-	name = Tom Payne
-	email = {{ .email }}
+	name = Ari
+	email = {{ .email | quote }}
 [advice]
-	addEmptyPathspec = false
 	pushNonFastForward = false
 	statusHints = false
 [alias]
@@ -17,6 +16,7 @@
 	cane = commit --amend --no-edit
 	cf = commit --fixup
 	cm = commit --message
+  ci = commit
 	co = checkout
 	cob = checkout -b
 	com = checkout master
@@ -25,14 +25,15 @@
 	dc = diff --cached
 	dom = diff origin/master
 	fo = fetch origin
-	fu = "!git log -n 16 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
 	g = grep --line-number
 	mbhom = merge-base HEAD origin/master
 	mff = merge --ff-only
 	ol = log --pretty=oneline
 	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	p = push
-	pf = push --force-with-lease
+	all = "!f() { ls -R -d */.git | xargs -I{} bash -c \"echo {} && git -C {}/../ $1\"; }; f"
+  ph = push origin HEAD
+	pf = push --force
 	prb = pull --rebase
 	r = restore
 	ra = rebase --abort
@@ -42,7 +43,7 @@
 	riom = rebase --interactive origin/master
 	rpo = remote prune origin
 	s = status -sb
-	sh = "!git log -n 16 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git show"
+  st = status
 	ss = commit --message snapshot --no-gpg-sign
 	su = submodule update
 	wd = diff --patience --word-diff
@@ -56,7 +57,8 @@
 [color]
 	ui = auto
 [core]
-	editor = nvim
+	editor = vim
+	excludesfile = ~/.config/git/ignore
 	whitespace = trailing-space,space-before-tab
 [diff]
 	algorithm = histogram
@@ -72,7 +74,7 @@
 	required = true
 [gitget]
 	root = ~/src
-{{ if .personal -}}
+{{ if or .personal -}}
 [http]
 	cookiefile = ~/.config/git/cookies
 {{ end -}}
@@ -88,27 +90,10 @@
 	autostash = true
 [receive]
 	fsckobjects = true
-{{ if eq .chezmoi.os "windows" -}}
-[safe]
-	directory = {{ .chezmoi.workingTree }}
-{{ end -}}
 [status]
 	submoduleSummary = true
 [transfer]
 	fsckobjects = true
 [trim]
-	bases = master,gh-pages
-{{- if .personal }}
-[url "git@github.com:chezmoi/"]
-	insteadOf = https://github.com/chezmoi/
-[url "git@github.com:twpayne/"]
-	insteadOf = https://github.com/twpayne/
-{{- end }}
-{{- $ghPath := lookPath "gh" }}
-{{- if $ghPath }}
-[credential "https://github.com"]
-	helper = !{{ $ghPath }} auth git-credential
-[credential "https://gist.github.com"]
-	helper = !{{ $ghPath }} auth git-credential
-{{- end }}
+	bases = main,gh-pages
 {{/* vim: set filetype=gitconfig: */}}
