@@ -1,0 +1,72 @@
+[".config/nvim/pack/twpayne/start/vim-igc"]
+    type = "git-repo"
+    url = "http://github.com/twpayne/vim-igc.git/"
+    refreshPeriod = "168h"
+[".oh-my-zsh"]
+    type = "archive"
+    url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+[".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
+    type = "archive"
+    url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+{{- $powerlevel10kVersionTag := (gitHubLatestRelease "romkatv/powerlevel10k").TagName }}
+[".oh-my-zsh/custom/themes/powerlevel10k"]
+    type = "archive"
+    url = "https://github.com/romkatv/powerlevel10k/archive/{{ $powerlevel10kVersionTag }}.tar.gz"
+    exact = true
+    stripComponents = 1
+{{- if eq .osid "linux-ubuntu" }}
+[".local/bin/nvim"]
+    type = "file"
+    url = "https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
+    refreshPeriod = "672h"
+    executable = true
+{{- $ezaVersionTag := (gitHubLatestRelease "eza-community/eza").TagName }}
+[".local/bin/eza"]
+    type = "archive-file"
+    url = "https://github.com/eza-community/eza/releases/download/{{ $ezaVersionTag }}/eza_x86_64-unknown-linux-gnu.tar.gz"
+    executable = true
+    path = "./eza"
+{{- $gduVersionTag := (gitHubLatestRelease "dundee/gdu").TagName }}
+[".local/bin/gdu"]
+    type = "archive-file"
+    url = "https://github.com/dundee/gdu/releases/download/{{ $gduVersionTag }}/gdu_linux_amd64.tgz"
+    executable = true
+    path = "gdu_linux_amd64"
+{{- end }}
+{{- if and (eq .chezmoi.os "linux") .personal (not .ephemeral) }}
+{{- $ageVersionTag := (gitHubLatestRelease "FiloSottile/age").TagName }}
+[".local/bin/age"]
+    type = "archive-file"
+    url = "https://github.com/FiloSottile/age/releases/download/{{ $ageVersionTag }}/age-{{ $ageVersionTag }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
+    executable = true
+    path = "age/age"
+[".local/bin/age-keygen"]
+    type = "archive-file"
+    url = "https://github.com/FiloSottile/age/releases/download/{{ $ageVersionTag }}/age-{{ $ageVersionTag }}-{{ .chezmoi.os }}-{{ .chezmoi.arch }}.tar.gz"
+    executable = true
+    path = "age/age-keygen"
+{{- end }}
+{{- if and (not .ephemeral) (not .headless) }}
+{{-   $fontDir := "" }}
+{{-   if eq .chezmoi.os "darwin" }}
+{{-     $fontDir = "Library/Fonts" }}
+{{-   else if eq .chezmoi.os "linux" }}
+{{-     $fontDir = ".local/share/fonts" }}
+{{-   end }}
+{{-   range (list
+        "MesloLGS NF Regular.ttf"
+        "MesloLGS NF Bold.ttf"
+        "MesloLGS NF Italic.ttf"
+        "MesloLGS NF Bold Italic.ttf") }}
+["{{ $fontDir }}/{{ . }}"]
+    type = "file"
+    url = "https://github.com/romkatv/powerlevel10k-media/raw/master/{{ . }}"
+    refreshPeriod = "168h"
+{{-   end }}
+{{- end }}
