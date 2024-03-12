@@ -378,40 +378,34 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 
 # to enable a plugin, use the 'set -g @plugin' syntax:
 # visit https://github.com/tmux-plugins for available plugins
-set -g @plugin 'tmux-plugins/tmux-copycat'
-set -g @plugin 'tmux-plugins/tmux-cpu'
+# set -g @plugin 'tmux-plugins/tmux-copycat'
+# set -g @plugin 'tmux-plugins/tmux-cpu'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'tmux-plugins/tmux-yank'
-set -g @plugin 'tmux-plugins/tmux-logging'
-set -g @plugin 'fcsonline/tmux-thumbs'
-set -g @plugin 'christoomey/vim-tmux-navigator'
-set -g @plugin 'jimeh/tmux-themepack'
-set -g @plugin 'sainnhe/tmux-fzf'
-set -g @plugin 'wfxr/tmux-fzf-url'
-set -g @plugin 'omerxx/catppuccin-tmux' # My fork that holds the meetings script bc I'm lazy af
-set -g @plugin 'omerxx/tmux-sessionx'
+# set -g @plugin 'tmux-plugins/tmux-logging'
+# set -g @plugin 'fcsonline/tmux-thumbs'
+# set -g @plugin 'christoomey/vim-tmux-navigator'
+# set -g @plugin 'jimeh/tmux-themepack'
+# set -g @plugin 'sainnhe/tmux-fzf'
+# set -g @plugin 'wfxr/tmux-fzf-url'
+# set -g @plugin 'omerxx/catppuccin-tmux' # My fork that holds the meetings script bc I'm lazy af
+# set -g @plugin 'omerxx/tmux-sessionx'
 
-set -g @continuum-boot 'on'
-set -g @continuum-boot-options 'iterm'
+# set -g @continuum-boot 'on'
+# set -g @continuum-boot-options 'iterm'
 
-set -g @sessionx-bind 'o'
-set -g @sessionx-x-path '~/dotfiles'
-set -g @sessionx-window-height '85%'
-set -g @sessionx-window-width '75%'
-set -g @sessionx-zoxide-mode 'on'
+# set -g @sessionx-bind 'o'
+# set -g @sessionx-x-path '~/dotfiles'
+# set -g @sessionx-window-height '85%'
+# set -g @sessionx-window-width '75%'
+# set -g @sessionx-zoxide-mode 'on'
 set -g @continuum-restore 'on'
-
-
-
-
 
 set -g @themepack 'powerline/default/cyan'
 
 set -g @resurrect-capture-pane-contents 'on'
 set -g @continuum-restore 'on'
-
-run '~/.tmux/plugins/tpm/tpm'
 
 # -- custom variables ----------------------------------------------------------
 
