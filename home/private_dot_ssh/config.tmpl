@@ -9,11 +9,6 @@ Host *
 
 Host github.com
   User git
-
-Host legion
-  ForwardAgent yes
-  User twp
-
-{{- if .flarm }}
-{{ onepasswordRead "op://FLARM/SSH Config/notesPlain" .onepasswordAccount }}
-{{- end }}
+  Hostname github.com
+  PreferredAuthentications publickey
+  IdentityFile /Users/auser/.ssh/id_ed25519
