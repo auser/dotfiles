@@ -92,12 +92,7 @@ alias lic='legit'
 # Python
 alias p='python3'
 alias p2='python2'
-
-# Alfred
-alias wf='alfred build'
-alias wfl='alfred link'
-alias wfa='alfred pack -o ~/Desktop'
-alias ws='workflow-install -s workflow' # Symlink `source` directory
+alias po='poetry'
 
 # Login to AWS ECR
 alias ecrlogin='aws ecr get-login-password --region us-east-1 --profile ethtrust-dev | docker login --username AWS --password-stdin '
@@ -157,6 +152,13 @@ alias yr='yarn run'
 alias yre='npm remove'
 alias ys='yarn start'
 alias ydev='yarn run dev'
+
+# Pnpm
+alias pn='pnpm'
+alias pni='pnpm install'
+
+# rust
+alias ru='rustup'
 
 # Go
 alias o='go'
@@ -248,14 +250,11 @@ alias essh='nvim ~/.ssh/config' # ssh config
 alias ez='nvim ~/.zshrc'
 
 # cd places
-alias doc='cd ~/Documents/'
 alias ds='cd ~/.ssh'
-alias dr='cd ~/src/alfred'
 alias dz='cd ~/.dotfiles'
 alias de='cd ~/Desktop'
 alias dq='cd ~/Downloads'
 alias drp='cd ~/Dropbox'
-alias dbin='cd /usr/local/bin/'
 
 # Xcode
 alias dx='cd ~/src/Xcode'
@@ -324,6 +323,7 @@ alias gdn='git diff --name-only'
 # Git Status
 alias gs='git status --short'
 alias gss='git show --word-diff=color' # See changes made
+alias upg='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
 
 # Emacs
 
