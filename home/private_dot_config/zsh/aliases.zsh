@@ -310,7 +310,6 @@ alias glp='git pull && git push'
 alias grao='git remote add origin'
 #alias gz='git discard'
 #alias gr='git rm --cached -r'
-alias upg='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
 
 # Undo your last commit, but don't throw away your changes
 alias greset='git reset --soft HEAD^'
