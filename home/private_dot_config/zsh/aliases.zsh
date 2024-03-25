@@ -351,10 +351,6 @@ alias mux='pgrep -vx tmux > /dev/null && \
 alias clean_desktop='defaults write com.apple.finder CreateDesktop -bool false && killall Finder'
 alias show_desktop='defaults write com.apple.finder CreateDesktop true && killall Finder'
 
-
-
-
-```sh
 alias ifconfig='sudo ifconfig'
 alias s='sudo'
 alias c='clear'
@@ -492,6 +488,6 @@ extract() {
     fi
   fi
 }
-```
+
 
 
