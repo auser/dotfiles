@@ -43,12 +43,12 @@ ZSH_DISABLE_COMPFIX=true
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+# zsh-autocomplete
 plugins=(
   git 
   zsh-autosuggestions 
   zsh-syntax-highlighting 
   fast-syntax-highlighting 
-  zsh-autocomplete
 )
 eval "$(starship init zsh)"
 
@@ -109,6 +109,8 @@ export IDF_TOOLS_PATH=${TOOLCHAIN_PATH}/esp32
 # Features
 source $HOME/.config/zsh/features/000_path.zsh
 source $HOME/.config/zsh/features/mise.zsh
+source $HOME/.config/zsh/features/pnpm.zsh
+source $HOME/.config/zsh/features/orbstack.zsh
 source $HOME/.config/zsh/aliases.zsh
 
 

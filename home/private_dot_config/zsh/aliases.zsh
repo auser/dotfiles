@@ -95,7 +95,7 @@ alias p2='python2'
 alias po='poetry'
 
 # Login to AWS ECR
-alias ecrlogin='aws ecr get-login-password --region us-east-1 --profile ethtrust-dev | docker login --username AWS --password-stdin '
+alias ecrlogin='aws ecr get-login-password --region us-east-1 --profile $AWS_PROFILE | docker login --username AWS --password-stdin '
 
 # Docker
 alias c='docker'
