@@ -2,6 +2,8 @@
 
 set -eufo pipefail
 
+brew tap homebrew/cask-fonts
+
 {{ $brews := list
      "age"
      "bat"
@@ -10,6 +12,7 @@ set -eufo pipefail
      "eza"
      "fd"
      "ffmpeg"
+     "font-meslo-lg-nerd-font"
      "fzf"
      "gdu"
      "gh"
@@ -21,6 +24,7 @@ set -eufo pipefail
      "golangci-lint"
      "jq"
      "mise"
+     "neovim"
      "openjdk"
      "pkg-config"
      "postgis"
@@ -33,7 +37,6 @@ set -eufo pipefail
      "1password-cli"
      "balenaetcher"
      "battery"
-     "hammerspoon"
      "transmission" -}}
 
 brew bundle --no-lock --file=/dev/stdin <<EOF
