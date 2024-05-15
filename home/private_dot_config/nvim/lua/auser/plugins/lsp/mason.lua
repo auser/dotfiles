@@ -37,8 +37,8 @@ return {
 				"emmet_ls",
 				"prismals",
 				"pyright",
-				"rust-analyzer",
-				"codelldb",
+				-- "rust-analyzer",
+				-- "codelldb",
 			},
 		})
 
