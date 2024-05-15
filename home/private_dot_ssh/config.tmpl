@@ -1,6 +1,9 @@
 HashKnownHosts no
 
 {{- if eq .chezmoi.os "darwin" }}
+Include ~/.orbstack/ssh/config
+
+HashKnownHosts no
 
 Host *
   AddKeysToAgent yes
@@ -14,6 +17,7 @@ Host github.com
   IdentityFile /Users/auser/.ssh/id_ed25519
 
 Host work
-  HostName bitbucket.org
+  Hostname bitbucket.org
+  User git
   AddKeysToAgent yes
   IdentityFile ~/.ssh/herring_id_ed25519
