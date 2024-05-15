@@ -37,6 +37,8 @@ return {
 				"emmet_ls",
 				"prismals",
 				"pyright",
+				"rust-analyzer",
+				"codelldb",
 			},
 		})
 
@@ -48,10 +50,9 @@ return {
 				"black", -- python formatter
 				"pylint",
 				"eslint_d",
-				"rust-analyzer",
+				-- "rust-analyzer",
 				"codelldb",
 			},
 		})
 	end,
 }
-
