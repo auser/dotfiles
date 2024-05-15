@@ -220,13 +220,6 @@ alias us='hugo server -D'
 alias ut='hugo server -w' # testing
 alias u='hugo'
 
-# Nginx
-alias ngup='sudo nginx'
-alias ngdown='sudo nginx -s stop'
-alias ngre='sudo nginx -s stop && sudo nginx'
-alias nglog='tail -f /usr/local/var/log/nginx/access.log' # TODO: maybe wrong location
-alias ngerr='tail -f /usr/local/var/log/nginx/error.log'
-
 # Utility
 alias net="ping ya.ru | grep -E --only-match --color=never '[0-9\.]+ ms'"                # check connection
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
@@ -351,7 +344,6 @@ alias mux='pgrep -vx tmux > /dev/null && \
 alias clean_desktop='defaults write com.apple.finder CreateDesktop -bool false && killall Finder'
 alias show_desktop='defaults write com.apple.finder CreateDesktop true && killall Finder'
 
-alias ifconfig='sudo ifconfig'
 alias s='sudo'
 alias c='clear'
 alias ..='cd ..'
@@ -370,17 +362,11 @@ alias webup='sudo python -m http.server 80'
 alias httpup='sudo ~/apps/up-http-tool/up'
 alias ftpup='sudo python -m pyftpdlib -p 21'
 alias smbup='sudo python3 /usr/share/doc/python3-impacket/examples/smbserver.py -smb2support share $(pwd)'
-alias vpn-htb='sudo openvpn --config /home/crystal/HTB.ovpn'
-alias vpn-academy='sudo openvpn --config /home/crystal/HTB-Academy.ovpn'
-alias vpn-release_arena='sudo openvpn --config /home/crystal/HTB-Release-Arena.ovpn'
-alias vpn-starting_point='sudo openvpn --config /home/crystal/HTB-Starting-Point.ovpn'
-alias vpn-thm='sudo openvpn --config /home/crystal/THM.ovpn'
 alias ss='searchsploit $1'
 alias ssx='searchsploit -x $1'
 alias ssm='searchsploit -m $1'
 alias gobusterz='gobuster dir -w /usr/share/dirbuster/wordlists/directory-list-lowercase-2.3-medium.txt -u $1'
 alias mscanz='sudo masscan -p1-65535,U:1-65535 $1 --rate=1000 -e tun0 --wait 5 > mscan.txt'
-alias nmapz='/home/crystal/scripts/gen_nmap.py; while read item; do sudo nmap -sV -sC -sU -sS $item; done < nmap.txt; rm mscan.txt nmap.txt'
 alias qmapz='sudo nmap -sV -sC $1'
 alias nse='ls /usr/share/nmap/scripts | grep'
 alias nse-help='nmap --script-help'
@@ -389,27 +375,16 @@ alias pattern_offset='/usr/share/metasploit-framework/tools/exploit/pattern_offs
 alias nasm_shell='/usr/share/metasploit-framework/tools/exploit/nasm_shell.rb'
 alias msfelfscan='/usr/share/framework2/msfelfscan'
 alias wpscan='wpscan -e ap,t,u --api-token <no_stealing_cats_tokens> --url $1'
-alias wes-ng='python /home/crystal/scripts/windows/wesng/wes.py'
 alias aslr_off='echo 0 | sudo tee /proc/sys/kernel/randomize_va_space'
-alias gen_nmap='/home/crystal/scripts/gen_nmap.py'
 alias gcc_no_protections='gcc -fno-stack-protector -z execstack -no-pie'
 alias dvwa_start='sudo service mysql start && sudo service apache2 start'
 alias docker_fix='sudo mkdir /sys/fs/cgroup/systemd; sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd'
-alias android_studio='/home/crystal/apps/android-studio/bin/studio.sh'
 alias rustscan='docker run -it --rm --name rustscan rustscan/rustscan:1.10.0'
 alias pipz_upgrade='pip freeze > requirements.txt; pip install -r requirements.txt --upgrade; rm requirements.txt;'
-alias ghidra_auto='python3 /home/crystal/apps/auto_ghidra.py'
-alias pwninit='/home/crystal/apps/pwninit --template-path ~/.config/pwninit-template.py; sed -n "4,6p" solve.py; rm solve.py; mv *_patched $1'
 alias burpsuite='java -jar --add-opens=java.desktop/javax.swing=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED /usr/bin/burpsuite'
 alias ctfd_download='python ~/ctf/helpers/ctfd_download_python/download.py'
-alias enum4linux='python /home/crystal/scripts/enum4linux-ng/enum4linux-ng.py'
-alias subbrute='python /home/crystal/apps/subbrute/subbrute.py'
 alias mobsf_emulator='emulator -avd $1 -writable-system -no-snapshot'
-alias codemerx='/home/crystal/apps/codemerx/bin/CodemerxDecompile'
 alias webdavup='sudo wsgidav --host=$1 --port=$2 --root=/tmp --auth=anonymous'
-alias username-anarchy='ruby /home/crystal/apps/username-anarchy/username-anarchy'
-alias xs-strike='python /home/crystal/apps/XSStrike/xsstrike.py'
-alias jwt_tool='python /home/crystal/apps/jwt_tool/jwt_tool.py'
 urlencode() {
     python3 -c "from pwn import *; print(urlencode('$1'));"
 }
