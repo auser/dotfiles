@@ -17,3 +17,5 @@ _kubernate_yargs_completions()
 }
 compdef _kubernate_yargs_completions kubernate
 ###-end-kubernate-completions-###
+# TODO: move this
+fpath=($fpath ~/.zsh/completion)
