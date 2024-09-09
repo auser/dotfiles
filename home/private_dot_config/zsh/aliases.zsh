@@ -96,6 +96,7 @@ alias po='poetry'
 
 # Login to AWS ECR
 alias ecrlogin='aws ecr get-login-password --region us-east-1 --profile $AWS_PROFILE | docker login --username AWS --password-stdin '
+alias awscaller='aws sts get-caller-identity --profile $AWS_PROFILE --query "Account" --output text'
 
 # Docker
 alias c='docker'
