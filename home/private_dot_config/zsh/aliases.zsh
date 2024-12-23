@@ -250,11 +250,6 @@ alias de='cd ~/Desktop'
 alias dq='cd ~/Downloads'
 alias drp='cd ~/Dropbox'
 
-# Xcode
-alias dx='cd ~/src/Xcode'
-alias dxi='cd ~/src/Xcode/iOS'
-alias dxm='cd ~/src/xcode/macOS'
-
 # Config
 alias d..='cd ~/.config'
 alias db='cd ~/.dotfiles/bin'
