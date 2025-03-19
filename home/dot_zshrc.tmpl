@@ -159,17 +159,34 @@ export NVM_DIR="$HOME/.nvm"
 # 1Password integration (using your specified account)
 {{- if and (hasKey . "onepasswordAccount") .personal }}
 if command -v op &> /dev/null; then
-  # Check if we're logged in to 1Password
-  if op account get > /dev/null 2>&1; then
-    # Try to get GitHub token
-    GITHUB_TOKEN=$(op item get "chezmoi GitHub API Token" --fields credential 2>/dev/null || echo "")
+  # Set the account identifier for use in manual commands
+  export OP_ACCOUNT="{{ .onepasswordAccount }}"
+  
+  # Function to get secrets from 1Password - only works if already authenticated
+  # Will NOT automatically trigger authentication
+  function op_get_secret() {
+    local item="$1"
+    local field="${2:-credential}"
+    
+    # Only attempt to get the item if it doesn't trigger authentication
+    op item get "$item" --fields "$field" --no-auth-prompt 2>/dev/null || echo ""
+  }
+  
+  # Define aliases for explicit 1Password operations when needed
+  alias op-signin="op signin --account $OP_ACCOUNT"
+  alias op-signout="op signout --account $OP_ACCOUNT"
+  alias op-status="op account get --account $OP_ACCOUNT 2>/dev/null && echo 'Authenticated' || echo 'Not authenticated'"
+  
+  # GitHub token is ONLY set if already authenticated, no auto-auth
+  if op account get --account "$OP_ACCOUNT" --no-auth-prompt &>/dev/null; then
+    GITHUB_TOKEN=$(op item get "chezmoi GitHub API Token" --fields credential --no-auth-prompt 2>/dev/null || echo "")
     if [ ! -z "$GITHUB_TOKEN" ]; then
       export CHEZMOI_GITHUB_ACCESS_TOKEN="$GITHUB_TOKEN"
     fi
     
     {{- if eq .chezmoi.os "darwin" }}
-    # Try to get Homebrew token
-    HOMEBREW_TOKEN=$(op item get "Homebrew GitHub API Token" --fields credential 2>/dev/null || echo "")
+    # Get Homebrew token ONLY if already authenticated
+    HOMEBREW_TOKEN=$(op item get "Homebrew GitHub API Token" --fields credential --no-auth-prompt 2>/dev/null || echo "")
     if [ ! -z "$HOMEBREW_TOKEN" ]; then
       export HOMEBREW_GITHUB_API_TOKEN="$HOMEBREW_TOKEN"
     fi
