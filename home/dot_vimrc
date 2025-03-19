@@ -1,0 +1,55 @@
+" Basic Vim Configuration
+
+" General settings
+set nocompatible
+syntax on
+set number
+set ruler
+set showmatch
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+set expandtab
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set autoindent
+set smartindent
+set backspace=indent,eol,start
+set history=1000
+set showcmd
+set showmode
+set wildmenu
+set wildmode=list:longest
+set scrolloff=3
+set encoding=utf-8
+set laststatus=2
+set title
+set mouse=a
+
+" Status line
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ [LEN=%L]
+set laststatus=2
+
+" Colors
+colorscheme default
+set background=dark
+
+" Key mappings
+let mapleader = ","
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+
+" Disable swap files and backups
+set noswapfile
+set nobackup
+set nowritebackup
+
+" Enable file type detection and plugins
+filetype plugin indent on
+
+" Load local customizations if they exist
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif 

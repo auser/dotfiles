@@ -1,0 +1,31 @@
+# .bash_profile
+
+# Include .bashrc if it exists
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi
+
+# Set PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# Set default editor
+export EDITOR="vim"
+export VISUAL="vim"
+
+# Set history control
+export HISTCONTROL=ignoreboth:erasedups
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+shopt -s histappend
+
+# Use colors for less, man, etc.
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;36m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+# Load local customizations if they exist
+[[ -f ~/.bash_profile.local ]] && source ~/.bash_profile.local 
