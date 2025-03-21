@@ -1,15 +1,12 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
--- Customize Treesitter
-
----@type LazySpec
 return {
   "nvim-treesitter/nvim-treesitter",
-  opts = {
-    ensure_installed = {
-      "lua",
-      "vim",
-      -- add more arguments for adding more treesitter parsers
-    },
-  },
+  build = ":TSUpdate", -- Automatically update parsers on update
+  config = function()
+    require("nvim-treesitter.configs").setup({
+      ensure_installed = { "lua", "javascript", "python", "bash", "java", "c", "markdown", "rust" },
+      highlight = { enable = true }, -- Enable syntax highlighting using Tree-sitter
+      indent = { enable = true }, -- Enable indentation based on Tree-sitter
+      -- You can add other Tree-sitter modules here as needed
+    })
+  end,
 }
