@@ -1,5 +1,8 @@
-#ZSH_THEME="powerlevel9k"
-ZSH_THEME="spaceship"
+# Use Powerlevel10k theme
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Remove Spaceship configuration since we're using Powerlevel10k
+# ZSH_THEME="spaceship"
 # ZSH_THEME="geoffgarside"
 
 SPACESHIP_PROMPT_ORDER=(
