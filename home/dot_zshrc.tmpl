@@ -43,8 +43,13 @@ ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
 # Load plugins from custom location
-source $HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $HOME/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [ -f "$HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+  source "$HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
+
+if [ -f "$HOME/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+  source "$HOME/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
 
 # Shell options
 setopt autocd
@@ -150,15 +155,14 @@ if command -v op &> /dev/null; then
 fi
 {{- end }}
 
-# Temporarily disable loading of private configuration files
-# until we can clean up the Antigen-related files
-# for dir in $HOME/.config/zsh/features $HOME/.config/private/zsh/features; do
-#   if [ -d "$dir" ]; then
-#     for file in "$dir"/*.zsh; do
-#       [ -f "$file" ] && source "$file"
-#     done
-#   fi
-# done
+# Load local configuration files
+for dir in $HOME/.config/zsh/features $HOME/.config/private/zsh/features; do
+  if [ -d "$dir" ]; then
+    for file in "$dir"/*.zsh; do
+      [ -f "$file" ] && source "$file"
+    done
+  fi
+done
 
 # Load local customizations
 [ -f "$HOME/.zshenv" ] && source "$HOME/.zshenv"
