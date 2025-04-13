@@ -16,10 +16,48 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
-    -- add LazyVim and import its plugins
+    -- LazyVim base
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- import/override with your plugins
-    { import = "plugins" },
+    
+    -- UI and Colors
+    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+    { "nvim-lualine/lualine.nvim" },
+    { "nvim-tree/nvim-web-devicons" },
+    { "folke/tokyonight.nvim" },
+    
+    -- LSP and Autocompletion
+    { "neovim/nvim-lspconfig" },
+    { "hrsh7th/nvim-cmp" },
+    { "hrsh7th/cmp-nvim-lsp" },
+    { "hrsh7th/cmp-buffer" },
+    { "hrsh7th/cmp-path" },
+    { "hrsh7th/cmp-cmdline" },
+    { "L3MON4D3/LuaSnip" },
+    { "saadparwaiz1/cmp_luasnip" },
+    
+    -- Language-specific plugins
+    { "simrat39/rust-tools.nvim" }, -- Rust
+    { "ray-x/go.nvim" }, -- Go
+    { "jose-elias-alvarez/typescript.nvim" }, -- TypeScript
+    { "mfussenegger/nvim-dap" }, -- Debug Adapter Protocol
+    { "rcarriga/nvim-dap-ui" },
+    
+    -- Git integration
+    { "lewis6991/gitsigns.nvim" },
+    { "tpope/vim-fugitive" },
+    
+    -- AI integration
+    { "dpayne/CodeGPT.nvim" }, -- Claude integration
+    
+    -- Quality of Life
+    { "windwp/nvim-autopairs" },
+    { "numToStr/Comment.nvim" },
+    { "nvim-treesitter/nvim-treesitter" },
+    { "nvim-telescope/telescope.nvim" },
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    
+    -- Performance
+    { "lewis6991/impatient.nvim" },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
@@ -30,7 +68,7 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "tokyonight", "habamax" } },
+  install = { colorscheme = { "catppuccin", "tokyonight" } },
   checker = {
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
@@ -42,7 +80,7 @@ require("lazy").setup({
         "gzip",
         -- "matchit",
         -- "matchparen",
-        -- "netrwPlugin",
+        "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",
@@ -50,4 +88,122 @@ require("lazy").setup({
       },
     },
   },
+})
+
+-- Basic settings
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.mouse = "a"
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.hlsearch = false
+vim.opt.wrap = false
+vim.opt.breakindent = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.termguicolors = true
+
+-- Set colorscheme
+vim.cmd.colorscheme("catppuccin")
+
+-- LSP settings
+local lspconfig = require("lspconfig")
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+-- Rust
+lspconfig.rust_analyzer.setup({
+  capabilities = capabilities,
+  settings = {
+    ["rust-analyzer"] = {
+      checkOnSave = {
+        command = "clippy",
+      },
+    },
+  },
+})
+
+-- Go
+lspconfig.gopls.setup({
+  capabilities = capabilities,
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+    },
+  },
+})
+
+-- TypeScript
+lspconfig.tsserver.setup({
+  capabilities = capabilities,
+})
+
+-- Autocompletion setup
+local cmp = require("cmp")
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.abort(),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+  }),
+  sources = cmp.config.sources({
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+    { name = "buffer" },
+    { name = "path" },
+  }),
+})
+
+-- Treesitter setup
+require("nvim-treesitter.configs").setup({
+  ensure_installed = { "rust", "go", "typescript", "javascript", "lua", "vim", "help" },
+  highlight = {
+    enable = true,
+  },
+})
+
+-- Git signs setup
+require("gitsigns").setup({
+  signs = {
+    add = { text = "+" },
+    change = { text = "~" },
+    delete = { text = "_" },
+    topdelete = { text = "‾" },
+    changedelete = { text = "~" },
+  },
+})
+
+-- Telescope setup
+require("telescope").setup({
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-u>"] = false,
+        ["<C-d>"] = false,
+      },
+    },
+  },
+})
+require("telescope").load_extension("fzf")
+
+-- Autopairs setup
+require("nvim-autopairs").setup()
+
+-- Comment setup
+require("Comment").setup()
+
+-- Claude integration setup
+require("codegpt").setup({
+  api_key = os.getenv("ANTHROPIC_API_KEY"),
+  model = "claude-3-opus-20240229",
 })
