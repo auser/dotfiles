@@ -14,6 +14,10 @@
 #   - false (default)
 tmux_conf_preserve_stock_bindings=false
 
+# Custom window navigation bindings
+bind C-h previous-window
+bind C-l next-window
+
 
 # -- session creation ----------------------------------------------------------
 
@@ -466,6 +470,10 @@ set -g pane-active-border-style fg=green
 # Add any custom key bindings here
 # Example:
 # bind-key -n C-Space next-window
+
+# Window navigation
+bind-key -n M-h previous-window
+bind-key -n M-l next-window
 
 # -- Environment ----------------------------------------------------------
 
