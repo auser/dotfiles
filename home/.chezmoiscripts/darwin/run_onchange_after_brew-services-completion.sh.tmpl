@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Check if we're on macOS
+if [[ "$(uname)" != "Darwin" ]]; then
+    exit 0
+fi
+
+# Check if Homebrew is installed
+if ! command -v brew &> /dev/null; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    
+    # Add Homebrew to PATH for the current session
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Create the directory if it doesn't exist
+mkdir -p /opt/homebrew/share/zsh/site-functions
+
+# Create symlink for brew services completion
+ln -sf "{{ .chezmoi.sourceDir }}/private_dot_config/zsh/completions/_brew_services" /opt/homebrew/share/zsh/site-functions/_brew_services 

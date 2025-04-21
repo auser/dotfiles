@@ -1,0 +1,31 @@
+#compdef brew services
+
+local curcontext="$curcontext" state line
+typeset -A opt_args
+
+_arguments -C \
+  "1: :->command" \
+  "*:: :->args"
+
+case $state in
+  command)
+    local -a commands
+    commands=(
+      "cleanup:Remove all unused services"
+      "list:List all services managed by brew services"
+      "restart:Gracefully restart selected service"
+      "start:Start selected service"
+      "stop:Stop selected service"
+    )
+    _describe -t commands "brew services command" commands
+    ;;
+  args)
+    case $line[1] in
+      cleanup|list)
+        ;;
+      restart|start|stop)
+        _brew_services
+        ;;
+    esac
+    ;;
+esac 
