@@ -2,7 +2,7 @@
 {{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
 {{- $flarm := false -}}{{/* true if this machine is used for FLARM */}}
 {{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
-{{- $personal := false -}}{{/* true if this machine should have personal secrets */}}
+{{- $personal := true -}}{{/* true if this machine should have personal secrets */}}
 {{- "" -}}
 
 {{- $osID := .chezmoi.os -}}
