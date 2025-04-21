@@ -439,9 +439,37 @@ set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'omerxx/tmux-sessionx'
 set -g @continuum-restore 'on'
 
+# -- Tmux Resurrect ----------------------------------------------------------
 
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
 
-# -- ## END OF PLUGINS ## -------------------------------------------------------
+# Restore vim sessions
+set -g @resurrect-strategy-vim 'session'
+
+# Restore neovim sessions
+set -g @resurrect-strategy-nvim 'session'
+
+# Restore pane contents
+set -g @resurrect-capture-pane-contents 'on'
+
+# Save and restore programs
+set -g @resurrect-processes 'ssh mosh irssi'
+
+# Auto-save every 15 minutes
+set -g @continuum-save-interval '15'
+
+# Auto-restore on tmux start
+set -g @continuum-restore 'on'
+
+# Custom key bindings for save and restore
+bind-key -r C-s run-shell '~/.tmux/plugins/tmux-resurrect/scripts/save.sh' \; display-message "Session saved!"
+bind-key -r C-r run-shell '~/.tmux/plugins/tmux-resurrect/scripts/restore.sh' \; display-message "Session restored!"
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'
 
 # -- Theme settings ----------------------------------------------------------
 
