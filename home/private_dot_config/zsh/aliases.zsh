@@ -100,9 +100,8 @@ alias awscaller='aws sts get-caller-identity --profile $AWS_PROFILE --query "Acc
 
 # Docker
 alias d='docker'
-alias ds='docker ps'
-alias dc='docker-compose'
-alias dcu='docker-compose up'
+alias cu='docker-compose'
+alias cup='docker-compose up'
 # alias cr='docker rm'
 # alias cc='docker compose'
 # alias cg='docker logs'
