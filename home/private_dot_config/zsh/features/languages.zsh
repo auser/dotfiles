@@ -86,7 +86,11 @@ export PATH=$ANDROID_SDK:$PATH
 # export FLUTTER=$HOME/work/android/flutter
 # export PATH=$FLUTTER/bin:$PATH
 
-export JAVA_HOME=$(/usr/libexec/java_home)
+# Java configuration
+if command -v java &> /dev/null; then
+  export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null || echo "")
+fi
+
 export ANDROID_HOME=$HOME/Library/Android/sdk
 
 export PATH="$PATH":"$HOME/.pub-cache/bin"

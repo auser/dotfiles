@@ -99,9 +99,9 @@ alias ecrlogin='aws ecr get-login-password --region us-east-1 --profile $AWS_PRO
 alias awscaller='aws sts get-caller-identity --profile $AWS_PROFILE --query "Account" --output text'
 
 # Docker
-alias c='docker'
-alias cs='docker ps'
-alias cu='docker-compose up'
+alias d='docker'
+alias cu='docker-compose'
+alias cup='docker-compose up'
 # alias cr='docker rm'
 # alias cc='docker compose'
 # alias cg='docker logs'
@@ -215,6 +215,9 @@ alias rrpdf='rm -rf *.pdf'
 
 # Source things
 alias sz='exec zsh'
+
+# Chezmoi
+alias cz='chezmoi'
 
 # Hugo
 alias us='hugo server -D'
