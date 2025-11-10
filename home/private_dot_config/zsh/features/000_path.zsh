@@ -45,7 +45,8 @@ for path_candidate in /opt/local/sbin \
   /sbin \
   /usr/sbin \
   /bin \
-  /usr/bin
+  /usr/bin \
+  $HOME/.dblab/dblab
 do
   if [ -d ${path_candidate} ]; then
     export PATH=${PATH}:${path_candidate}

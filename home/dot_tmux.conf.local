@@ -455,7 +455,7 @@ set -g @resurrect-strategy-nvim 'session'
 set -g @resurrect-capture-pane-contents 'on'
 
 # Save and restore programs
-set -g @resurrect-processes 'ssh mosh irssi'
+# set -g @resurrect-processes 'ssh mosh irssi'
 
 # Auto-save every 15 minutes
 set -g @continuum-save-interval '15'
