@@ -45,7 +45,27 @@ require("lazy").setup({
     -- Git integration
     { "lewis6991/gitsigns.nvim" },
     { "tpope/vim-fugitive" },
-    
+
+    -- Tmux navigation
+    {
+      "christoomey/vim-tmux-navigator",
+      cmd = {
+        "TmuxNavigateLeft",
+        "TmuxNavigateDown",
+        "TmuxNavigateUp",
+        "TmuxNavigateRight",
+        "TmuxNavigatePrevious",
+        "TmuxNavigatorProcessList",
+      },
+      keys = {
+        { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+        { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+        { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+        { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+        { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+      },
+    },
+
     -- AI integration
     { "dpayne/CodeGPT.nvim" }, -- Claude integration
     
@@ -207,3 +227,7 @@ require("codegpt").setup({
   api_key = os.getenv("ANTHROPIC_API_KEY"),
   model = "claude-3-opus-20240229",
 })
+
+require("config.cursor_keymaps")
+
+require("config.ai_keymaps")
