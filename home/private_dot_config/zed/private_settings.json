@@ -1,15 +1,12 @@
 {
-  // UI / editor
   "theme": "ayu-dark",
   "vim_mode": true,
   "tab_size": 2,
 
-  // File tree (project panel)
   "project_panel": {
-    "dock": "left" // left-side tree view
+    "dock": "left"
   },
 
-  // Terminal: always start tmux
   "terminal": {
     "shell": {
       "with_arguments": {

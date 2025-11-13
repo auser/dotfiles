@@ -67,7 +67,16 @@ require("lazy").setup({
     },
 
     -- AI integration
-    { "dpayne/CodeGPT.nvim" }, -- Claude integration
+    {
+      "greggh/claude-code.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim", -- Required for git operations
+      },
+      config = function()
+        require("claude-code").setup()
+      end
+    },
+    -- { "dpayne/CodeGPT.nvim" }, -- Claude integration
     
     -- Quality of Life
     { "windwp/nvim-autopairs" },
@@ -223,10 +232,7 @@ require("nvim-autopairs").setup()
 require("Comment").setup()
 
 -- Claude integration setup
-require("codegpt").setup({
-  api_key = os.getenv("ANTHROPIC_API_KEY"),
-  model = "claude-3-opus-20240229",
-})
+require("claude-code").setup()
 
 require("config.cursor_keymaps")
 
