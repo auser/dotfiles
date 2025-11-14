@@ -1,3 +1,6 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -18,13 +21,13 @@ require("lazy").setup({
   spec = {
     -- LazyVim base
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    
+
     -- UI and Colors
     { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
     { "nvim-lualine/lualine.nvim" },
     { "nvim-tree/nvim-web-devicons" },
     { "folke/tokyonight.nvim" },
-    
+
     -- LSP and Autocompletion
     { "neovim/nvim-lspconfig" },
     { "hrsh7th/nvim-cmp" },
@@ -34,14 +37,19 @@ require("lazy").setup({
     { "hrsh7th/cmp-cmdline" },
     { "L3MON4D3/LuaSnip" },
     { "saadparwaiz1/cmp_luasnip" },
-    
+
     -- Language-specific plugins
     { "simrat39/rust-tools.nvim" }, -- Rust
     { "ray-x/go.nvim" }, -- Go
     { "jose-elias-alvarez/typescript.nvim" }, -- TypeScript
-    { "mfussenegger/nvim-dap" }, -- Debug Adapter Protocol
+    {
+      "mfussenegger/nvim-dap",
+      config = function()
+        require("dap").set_log_level("INFO")
+      end,
+    }, -- Debug Adapter Protocol
     { "rcarriga/nvim-dap-ui" },
-    
+
     -- Git integration
     { "lewis6991/gitsigns.nvim" },
     { "tpope/vim-fugitive" },
@@ -73,18 +81,35 @@ require("lazy").setup({
         "nvim-lua/plenary.nvim", -- Required for git operations
       },
       config = function()
-        require("claude-code").setup()
-      end
+        require("claude-code").setup({
+          -- only override the window if you want a float; leave keymaps at defaults
+          window = {
+            position = "float", -- or "botright" if you prefer a bottom split
+            float = {
+              width = "90%",
+              height = "90%",
+              row = "center",
+              col = "center",
+              relative = "editor",
+              border = "rounded",
+            },
+          },
+          -- DO NOT override keymaps here; let the plugin keep its defaults:
+          --   <leader>ac, <C-,>, <leader>cC, <leader>cV
+        })
+      end,
     },
+
+    -- { "olimorris/codecompanion.nvim" },
     -- { "dpayne/CodeGPT.nvim" }, -- Claude integration
-    
+
     -- Quality of Life
     { "windwp/nvim-autopairs" },
     { "numToStr/Comment.nvim" },
     { "nvim-treesitter/nvim-treesitter" },
     { "nvim-telescope/telescope.nvim" },
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-    
+
     -- Performance
     { "lewis6991/impatient.nvim" },
   },
@@ -231,9 +256,5 @@ require("nvim-autopairs").setup()
 -- Comment setup
 require("Comment").setup()
 
--- Claude integration setup
-require("claude-code").setup()
-
 require("config.cursor_keymaps")
-
 require("config.ai_keymaps")

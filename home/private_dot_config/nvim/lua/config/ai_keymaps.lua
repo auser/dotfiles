@@ -1,36 +1,26 @@
 -- lua/config/ai_keymaps.lua
 
 local map = vim.keymap.set
-local opts = function(desc)
+local function opts(desc)
   return { noremap = true, silent = true, desc = "AI: " .. desc }
 end
 
--- === Primary AI entry points (Cursor-like) ===
+-- === Claude Code primary entry points ===
 
--- Open/toggle chat side panel (like Cursor's chat sidebar)
-map({ "n", "v" }, "<leader>ac", "<cmd>CodeCompanionChat Toggle<cr>", opts("Chat (toggle)"))
+-- Toggle/focus Claude Code terminal (like Cursor's chat/sidebar)
+map("n", "<leader>ac", "<cmd>ClaudeCodeFocus<cr>", opts("Claude Code (focus/toggle)"))
+-- Extra toggle if you like (optional, matches :ClaudeCode)
+map("n", "<leader>cc", "<cmd>ClaudeCode<cr>", opts("Claude Code (toggle)"))
 
--- Ask about selection / code under cursor (inline)
--- Visual mode: operate on selection; Normal: whole buffer + cursor context
-map({ "n", "v" }, "<leader>aa", "<cmd>CodeCompanion<cr>", opts("Ask / Inline assistant"))
+-- Send visual selection to Claude as context
+map("v", "<leader>as", "<cmd>ClaudeCodeSend<cr>", opts("Send selection to Claude Code"))
 
--- Open the "Action Palette" (Cursor-style quick actions)
-map({ "n", "v" }, "<leader>ap", "<cmd>CodeCompanionActions<cr>", opts("Action palette"))
+-- Resume last conversation
+map("n", "<leader>aC", "<cmd>ClaudeCodeContinue<cr>", opts("Continue last Claude conversation"))
 
--- Add selection to current chat (like “Add to chat” in Cursor)
-map("v", "<leader>as", "<cmd>CodeCompanionChat Add<cr>", opts("Send selection to chat"))
+-- Verbose Claude session
+map("n", "<leader>aV", "<cmd>ClaudeCodeVerbose<cr>", opts("Claude Code (verbose)"))
 
-
--- === Common flows, Cursor-ish semantics ===
-
--- Explain selection
-map("v", "<leader>ae", ":CodeCompanion /explain<cr>", opts("Explain selection"))
-
--- Refactor / improve selection
-map("v", "<leader>ar", ":CodeCompanion /refactor<cr>", opts("Refactor selection"))
-
--- Fix diagnostics under cursor (when you have a prompt for that)
-map("n", "<leader>af", ":CodeCompanion /fix_diagnostic<cr>", opts("Fix diagnostic"))
-
--- Document this file / function (if you add prompts)
-map({ "n", "v" }, "<leader>ad", ":CodeCompanion /doc<cr>", opts("Generate docs"))
+-- Accept/deny diffs when Claude proposes changes
+map("n", "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", opts("Accept Claude diff"))
+map("n", "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", opts("Reject Claude diff"))
