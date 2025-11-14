@@ -1,12 +1,18 @@
 return {
   "nvim-treesitter/nvim-treesitter",
-  build = ":TSUpdate", -- Automatically update parsers on update
-  config = function()
-    require("nvim-treesitter.configs").setup({
-      ensure_installed = { "lua", "javascript", "python", "bash", "java", "c", "markdown", "rust" },
-      highlight = { enable = true }, -- Enable syntax highlighting using Tree-sitter
-      indent = { enable = true }, -- Enable indentation based on Tree-sitter
-      -- You can add other Tree-sitter modules here as needed
-    })
+  event = { "BufReadPost", "BufNewFile" },
+  build = ":TSUpdate",
+  opts = {
+    ensure_installed = {
+      "lua", "rust", "go",
+      "javascript", "typescript",
+      "bash", "markdown", "markdown_inline",
+      "python", "json", "c",
+    },
+    highlight = { enable = true },
+    indent = { enable = true },
+  },
+  config = function(_, opts)
+    require("nvim-treesitter.configs").setup(opts)
   end,
 }
