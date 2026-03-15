@@ -47,6 +47,14 @@
 	ss = commit --message snapshot --no-gpg-sign
 	su = submodule update
 	wd = diff --patience --word-diff
+
+  # Worktree
+  wt = worktree
+  wtl = worktree list
+  wta = worktree add
+  wtr = worktree remove
+  wtp = worktree prune
+  wts = "!git worktree list --porcelain"
 	# https://golang.org/doc/contribute.html
 	change = codereview change
 	gofmt = codereview gofmt

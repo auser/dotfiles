@@ -4,6 +4,7 @@
 export GOPATH="$(go env GOPATH)" # Go
 # Conditional PATH additions
 for path_candidate in /opt/local/sbin \
+  ~/.orbstack/bin \
   ~/.toolbox/bin \
   /Applications/Xcode.app/Contents/Developer/usr/bin \
   ~/Library/Android/sdk/cmdline-tools/latest/bin \
