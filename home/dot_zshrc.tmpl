@@ -42,6 +42,10 @@ ZSH_DISABLE_COMPFIX=true
 # Source Oh-My-Zsh
 source $ZSH/oh-my-zsh.sh
 
+# Powerlevel
+source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
+
+
 # Load plugins from custom location
 if [ -f "$HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
   source "$HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
@@ -144,6 +148,15 @@ if command -v op &> /dev/null; then
   alias op-signin="op signin --account $OP_ACCOUNT"
   alias op-signout="op signout --account $OP_ACCOUNT"
   alias op-status="op account get --account $OP_ACCOUNT 2>/dev/null && echo 'Authenticated' || echo 'Not authenticated'"
+
+  bindkey '^[f' forward-word
+  bindkey '^[b' backward-word
+
+  # Arrow key variants (important inside tmux)
+  bindkey '^[[1;3C' forward-word
+  bindkey '^[[1;3D' backward-word
+  bindkey '^[[1;9C' forward-word
+  bindkey '^[[1;9D' backward-word
   
   if op account get --account "$OP_ACCOUNT" --no-auth-prompt &>/dev/null; then
     GITHUB_TOKEN=$(op_get_secret "chezmoi GitHub API Token")
