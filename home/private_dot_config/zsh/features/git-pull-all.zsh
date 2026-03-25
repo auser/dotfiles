@@ -1,0 +1,1 @@
+alias gpuall='git-pull-all'

@@ -68,9 +68,14 @@ setopt hist_ignore_dups
 setopt hist_ignore_space
 
 # History configuration
-HISTFILE=~/.zsh_history
+# history setup
+HISTFILE=$HOME/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
+setopt share_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_verify
 
 ulimit -n 65536
 

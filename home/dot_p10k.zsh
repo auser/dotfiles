@@ -138,6 +138,9 @@
   # Add an empty line before each prompt.
   typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=false
 
+  # Directory color (https://www.josean.com/posts/how-to-setup-alacritty-terminal)
+  typeset -g POWERLEVEL9K_DIR_BACKGROUND=0
+
   # Connect left prompt lines with these symbols.
   typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=
   typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX=
