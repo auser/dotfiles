@@ -2,3 +2,5 @@
 **/dot_git/**
 **/dot_DS_Store
 **/.DS_Store
+**/*.mdb
+**/zed/conversations/
