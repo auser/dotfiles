@@ -1,4 +1,4 @@
-{{- if eq .chezmoi.os "darwin" }}
+
 Include ~/.orbstack/ssh/config
 
 HashKnownHosts no
@@ -10,8 +10,7 @@ Host *
   ForwardAgent yes
 HashKnownHosts no
 
-Include config.d/devbox
-{{- end }}
+# Include config.d/devbox
 
 Host *
   AddKeysToAgent yes
@@ -25,61 +24,3 @@ Host github.com
   PreferredAuthentications publickey
   IdentityFile /Users/auser/.ssh/id_ed25519
   IdentitiesOnly yes
-
-Host work
-  Hostname bitbucket.org
-  User git
-  AddKeysToAgent yes
-  IdentityFile ~/.ssh/herring_id_ed25519
-  IdentitiesOnly yes
-
-Host build.fp-services.com
-  Hostname build.fp-services.com
-  User alerner
-  AddKeysToAgent yes
-  IdentityFile ~/.ssh/herring_id_ed25519
-  IdentitiesOnly yes
-
-
-Host proxy01
-  Hostname 10.8.29.32
-  User alerner
-  AddKeysToAgent yes
-  IdentityFile ~/.ssh/herring_id_ed25519
-  IdentitiesOnly yes
-
-Host docker03
-  Hostname 10.8.244.2
-  User alerner
-  AddKeysToAgent yes
-  IdentityFile ~/.ssh/herring_id_ed25519
-  IdentitiesOnly yes
-
-Host civpldir
-  Hostname 10.8.28.100
-  User alerner
-  AddKeysToAgent yes
-  IdentityFile ~/.ssh/herring_id_rsa
-  IdentitiesOnly yes
-  HostKeyAlgorithms=+ssh-rsa
-
-Host fpwebproxy01
-  Hostname fpwebproxy01.herringbank.com
-  User alerner
-  AddKeysToAgent yes
-  IdentityFile ~/.ssh/herring_id_ed25519
-  IdentitiesOnly yes
-
-Host fpservices
-  Hostname build.fp-services.com
-  IdentityFile ~/.ssh/herring_id_ed25519
-  User alerner
-  ProxyCommand ssh -q -W %h:%p fpwebproxy01
-
-Host civpldemo01
-  Hostname civpldemo01.herringbank.com 
-  IdentityFile ~/.ssh/herring_id_ed25519
-  User alerner 
-  IdentitiesOnly yes 
-  AddKeysToAgent yes
-

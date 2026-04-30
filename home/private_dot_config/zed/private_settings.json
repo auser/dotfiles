@@ -1,22 +1,91 @@
 {
-  "theme": "ayu-dark",
+  "semantic_tokens": "combined",
+  "languages": {
+    "TypeScript": {
+      "document_folding_ranges": "off",
+      "colorize_brackets": true,
+      "inlay_hints": {
+        "show_background": false,
+        "show_other_hints": true,
+        "show_type_hints": true,
+        "show_value_hints": true,
+        "enabled": true,
+      },
+      "indent_guides": {
+        "coloring": "indent_aware",
+        "line_width": 2,
+        "active_line_width": 1,
+        "background_coloring": "disabled",
+      },
+    },
+    "TSX": {
+      "inlay_hints": { "enabled": true, "show_background": false },
+      "colorize_brackets": true,
+    },
+    "JavaScript": {
+      "inlay_hints": { "enabled": true, "show_background": false },
+      "colorize_brackets": true,
+    },
+    "Markdown": {
+      "soft_wrap": "editor_width",
+      "show_edit_predictions": false,
+    },
+  },
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry",
+    },
+  },
+  "theme": {
+    "mode": "system",
+    "light": "Ayu Mirage",
+    "dark": "Ayu Dark",
+  },
+  // === VIM ===
   "vim_mode": true,
+  "vim": {
+    "use_system_clipboard": "always",
+    "use_smartcase_find": true,
+    // "enable_vim_sneak": true,
+    "gdefault": false,
+    "toggle_relative_line_numbers": true,
+    "highlight_on_yank_duration": 200,
+    "use_regex_search": true,
+  },
+  "base_keymap": "Cursor",
+
+  // === Layout ===
+  "project_panel": {
+    "button": true,
+    "dock": "left",
+    "indent_size": 20.0,
+    "entry_spacing": "standard",
+  },
+  "git_panel": { "dock": "right" },
+  "current_line_highlight": "all",
   "tab_size": 2,
 
-  "project_panel": {
-    "dock": "left"
-  },
+  // === Editor ===
+  "format_on_save": "on",
+  "soft_wrap": "editor_width",
+  "cursor_blink": true,
+  "inlay_hints": { "enabled": true },
+  "linked_edits": true,
+  "colorize_brackets": true,
+  "remove_trailing_whitespace_on_save": true,
+  "show_edit_predictions": true,
 
+  // === Prettier ===
+  "prettier": { "allowed": true },
   "terminal": {
     "shell": {
-      "with_arguments": {
-        "program": "tmux",
-        "args": ["new", "-As", "zed"]
-      }
+      "program": "/bin/zsh",
     },
+    "font_family": "MesloLGL Nerd Font Mono",
+    "font_size": 16.0,
     "working_directory": "current_project_directory",
     "toolbar": {
-      "breadcrumbs": true
-    }
-  }
+      "breadcrumbs": true,
+    },
+  },
 }

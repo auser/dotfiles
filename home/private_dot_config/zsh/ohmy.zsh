@@ -26,6 +26,7 @@ plugins=(
     microk8s
     # pyenv
     python
+    direnv
 )
 
 # Source Oh My Zsh
