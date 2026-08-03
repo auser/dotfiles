@@ -1,8 +1,4 @@
-export PATH="$HOME/.bin:$PATH"
-
-# mise
-if [[ -o interactive ]]; then
+# Activate mise once for interactive shells.
+if (( $+commands[mise] )); then
   eval "$(mise activate zsh)"
-else
-  eval "$(mise activate zsh --shims)"
 fi

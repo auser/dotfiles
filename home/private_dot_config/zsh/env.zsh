@@ -1,34 +1,20 @@
-# Setting and editing of env variables.
+# Static environment variables and small shell helpers.
+# Keep this file quiet: it is sourced after Powerlevel10k instant prompt.
 
-# Vars
-export EDITOR='nvim'
-export SUDO_EDITOR='nvim'
+export EDITOR="${EDITOR:-nvim}"
+export VISUAL="${VISUAL:-$EDITOR}"
+export SUDO_EDITOR="${SUDO_EDITOR:-$EDITOR}"
 
-
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-# [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-
-export PNPM_HOME="/Users/auser/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-export PATH=~/.mix/escripts:$PATH
-
-if [ -z "$SSH_AUTH_SOCK" ]; then
-   # Check for a currently running instance of the agent
-   RUNNING_AGENT="`ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]'`"
-   if [ "$RUNNING_AGENT" = "0" ]; then
-        # Launch a new instance of the agent
-        ssh-agent -s &> $HOME/.ssh/ssh-agent
-   fi
-   eval `cat $HOME/.ssh/ssh-agent`
-fi
-
-export LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix)/lib:$(brew --prefix)/opt/libiconv/lib
-
-source $HOME/.turso/env 
+# Optional tool-managed environment.
+[[ -r "$HOME/.turso/env" ]] && source "$HOME/.turso/env"
 
 function zed-omlx() {
-  export OMLX_API_KEY=$(op item get "oMLX API key" --fields notesPlain)
-  open -a Zed
+  if (( ! $+commands[op] )); then
+    print -u2 -- "zed-omlx: 1Password CLI (op) is not installed"
+    return 127
+  fi
+
+  local omlx_api_key
+  omlx_api_key="$(op item get "oMLX API key" --fields notesPlain)" || return
+  OMLX_API_KEY="$omlx_api_key" open -a Zed
 }
