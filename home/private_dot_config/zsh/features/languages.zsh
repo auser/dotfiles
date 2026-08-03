@@ -1,101 +1,43 @@
+# Language and SDK integrations. Each integration is optional and must stay quiet
+# when its tool is not installed.
 
-#######################################################################
-# GOLANG
-#######################################################################
-
-#export GOPATH="$HOME/go"; export GOROOT="$HOME/.go"; export PATH="$GOPATH/bin:$PATH"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
-#alias gogo="$GOPATH/bin/g"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
-# g-install: do NOT edit, see https://github.com/stefanmaric/g
-
-#######################################################################
-# Anaconda
-#######################################################################
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
+# Node.js via nvm. mise can also manage Node; this block only runs when nvm exists.
+if [[ -n "${XDG_CONFIG_HOME:-}" ]]; then
+  export NVM_DIR="$XDG_CONFIG_HOME/nvm"
 else
-    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
-    fi
+  export NVM_DIR="$HOME/.nvm"
 fi
-unset __conda_setup
-# <<< conda initialize <<<
+[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
 
-#######################################################################
-# RUST
-#######################################################################
-#autoload -U is-at-least
-
-#######################################################################
-# FLUTTER
-#######################################################################
-#export PATH=/home/auser/Development/flutter/mine/flutter/bin:$PATH
-
-#######################################################################
-# ELIXIR
-#######################################################################
-#export PATH=$HOME/.mix/escripts:$PATH
-
-#######################################################################
-# NODE
-#######################################################################
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# pnpm
-export PNPM_HOME="/home/drew/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-
-# compinstall
-#zstyle :compinstall filename "$HOME/.zshrc"
-#autoload -Uz compinit
-#compinit
-
-#######################################################################
-# NIX
-#######################################################################
-#. /home/auser/.nix-profile/etc/profile.d/nix.sh
-
-#######################################################################
-# WASMER
-#######################################################################
-#export WASMER_DIR="/home/auser/.wasmer"
-#[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
-
-#######################################################################
-# NODE
-#######################################################################
-export ANDROID=$HOME/work/android
-export PATH=$ANDROID/cmdline-tools/bin:$PATH
-export PATH=$ANDROID/flutter/bin:$PATH
-
-# Android SDK
-export ANDROID_SDK=$ANDROID
-export PATH=$ANDROID_SDK:$PATH
-
-# Flutter
-# export FLUTTER=$HOME/work/android/flutter
-# export PATH=$FLUTTER/bin:$PATH
-
-# Java configuration
-if command -v java &> /dev/null; then
-  export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null || echo "")
+# Java on macOS.
+if [[ "$OSTYPE" == darwin* && -x /usr/libexec/java_home ]]; then
+  _java_home="$(/usr/libexec/java_home 2>/dev/null)" || _java_home=""
+  [[ -n "$_java_home" ]] && export JAVA_HOME="$_java_home"
+  unset _java_home
 fi
 
-export ANDROID_HOME=$HOME/Library/Android/sdk
+# Android SDK. Respect an existing override before choosing a platform default.
+if [[ -z "${ANDROID_HOME:-}" ]]; then
+  if [[ "$OSTYPE" == darwin* ]]; then
+    ANDROID_HOME="$HOME/Library/Android/sdk"
+  elif [[ -d "$HOME/Android/Sdk" ]]; then
+    ANDROID_HOME="$HOME/Android/Sdk"
+  fi
+fi
 
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-export PATH="$PATH":"$HOME/fvm/default/bin"
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
+if [[ -n "${ANDROID_HOME:-}" && -d "$ANDROID_HOME" ]]; then
+  export ANDROID_HOME
+  export ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
+
+  typeset -a _android_path
+  for _dir in \
+    "$ANDROID_HOME/emulator" \
+    "$ANDROID_HOME/platform-tools" \
+    "$ANDROID_HOME/cmdline-tools/latest/bin" \
+    "$ANDROID_HOME/tools/bin"
+  do
+    [[ -d "$_dir" ]] && _android_path+=("$_dir")
+  done
+  path=("${_android_path[@]}" "${path[@]}")
+  unset _dir _android_path
+fi
