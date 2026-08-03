@@ -1,97 +1,129 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialize Homebrew before zsh completion setup. This keeps Homebrew's
+# site-functions in fpath before Oh My Zsh runs compinit.
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+elif [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+typeset -gaU path fpath
+if (( $+commands[brew] )); then
+  _brew_bin="${commands[brew]}"
+  _brew_prefix="${_brew_bin:h:h}"
+  [[ -d "$_brew_prefix/share/zsh/site-functions" ]] &&
+    fpath=("$_brew_prefix/share/zsh/site-functions" $fpath)
+  unset _brew_bin _brew_prefix
+fi
+
+# Enable Powerlevel10k instant prompt. Keep this near the top of ~/.zshrc.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Prevent console output from breaking instant prompt
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-
 # Environment settings
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+export LANG="${LANG:-en_US.UTF-8}"
 {{ if eq .chezmoi.os "linux" -}}
-export EDITOR=$HOME/.local/bin/nvim
+export EDITOR="$HOME/.local/bin/nvim"
 {{ else -}}
-export EDITOR=nvim
+export EDITOR="nvim"
 {{ end -}}
-export VISUAL=$EDITOR
-export GOPATH=$HOME
-export GO111MODULE=on
-{{- if eq .chezmoi.os "darwin" }}
+export VISUAL="$EDITOR"
+export SUDO_EDITOR="${SUDO_EDITOR:-$EDITOR}"
+export GOPATH="${GOPATH:-$HOME/go}"
+{{ if eq .chezmoi.os "darwin" -}}
 export HOMEBREW_NO_AUTO_UPDATE=1
-{{- end }}
+export PNPM_HOME="$HOME/Library/pnpm"
+{{ else -}}
+export PNPM_HOME="$HOME/.local/share/pnpm"
+{{ end -}}
 
-# Path management
-typeset -U path
-path=(
-  $HOME/bin
-  $HOME/go/bin
-  $HOME/.cargo/bin
-  $HOME/.local/bin
-  $path
-)
+# Add user-owned executable directories once, in a deterministic order.
+typeset -a _dotfiles_path
+for _dir in \
+  "$HOME/.local/bin" \
+  "$HOME/bin" \
+  "$HOME/.bin" \
+  "$HOME/.cargo/bin" \
+  "$GOPATH/bin" \
+  "$PNPM_HOME" \
+  "$HOME/.orbstack/bin" \
+  "$HOME/.local/share/ponyup/bin" \
+  "$HOME/.composer/vendor/bin" \
+  "$HOME/.pub-cache/bin" \
+  "$HOME/fvm/default/bin" \
+  "$HOME/.lmstudio/bin" \
+  /opt/local/bin \
+  /opt/local/sbin
+do
+  [[ -d "$_dir" ]] && _dotfiles_path+=("$_dir")
+done
+path=("${_dotfiles_path[@]}" "${path[@]}")
+unset _dir _dotfiles_path
 
-# Oh-My-Zsh configuration
-export ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# Oh My Zsh configuration. Chezmoi installs both Oh My Zsh and Powerlevel10k.
+export ZSH="$HOME/.oh-my-zsh"
+export ZSH_CUSTOM="${ZSH_CUSTOM:-$ZSH/custom}"
+
+if [[ -r "$ZSH_CUSTOM/themes/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
+  ZSH_THEME="powerlevel10k/powerlevel10k"
+else
+  # Keep the shell usable while chezmoi restores the external theme.
+  ZSH_THEME=""
+fi
+
 CASE_SENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 HIST_STAMPS="yyyy-mm-dd"
 ZSH_DISABLE_COMPFIX=true
 
-# Source Oh-My-Zsh
-source $ZSH/oh-my-zsh.sh
+# Only enable plugins that are actually installed. Syntax highlighting stays last.
+plugins=(git vi-mode fzf tmux macos npm colored-man-pages kubectl)
+for _plugin in docker rust minikube microk8s python zsh-autosuggestions zsh-syntax-highlighting; do
+  if [[ -d "$ZSH/plugins/$_plugin" || -d "$ZSH_CUSTOM/plugins/$_plugin" ]]; then
+    plugins+=("$_plugin")
+  fi
+done
+unset _plugin
 
-# Powerlevel
-source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
-
-
-# Load plugins from custom location
-if [ -f "$HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-  source "$HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-fi
-
-if [ -f "$HOME/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-  source "$HOME/.zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
+# Oh My Zsh owns completion initialization and is sourced exactly once.
+[[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
 
 # Shell options
 setopt autocd
-setopt histignorespace
-setopt rm_star_silent
 setopt appendhistory
-setopt histignorealldups
 setopt extendedglob
-setopt interactivecomments
-setopt share_history
+setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
 setopt hist_ignore_dups
 setopt hist_ignore_space
+setopt hist_verify
+setopt interactivecomments
+setopt rm_star_silent
+setopt share_history
 
 # History configuration
-# history setup
-HISTFILE=$HOME/.zsh_history
+HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=10000
-setopt share_history
-setopt hist_expire_dups_first
-setopt hist_ignore_dups
-setopt hist_verify
 
-ulimit -n 65536
+# Some hosts have a lower hard limit; do not make shell startup noisy there.
+ulimit -n 65536 2>/dev/null || true
 
 # Essential aliases
 alias g=git
 alias gnp="git --no-pager"
-{{- if lookPath "bat" }}
+{{ if lookPath "bat" -}}
 alias cat=bat
-{{- else if lookPath "batcat" }}
+{{ else if lookPath "batcat" -}}
 alias cat=batcat
-{{- end }}
-{{- if lookPath "eza" }}
+{{ end -}}
+{{ if lookPath "eza" -}}
 alias ls=eza
-{{- else }}
+{{ else -}}
 alias ls='ls -G'
-{{- end }}
+{{ end -}}
 alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -CF'
@@ -114,84 +146,55 @@ alias ta='tmux attach -t'
 alias tl='tmux list-sessions'
 alias tk='tmux kill-session -t'
 
-# Tool integrations
-# mise activation
-[ -f "$HOME/.local/bin/mise" ] && eval "$($HOME/.local/bin/mise activate zsh)"
-
-# pnpm setup
-{{- if eq .chezmoi.os "darwin" }}
-export PNPM_HOME="$HOME/Library/pnpm"
-{{- else }}
-export PNPM_HOME="$HOME/.local/share/pnpm"
-{{- end }}
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-
-# direnv integration
-command -v direnv &> /dev/null && eval "$(direnv hook zsh)"
-
-# nvm setup
-{{ if stat (joinPath .chezmoi.homeDir ".nvm") }}
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-{{ end }}
-
 # 1Password integration
-{{- if and (hasKey . "onepasswordAccount") .personal }}
-if command -v op &> /dev/null; then
+{{ if and (hasKey . "onepasswordAccount") .personal -}}
+if (( $+commands[op] )); then
   export OP_ACCOUNT="{{ .onepasswordAccount }}"
-  
+
   function op_get_secret() {
     local item="$1"
     local field="${2:-credential}"
-    op item get "$item" --fields "$field" --no-auth-prompt 2>/dev/null || echo ""
+    op item get "$item" --fields "$field" --no-auth-prompt 2>/dev/null || print -r -- ""
   }
-  
+
   alias op-signin="op signin --account $OP_ACCOUNT"
   alias op-signout="op signout --account $OP_ACCOUNT"
   alias op-status="op account get --account $OP_ACCOUNT 2>/dev/null && echo 'Authenticated' || echo 'Not authenticated'"
 
   bindkey '^[f' forward-word
   bindkey '^[b' backward-word
-
-  # Arrow key variants (important inside tmux)
   bindkey '^[[1;3C' forward-word
   bindkey '^[[1;3D' backward-word
   bindkey '^[[1;9C' forward-word
   bindkey '^[[1;9D' backward-word
-  
+
   if op account get --account "$OP_ACCOUNT" --no-auth-prompt &>/dev/null; then
-    GITHUB_TOKEN=$(op_get_secret "chezmoi GitHub API Token")
-    [ ! -z "$GITHUB_TOKEN" ] && export CHEZMOI_GITHUB_ACCESS_TOKEN="$GITHUB_TOKEN"
-    
-    {{- if eq .chezmoi.os "darwin" }}
-    HOMEBREW_TOKEN=$(op_get_secret "Homebrew GitHub API Token")
-    [ ! -z "$HOMEBREW_TOKEN" ] && export HOMEBREW_GITHUB_API_TOKEN="$HOMEBREW_TOKEN"
-    {{- end }}
+    GITHUB_TOKEN="$(op_get_secret "chezmoi GitHub API Token")"
+    [[ -n "$GITHUB_TOKEN" ]] && export CHEZMOI_GITHUB_ACCESS_TOKEN="$GITHUB_TOKEN"
+
+    {{ if eq .chezmoi.os "darwin" -}}
+    HOMEBREW_TOKEN="$(op_get_secret "Homebrew GitHub API Token")"
+    [[ -n "$HOMEBREW_TOKEN" ]] && export HOMEBREW_GITHUB_API_TOKEN="$HOMEBREW_TOKEN"
+    {{ end -}}
   fi
 fi
-{{- end }}
+{{ end -}}
 
-source "$HOME/.config/zsh/env.zsh"
+# Static environment and helper functions.
+[[ -r "$HOME/.config/zsh/env.zsh" ]] && source "$HOME/.config/zsh/env.zsh"
 
-# Load local configuration files
-for dir in $HOME/.config/zsh/features $HOME/.config/private/zsh/features; do
-  if [ -d "$dir" ]; then
-    for file in "$dir"/*.zsh; do
-      [ -f "$file" ] && source "$file"
-    done
-  fi
+# Load feature modules in lexical order. The (N) qualifier makes an empty
+# directory expand to nothing instead of raising "no matches found".
+for _feature_dir in "$HOME/.config/zsh/features" "$HOME/.config/private/zsh/features"; do
+  [[ -d "$_feature_dir" ]] || continue
+  for _feature_file in "$_feature_dir"/*.zsh(N); do
+    source "$_feature_file"
+  done
 done
+unset _feature_dir _feature_file
 
-# Load local customizations
-[ -f "$HOME/.zshenv" ] && source "$HOME/.zshenv"
-[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+# Host-local customizations are intentionally unmanaged.
+[[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-export PATH="$PATH:/Users/auser/.lmstudio/bin"
-
+# Powerlevel10k configuration. Keep this at the end of interactive setup.
+[[ -r "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
