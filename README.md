@@ -1,80 +1,73 @@
 # Dotfiles
 
-My personal dotfiles managed with [chezmoi](https://www.chezmoi.io/), focusing on simplicity and clean organization.
+Personal macOS and Linux configuration managed with [chezmoi](https://www.chezmoi.io/).
 
 ## Installation
 
-### Quick Install
+### Quick install
 
 ```bash
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply auser
 ```
 
-### Manual Install
+### Manual install
 
-1. Install chezmoi:
-   ```bash
-   sh -c "$(curl -fsLS get.chezmoi.io)"
-   ```
+```bash
+sh -c "$(curl -fsLS get.chezmoi.io)"
+chezmoi init auser
+chezmoi apply
+```
 
-2. Initialize with this repo:
-   ```bash
-   chezmoi init auser
-   ```
+## What is managed
 
-3. Apply changes:
-   ```bash
-   chezmoi apply
-   ```
+- **Zsh**: Oh My Zsh, Powerlevel10k, completions, guarded tool integrations, and host-local overrides
+- **Tmux**: tmux configuration and TPM-managed plugins
+- **Editors**: Vim/Neovim and Zed settings
+- **Git and CLI tools**: shared configuration, aliases, and platform-specific packages
+- **macOS and Linux**: chezmoi templates and platform-specific install scripts
 
-## What's Included
+Oh My Zsh, Powerlevel10k, and selected zsh plugins are installed through chezmoi externals. Shell startup is intentionally ordered so that Homebrew and completion paths are available before Oh My Zsh runs `compinit`, and Oh My Zsh is sourced only once.
 
-- **Zsh configuration**: Lightweight setup without Oh My Zsh dependency, with git-aware prompt
-- **Tmux configuration**: Simplified with intuitive key bindings and sensible defaults
-- **Vim setup**: Clean configuration with essential features
-- **Git configuration**: Standard settings with useful aliases
-- **Shell aliases**: Common shortcuts for everyday commands
+## Zsh organization
 
-## Philosophy
+- `home/dot_zprofile.tmpl`: quiet login-shell environment, primarily Homebrew
+- `home/dot_zshrc.tmpl`: interactive shell bootstrap, prompt, history, aliases, and module loading
+- `home/private_dot_config/zsh/env.zsh`: static environment variables and small helper functions
+- `home/private_dot_config/zsh/features/*.zsh`: optional, guarded tool integrations loaded in lexical order
+- `home/dot_p10k.zsh`: generated Powerlevel10k configuration
+- `~/.zshrc.local`: unmanaged machine-local overrides
 
-These dotfiles are designed with simplicity and maintainability in mind:
+Feature modules must not source Oh My Zsh, initialize completion, or duplicate global PATH setup. Optional tools should be checked before they are invoked, and startup files should not write to the console.
 
-- **Minimal dependencies**: No reliance on external frameworks like Oh My Zsh
-- **Straightforward configuration**: Clear organization and comments
-- **Easy customization**: Support for local overrides through .local files
-- **Cross-platform compatibility**: Works on macOS, Linux, and other Unix-like systems
+## Restoring shell dependencies
 
-## Organization
+After an interrupted install or manual replacement of `~/.oh-my-zsh`, restore chezmoi-managed externals and rebuild the completion cache:
 
-The repository is organized by target locations in the home directory, managed through Chezmoi's templating and configuration system.
+```bash
+chezmoi apply
+rm -f ~/.zcompdump*
+exec zsh
+```
 
-## 1Password Integration
+A `compinit: no such file or directory` message usually means that a completion file or symlink inside a directory in `$fpath` is stale. Remove or restore that specific entry before rebuilding `.zcompdump`.
 
-This dotfiles setup optionally integrates with 1Password to securely store and retrieve sensitive information:
+## 1Password integration
 
-1. **Prerequisites**:
-   - 1Password CLI (`op`) installed
-   - Logged in to your 1Password account (`op signin`)
+On personal machines, the zsh template can use the 1Password CLI for GitHub and Homebrew API tokens.
 
-2. **Stored Secrets**:
-   - GitHub API tokens
-   - Homebrew tokens (macOS only)
-   - Other personal credentials can be easily added
+Prerequisites:
 
-3. **How it works**:
-   - On first run, you'll be asked if this is a personal machine
-   - If yes, and if 1Password CLI is detected, credentials will be used
-   - If 1Password is not available, the configuration degrades gracefully
+- 1Password CLI (`op`)
+- A configured account in chezmoi data
+- An authenticated 1Password session when secret-backed commands are needed
 
-4. **Troubleshooting**:
-   - If you see errors related to 1Password, ensure you're logged in: `op signin`
-   - You can manually edit `.chezmoi.toml` to adjust 1Password settings
+The configuration degrades when `op` is unavailable.
 
-## Customization
+## Local customization
 
-Each configuration file supports local customizations:
+These files are intentionally unmanaged and can hold machine-specific settings:
 
-- `~/.zshrc.local`: Custom zsh settings
-- `~/.tmux.conf.local`: Custom tmux settings
-- `~/.vimrc.local`: Custom vim settings
-- `~/.gitconfig.local`: Custom git settings 
+- `~/.zshrc.local`
+- `~/.tmux.conf.local`
+- `~/.vimrc.local`
+- `~/.gitconfig.local`
