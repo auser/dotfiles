@@ -27,3 +27,8 @@ fi
 export LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix)/lib:$(brew --prefix)/opt/libiconv/lib
 
 source $HOME/.turso/env 
+
+function zed-omlx() {
+  export OMLX_API_KEY=$(op item get "oMLX API key" --fields notesPlain)
+  open -a Zed
+}

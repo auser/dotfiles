@@ -175,6 +175,8 @@ if command -v op &> /dev/null; then
 fi
 {{- end }}
 
+source "$HOME/.config/zsh/env.zsh"
+
 # Load local configuration files
 for dir in $HOME/.config/zsh/features $HOME/.config/private/zsh/features; do
   if [ -d "$dir" ]; then
