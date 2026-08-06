@@ -39,7 +39,7 @@ export PNPM_HOME="$HOME/Library/pnpm"
 export PNPM_HOME="$HOME/.local/share/pnpm"
 {{ end -}}
 
-# Add user-owned executable directories once, in a deterministic order.
+# Add executable directories once, in a deterministic order.
 typeset -a _dotfiles_path
 for _dir in \
   "$HOME/.local/bin" \
@@ -54,6 +54,7 @@ for _dir in \
   "$HOME/.pub-cache/bin" \
   "$HOME/fvm/default/bin" \
   "$HOME/.lmstudio/bin" \
+  /nix/var/nix/profiles/default/bin \
   /opt/local/bin \
   /opt/local/sbin
 do
