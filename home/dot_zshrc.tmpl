@@ -199,3 +199,8 @@ unset _feature_dir _feature_file
 
 # Powerlevel10k configuration. Keep this at the end of interactive setup.
 [[ -r "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
+
+# Direnv
+if (( $+commands[direnv] )); then
+  eval "$(direnv hook zsh)"
+fi
