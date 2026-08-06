@@ -512,6 +512,8 @@ set -g pane-active-border-style fg=green
 bind-key -n M-h previous-window
 bind-key -n M-l next-window
 
+set -g extended-keys-format csi-u
+
 # -- Environment ----------------------------------------------------------
 
 # Add any environment variables here
