@@ -6,3 +6,8 @@ eval "$(/usr/local/bin/brew shellenv)"
 {{ else if stat "/home/linuxbrew/.linuxbrew/bin/brew" -}}
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 {{ end -}}
+
+# Initialize Nix's multi-user environment when it is installed.
+if [[ -r /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+  source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
