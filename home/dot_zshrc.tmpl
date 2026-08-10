@@ -56,7 +56,9 @@ for _dir in \
   "$HOME/.lmstudio/bin" \
   /nix/var/nix/profiles/default/bin \
   /opt/local/bin \
-  /opt/local/sbin
+  /opt/local/sbin \
+  ./target/debug \
+  ./target/release
 do
   [[ -d "$_dir" ]] && _dotfiles_path+=("$_dir")
 done
