@@ -32,6 +32,12 @@
     },
   },
   "agent_servers": {
+    "kimi": {
+      "type": "registry"
+    },
+    "codex-acp": {
+      "type": "registry"
+    },
     "claude-acp": {
       "type": "registry",
     },

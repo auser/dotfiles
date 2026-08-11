@@ -206,3 +206,11 @@ unset _feature_dir _feature_file
 if (( $+commands[direnv] )); then
   eval "$(direnv hook zsh)"
 fi
+
+# Nix
+if [[ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+  source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
+
+# Rustup proxies must precede Nix/Homebrew cargo and rustc.
+export PATH="$HOME/.cargo/bin:$PATH"
