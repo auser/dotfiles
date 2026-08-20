@@ -56,9 +56,7 @@ for _dir in \
   "$HOME/.lmstudio/bin" \
   /nix/var/nix/profiles/default/bin \
   /opt/local/bin \
-  /opt/local/sbin \
-  ./target/release \
-  ./target/debug
+  /opt/local/sbin
 do
   [[ -d "$_dir" ]] && _dotfiles_path+=("$_dir")
 done
@@ -214,3 +212,7 @@ fi
 
 # Rustup proxies must precede Nix/Homebrew cargo and rustc.
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# Cargo build packages
+export PATH="./target/release:./target/debug:$PATH"
+
