@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -eu
+
+state_home="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+# Nix has used multiple default profile locations over time and depending on
+# use-xdg-base-directories. Keep one stable executable path for editors while
+# dispatching to the formatter installed in whichever profile is active.
+for candidate in \
+  "$state_home/nix/profile/bin/nixfmt" \
+  "$state_home/nix/profiles/profile/bin/nixfmt" \
+  "$HOME/.nix-profile/bin/nixfmt" \
+  "/nix/var/nix/profiles/default/bin/nixfmt"
+do
+  if [ -x "$candidate" ]; then
+    exec "$candidate" "$@"
+  fi
+done
+
+cat >&2 <<'EOF'
+nixfmt is not installed in a known Nix profile.
+
+Install it with:
+  nix profile add 'nixpkgs#nixfmt'
+EOF
+exit 127
