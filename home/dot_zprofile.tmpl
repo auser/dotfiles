@@ -11,3 +11,20 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 if [[ -r /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
   source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 fi
+
+# Nix has used both legacy and XDG-based per-user profile locations. Add every
+# existing profile bin directory so `nix profile add` commands are immediately
+# available in login shells regardless of the active Nix layout.
+typeset -gaU path
+typeset -a _nix_profile_paths
+_nix_state_home="${XDG_STATE_HOME:-$HOME/.local/state}"
+for _dir in \
+  "$_nix_state_home/nix/profile/bin" \
+  "$_nix_state_home/nix/profiles/profile/bin" \
+  "$HOME/.nix-profile/bin"
+do
+  [[ -d "$_dir" ]] && _nix_profile_paths+=("$_dir")
+done
+path=("${_nix_profile_paths[@]}" "${path[@]}")
+export PATH
+unset _dir _nix_profile_paths _nix_state_home
