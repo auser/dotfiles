@@ -26,9 +26,12 @@ keybinds {
         bind "k" { MoveFocus "Up"; SwitchToMode "locked"; }
         bind "l" { MoveFocus "Right"; SwitchToMode "locked"; }
 
-        // Splits, new tabs, and tab navigation
-        bind "|" { NewPane "Right"; SwitchToMode "locked"; }
+        // Vertical split (panes side by side) and horizontal split (stacked).
+        bind "\\" { NewPane "Right"; SwitchToMode "locked"; }
         bind "-" { NewPane "Down"; SwitchToMode "locked"; }
+        bind "Ctrl n" { NewPane; SwitchToMode "locked"; }
+
+        // Tab navigation
         bind "c" { NewTab; SwitchToMode "locked"; }
         bind "p" { GoToPreviousTab; SwitchToMode "locked"; }
         bind "n" { GoToNextTab; SwitchToMode "locked"; }
@@ -36,7 +39,7 @@ keybinds {
 
         // Pane actions
         bind "x" { CloseFocus; SwitchToMode "locked"; }
-        bind "z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
+        bind "Ctrl z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
         bind "f" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "r" { SwitchToMode "resize"; }
         bind "," { SwitchToMode "RenamePane"; PaneNameInput 0; }
