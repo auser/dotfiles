@@ -1,0 +1,100 @@
+// Ctrl+A prefix bindings for a tmux-like Zellij workflow.
+// The prefix enters a one-action tmux mode; actions return to locked mode so
+// normal terminal shortcuts, including Ctrl+A, pass through.
+
+default_mode "locked"
+pane_frames true
+mouse_mode true
+scrollback_editor "nvim"
+session_serialization true
+pane_viewport_serialization true
+scrollback_lines_to_serialize 10000
+show_startup_tips false
+
+keybinds {
+    locked {
+        bind "Ctrl a" { SwitchToMode "tmux"; }
+    }
+
+    tmux {
+        // Repeat Ctrl+A to send Ctrl+A to the application.
+        bind "Ctrl a" { Write 1; SwitchToMode "locked"; }
+
+        // Pane focus
+        bind "h" { MoveFocus "Left"; SwitchToMode "locked"; }
+        bind "j" { MoveFocus "Down"; SwitchToMode "locked"; }
+        bind "k" { MoveFocus "Up"; SwitchToMode "locked"; }
+        bind "l" { MoveFocus "Right"; SwitchToMode "locked"; }
+
+        // Splits, new tabs, and tab navigation
+        bind "|" { NewPane "Right"; SwitchToMode "locked"; }
+        bind "-" { NewPane "Down"; SwitchToMode "locked"; }
+        bind "c" { NewTab; SwitchToMode "locked"; }
+        bind "p" { GoToPreviousTab; SwitchToMode "locked"; }
+        bind "n" { GoToNextTab; SwitchToMode "locked"; }
+        bind "Tab" { GoToPreviousTab; SwitchToMode "locked"; }
+
+        // Pane actions
+        bind "x" { CloseFocus; SwitchToMode "locked"; }
+        bind "z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
+        bind "f" { ToggleFloatingPanes; SwitchToMode "locked"; }
+        bind "r" { SwitchToMode "resize"; }
+        bind "," { SwitchToMode "RenamePane"; PaneNameInput 0; }
+
+        // Tab, session, and scrollback actions
+        bind "." { SwitchToMode "RenameTab"; TabNameInput 0; }
+        bind "s" { LaunchOrFocusPlugin "zellij:session-manager"; SwitchToMode "locked"; }
+        bind "d" { Detach; }
+        bind "[" { SwitchToMode "scroll"; }
+        bind "m" { ToggleMouseMode; SwitchToMode "locked"; }
+    }
+
+    resize {
+        bind "Esc" { SwitchToMode "locked"; }
+        bind "h" { Resize "Left"; SwitchToMode "locked"; }
+        bind "j" { Resize "Down"; SwitchToMode "locked"; }
+        bind "k" { Resize "Up"; SwitchToMode "locked"; }
+        bind "l" { Resize "Right"; SwitchToMode "locked"; }
+        bind "H" { Resize "Left"; SwitchToMode "locked"; }
+        bind "J" { Resize "Down"; SwitchToMode "locked"; }
+        bind "K" { Resize "Up"; SwitchToMode "locked"; }
+        bind "L" { Resize "Right"; SwitchToMode "locked"; }
+        bind "Left" { Resize "Left"; SwitchToMode "locked"; }
+        bind "Down" { Resize "Down"; SwitchToMode "locked"; }
+        bind "Up" { Resize "Up"; SwitchToMode "locked"; }
+        bind "Right" { Resize "Right"; SwitchToMode "locked"; }
+    }
+
+    scroll {
+        bind "Esc" { ScrollToBottom; SwitchToMode "locked"; }
+        bind "q" { ScrollToBottom; SwitchToMode "locked"; }
+        bind "PageUp" { PageScrollUp; }
+        bind "PageDown" { PageScrollDown; }
+        bind "Enter" { SwitchToMode "entersearch"; SearchInput 0; }
+        bind "e" { EditScrollback; SwitchToMode "locked"; }
+    }
+
+    entersearch {
+        bind "Esc" "Ctrl c" { SwitchToMode "scroll"; }
+        bind "Enter" { SwitchToMode "search"; }
+    }
+
+    search {
+        bind "Esc" { SwitchToMode "locked"; }
+        bind "Ctrl a" { SwitchToMode "locked"; }
+        bind "n" { Search "down"; }
+        bind "N" { Search "up"; }
+    }
+
+    renametab {
+        bind "Enter" { SwitchToMode "locked"; }
+        bind "Esc" { UndoRenameTab; SwitchToMode "locked"; }
+        bind "Ctrl c" { SwitchToMode "locked"; }
+    }
+
+    renamepane {
+        bind "Enter" { SwitchToMode "locked"; }
+        bind "Esc" { UndoRenamePane; SwitchToMode "locked"; }
+        bind "Ctrl c" { SwitchToMode "locked"; }
+    }
+}
