@@ -18,8 +18,8 @@ twice to send Ctrl+A to the application.
 | Ctrl+A, r, H/J/K/L | Resize a pane |
 | Ctrl+A, c | New tab |
 | Ctrl+A, p / n | Previous / next tab |
-| Ctrl+A, , | Rename tab |
-| Ctrl+A, . | Rename pane |
+| Ctrl+A, , | Rename pane |
+| Ctrl+A, . | Rename tab |
 | Ctrl+A, x | Close pane |
 | Ctrl+A, z | Toggle pane fullscreen |
 | Ctrl+A, s | Open session manager |
