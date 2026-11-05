@@ -26,9 +26,9 @@ keybinds {
         bind "k" { MoveFocus "Up"; SwitchToMode "locked"; }
         bind "l" { MoveFocus "Right"; SwitchToMode "locked"; }
 
-        // Vertical split (panes side by side) and horizontal split (stacked).
-        bind "\\" { NewPane "Right"; SwitchToMode "locked"; }
-        bind "-" { NewPane "Down"; SwitchToMode "locked"; }
+        // Ctrl+backslash splits vertically; Ctrl+minus splits horizontally.
+        bind "Ctrl \\" { NewPane "Right"; SwitchToMode "locked"; }
+        bind "Ctrl -" { NewPane "Down"; SwitchToMode "locked"; }
 
         // Create and navigate tabs
         bind "Ctrl n" { NewTab; SwitchToMode "locked"; }
@@ -37,9 +37,10 @@ keybinds {
         bind "n" { GoToNextTab; SwitchToMode "locked"; }
         bind "Tab" { GoToPreviousTab; SwitchToMode "locked"; }
 
+        // Closing requires an explicit confirmation in Pane mode.
+        bind "Ctrl x" { SwitchToMode "pane"; }
+
         // Pane actions
-        bind "x" { CloseFocus; SwitchToMode "locked"; }
-        bind "Ctrl x" { CloseFocus; SwitchToMode "locked"; }
         bind "Ctrl z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
         bind "f" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "r" { SwitchToMode "resize"; }
@@ -51,6 +52,12 @@ keybinds {
         bind "d" { Detach; }
         bind "[" { SwitchToMode "scroll"; }
         bind "m" { ToggleMouseMode; SwitchToMode "locked"; }
+    }
+
+    // Ctrl+A Ctrl+X opens this small yes/no confirmation mode.
+    pane clear-defaults=true {
+        bind "y" "Enter" { CloseFocus; SwitchToMode "locked"; }
+        bind "n" "Esc" "Ctrl c" { SwitchToMode "locked"; }
     }
 
     resize {
