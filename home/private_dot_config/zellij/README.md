@@ -1,47 +1,48 @@
 # Zellij
 
 Zellij uses KDL and reads this file as `~/.config/zellij/config.kdl`.
-The checked-in file is managed by chezmoi.
+The checked-in configuration is managed by chezmoi.
 
-The configuration uses Ctrl+A to toggle between locked mode (normal input
-passes through) and normal mode (Zellij controls). From normal mode, choose
-pane (`p`), tab (`t`), resize (`r`), or session (`s`) mode. The mode bar
-shows the active mode and available shortcuts.
+This setup keeps a tmux-style prefix workflow: press Ctrl+A, then one action
+key. Zellij returns to locked mode after each action, so normal terminal
+shortcuts (including Ctrl+A in shells and editors) pass through. Press Ctrl+A
+twice to send Ctrl+A to the application.
 
-## Familiar shortcuts
+## Shortcuts
 
-- `Ctrl+A p h/j/k/l`: focus a pane
-- `Ctrl+A p |` / `Ctrl+A p -`: split right / down
-- `Ctrl+A r H/J/K/L`: resize a pane
-- `Ctrl+A t c`: create a tab
-- `Ctrl+A t h/l`: previous / next tab
-- `Ctrl+A s w`: open the session manager
-- `Ctrl+A s d`: detach from the session
-- `Ctrl+A m`: toggle mouse support
-- `Ctrl+A Ctrl+A` or `Esc`: return to locked mode
+| Keys | Action |
+| --- | --- |
+| Ctrl+A, h/j/k/l | Focus left/down/up/right pane |
+| Ctrl+A, `|` / `-` | Split right / down |
+| Ctrl+A, H/J/K/L | Resize left/down/up/right |
+| Ctrl+A, r, H/J/K/L | Resize a pane |
+| Ctrl+A, c | New tab |
+| Ctrl+A, p / n | Previous / next tab |
+| Ctrl+A, , | Rename tab |
+| Ctrl+A, . | Rename pane |
+| Ctrl+A, x | Close pane |
+| Ctrl+A, z | Toggle pane fullscreen |
+| Ctrl+A, s | Open session manager |
+| Ctrl+A, d | Detach |
+| Ctrl+A, [ | Enter scrollback |
+| Ctrl+A, m | Toggle mouse mode |
 
-Zellij is modal, so most actions use a mode key plus the action key. Pane
-navigation and resizing remain in their modes for repeated movement; split and
-new-tab actions return to locked mode.
+Pane focus, splits, tab navigation and most pane actions are one prefix plus
+one key. Resizing uses Ctrl+A then `r` to enter resize mode, followed by
+H/J/K/L; each resize returns to locked mode. Scrollback supports Page Up/Down,
+Enter to search, and `e` to edit in Neovim.
 
 Session layout and up to 10,000 lines of scrollback are serialized for
 resurrection. Zellij asks before rerunning restored commands.
 
-## Try it
+## Apply with chezmoi
 
-Install or update managed files without immediately applying them:
-
-```sh
-chezmoi update --apply=false
-```
-
-Review the proposed change, then apply it:
+Preview the managed changes, then apply the Zellij config:
 
 ```sh
+chezmoi diff
 chezmoi apply ~/.config/zellij/config.kdl
 ```
 
-Start Zellij with `zellij`, or reload the config in an active session with
-`Ctrl+A` followed by `r` only if normal-mode `r` is assigned as resize mode
-(and use the Zellij configuration screen/reload action instead). Config changes
-are watched automatically by Zellij.
+Zellij watches its configuration file and applies most changes to active
+sessions automatically. Start it with `zellij`.
