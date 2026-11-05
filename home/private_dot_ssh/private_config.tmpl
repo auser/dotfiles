@@ -24,3 +24,28 @@ Host github.com
   PreferredAuthentications publickey
   IdentityFile /Users/auser/.ssh/id_ed25519
   IdentitiesOnly yes
+
+Host imperativeai.ghe.com
+  User git
+  Hostname imperativeai.ghe.com
+  IdentityFile /Users/auser/.ssh/imperative_ed25519
+  IdentitiesOnly yes
+
+Host chews
+  User exedev
+  HostName Tesoro-proxi.exe.xyz
+  IdentitiesOnly yes
+  IdentityFile /Users/auser/.ssh/chews_ed25519
+
+Host chews_ai
+  User exedev
+  HostName proxi.exe.xyz
+  IdentitiesOnly yes
+  IdentityFile /Users/auser/.ssh/chews_ai
+
+Host rpi1 rpi1.local
+  User auser
+  HostName 192.168.4.26
+  IdentitiesOnly yes
+  #IdentityFile /Users/auser/.ssh/id_ed25519
+  AddressFamily inet
