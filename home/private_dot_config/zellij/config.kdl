@@ -39,6 +39,7 @@ keybinds {
 
         // Pane actions
         bind "x" { CloseFocus; SwitchToMode "locked"; }
+        bind "Ctrl x" { CloseFocus; SwitchToMode "locked"; }
         bind "Ctrl z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
         bind "f" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "r" { SwitchToMode "resize"; }

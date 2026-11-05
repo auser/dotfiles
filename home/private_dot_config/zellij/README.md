@@ -23,16 +23,16 @@ twice to send Ctrl+A to the application.
 | Ctrl+A, p / n | Previous / next tab |
 | Ctrl+A, , | Rename pane |
 | Ctrl+A, . | Rename tab |
-| Ctrl+A, x | Close pane |
+| Ctrl+A, Ctrl+X | Close focused pane |
 | Ctrl+A, s | Open session manager |
 | Ctrl+A, d | Detach |
 | Ctrl+A, [ | Enter scrollback |
 | Ctrl+A, m | Toggle mouse mode |
 
-Pane focus, splits, tab navigation, new pane, and zoom use the prefix plus one
-key. Resizing uses Ctrl+A then `r` to enter resize mode, followed by H/J/K/L;
-each resize returns to locked mode. Scrollback supports Page Up/Down, Enter to
-search, and `e` to edit in Neovim.
+Pane focus, splits, tab navigation, new pane, zoom and closing a pane use the
+prefix plus one key. Resizing uses Ctrl+A then `r` to enter resize mode,
+followed by H/J/K/L; each resize returns to locked mode. Scrollback supports
+Page Up/Down, Enter to search, and `e` to edit in Neovim.
 
 Session layout and up to 10,000 lines of scrollback are serialized for
 resurrection. Zellij asks before rerunning restored commands.
