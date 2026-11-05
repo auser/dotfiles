@@ -15,11 +15,12 @@ twice to send Ctrl+A to the application.
 | Ctrl+A, h/j/k/l | Focus left/down/up/right pane |
 | Ctrl+A, `\` | Vertical split (panes side by side) |
 | Ctrl+A, `-` | Horizontal split (panes stacked) |
-| Ctrl+A, Ctrl+N | Open a new pane in the largest available area |
+| Ctrl+A, a | Open a new pane in the largest available area |
+| Ctrl+A, Ctrl+N | New tab |
 | Ctrl+A, Ctrl+Z | Toggle focused pane zoom |
 | Ctrl+A, H/J/K/L | Resize left/down/up/right |
 | Ctrl+A, r, H/J/K/L | Resize a pane |
-| Ctrl+A, c | New tab |
+| Ctrl+A, c | New tab (alternate shortcut) |
 | Ctrl+A, p / n | Previous / next tab |
 | Ctrl+A, , | Rename pane |
 | Ctrl+A, . | Rename tab |
