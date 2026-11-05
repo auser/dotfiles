@@ -26,8 +26,8 @@ keybinds {
         bind "k" { MoveFocus "Up"; SwitchToMode "locked"; }
         bind "l" { MoveFocus "Right"; SwitchToMode "locked"; }
 
-        // Ctrl+backslash splits vertically; Ctrl+minus splits horizontally.
-        bind "Ctrl \\" { NewPane "Right"; SwitchToMode "locked"; }
+        // Ctrl+| splits vertically; Ctrl+- splits horizontally.
+        bind "Ctrl |" { NewPane "Right"; SwitchToMode "locked"; }
         bind "Ctrl -" { NewPane "Down"; SwitchToMode "locked"; }
 
         // Create and navigate tabs
@@ -46,9 +46,10 @@ keybinds {
         bind "r" { SwitchToMode "resize"; }
         bind "," { SwitchToMode "RenamePane"; PaneNameInput 0; }
 
-        // Tab, session, and scrollback actions
+        // Tab, session, help, and scrollback actions
         bind "." { SwitchToMode "RenameTab"; TabNameInput 0; }
         bind "s" { LaunchOrFocusPlugin "zellij:session-manager"; SwitchToMode "locked"; }
+        bind "?" { LaunchOrFocusPlugin "zellij:about"; SwitchToMode "locked"; }
         bind "d" { Detach; }
         bind "[" { SwitchToMode "scroll"; }
         bind "m" { ToggleMouseMode; SwitchToMode "locked"; }
