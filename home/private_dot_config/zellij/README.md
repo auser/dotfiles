@@ -23,16 +23,18 @@ twice to send Ctrl+A to the application.
 | Ctrl+A, p / n | Previous / next tab |
 | Ctrl+A, , | Rename pane |
 | Ctrl+A, . | Rename tab |
-| Ctrl+A, Ctrl+X, Y | Confirm closing the focused pane |
-| Ctrl+A, Ctrl+X, N or Esc | Cancel closing the focused pane |
+| Ctrl+A, Ctrl+X, X | Show Pane mode, then close the focused pane |
+| Ctrl+A, Ctrl+X, Esc | Cancel and return to normal input |
 | Ctrl+A, s | Open session manager |
 | Ctrl+A, d | Detach |
 | Ctrl+A, [ | Enter scrollback |
 | Ctrl+A, m | Toggle mouse mode |
 
-The close binding uses a confirmation step because Zellij's `CloseFocus`
-action does not provide a native yes/no popup in keybindings. Ctrl+A Ctrl+X
-enters Pane mode; press Y or Enter to close, or N/Esc to cancel.
+Pane closing uses two deliberate keypresses after the prefix. Ctrl+A Ctrl+X
+opens Zellij's built-in Pane mode, which displays its available actions in
+the status bar. Press X to close the focused pane, or Esc to leave Pane mode
+without closing it. Zellij has no native yes/no dialog for the `CloseFocus`
+keybinding, so this uses the built-in mode UI as the visible confirmation step.
 
 Resizing uses Ctrl+A then `r` to enter resize mode, followed by H/J/K/L; each
 resize returns to locked mode. Scrollback supports Page Up/Down, Enter to

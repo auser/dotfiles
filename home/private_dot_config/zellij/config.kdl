@@ -37,7 +37,7 @@ keybinds {
         bind "n" { GoToNextTab; SwitchToMode "locked"; }
         bind "Tab" { GoToPreviousTab; SwitchToMode "locked"; }
 
-        // Closing requires an explicit confirmation in Pane mode.
+        // Enter the visible Pane mode before choosing whether to close.
         bind "Ctrl x" { SwitchToMode "pane"; }
 
         // Pane actions
@@ -54,10 +54,10 @@ keybinds {
         bind "m" { ToggleMouseMode; SwitchToMode "locked"; }
     }
 
-    // Ctrl+A Ctrl+X opens this small yes/no confirmation mode.
-    pane clear-defaults=true {
-        bind "y" "Enter" { CloseFocus; SwitchToMode "locked"; }
-        bind "n" "Esc" "Ctrl c" { SwitchToMode "locked"; }
+    // Keep Pane mode defaults so Zellij displays its normal on-screen hints.
+    // Ctrl+A Ctrl+X enters Pane mode; X closes, while Esc exits without closing.
+    pane {
+        bind "x" { CloseFocus; }
     }
 
     resize {
