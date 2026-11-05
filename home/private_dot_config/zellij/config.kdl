@@ -29,9 +29,10 @@ keybinds {
         // Vertical split (panes side by side) and horizontal split (stacked).
         bind "\\" { NewPane "Right"; SwitchToMode "locked"; }
         bind "-" { NewPane "Down"; SwitchToMode "locked"; }
-        bind "Ctrl n" { NewPane; SwitchToMode "locked"; }
+        bind "a" { NewPane; SwitchToMode "locked"; }
 
-        // Tab navigation
+        // Create and navigate tabs
+        bind "Ctrl n" { NewTab; SwitchToMode "locked"; }
         bind "c" { NewTab; SwitchToMode "locked"; }
         bind "p" { GoToPreviousTab; SwitchToMode "locked"; }
         bind "n" { GoToNextTab; SwitchToMode "locked"; }
