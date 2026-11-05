@@ -87,11 +87,13 @@ keybinds {
     }
 
     renametab {
+        bind "Enter" { SwitchToMode "locked"; }
         bind "Esc" { UndoRenameTab; SwitchToMode "locked"; }
         bind "Ctrl c" { SwitchToMode "locked"; }
     }
 
     renamepane {
+        bind "Enter" { SwitchToMode "locked"; }
         bind "Esc" { UndoRenamePane; SwitchToMode "locked"; }
         bind "Ctrl c" { SwitchToMode "locked"; }
     }
