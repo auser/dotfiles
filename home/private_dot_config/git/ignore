@@ -80,3 +80,7 @@ htmlcov/
 .env.development.local
 .env.test.local
 .env.production.local 
+
+# Claude
+.claude/settings.local.json
+
