@@ -13,7 +13,7 @@ twice to send Ctrl+A to the application.
 | Keys | Action |
 | --- | --- |
 | Ctrl+A, h/j/k/l | Focus left/down/up/right pane |
-| Ctrl+A, Ctrl+\ | Vertical split (panes side by side) |
+| Ctrl+A, Ctrl+\| | Vertical split (panes side by side) |
 | Ctrl+A, Ctrl+- | Horizontal split (panes stacked) |
 | Ctrl+A, Ctrl+N | New tab |
 | Ctrl+A, Ctrl+Z | Toggle focused pane zoom |
@@ -25,6 +25,7 @@ twice to send Ctrl+A to the application.
 | Ctrl+A, . | Rename tab |
 | Ctrl+A, Ctrl+X, X | Show Pane mode, then close the focused pane |
 | Ctrl+A, Ctrl+X, Esc | Cancel and return to normal input |
+| Ctrl+A, ? | Open Zellij's about and usage tips |
 | Ctrl+A, s | Open session manager |
 | Ctrl+A, d | Detach |
 | Ctrl+A, [ | Enter scrollback |
@@ -35,6 +36,10 @@ opens Zellij's built-in Pane mode, which displays its available actions in
 the status bar. Press X to close the focused pane, or Esc to leave Pane mode
 without closing it. Zellij has no native yes/no dialog for the `CloseFocus`
 keybinding, so this uses the built-in mode UI as the visible confirmation step.
+
+For on-screen mode-specific hints, use Pane/Resize modes or consult this
+guide. `Ctrl+A, ?` opens Zellij's about plugin; its usage tips can also be
+opened through Zellij's built-in `Ctrl+O, A, ?` sequence.
 
 Resizing uses Ctrl+A then `r` to enter resize mode, followed by H/J/K/L; each
 resize returns to locked mode. Scrollback supports Page Up/Down, Enter to
