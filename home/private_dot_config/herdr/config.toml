@@ -69,8 +69,8 @@ focus_pane_left = "prefix+h"
 focus_pane_down = "prefix+j"
 focus_pane_up = "prefix+k"
 focus_pane_right = "prefix+l"
-split_vertical = ["prefix+ctrl+|", "prefix+v"]
-split_horizontal = ["prefix+ctrl+minus", "prefix+minus"]
+split_vertical = "prefix+shift+|"
+split_horizontal = "prefix+minus"
 close_pane = ["prefix+ctrl+x", "prefix+x"]
 zoom = ["prefix+ctrl+z", "prefix+z"]
 resize_mode = "prefix+r"
@@ -87,11 +87,13 @@ close_tab = "prefix+shift+x"
 
 # Workspace controls
 workspace_picker = "prefix+w"
-new_workspace = "prefix+shift+n"
-previous_workspace = "prefix+shift+left"
-next_workspace = "prefix+shift+right"
+new_workspace = "prefix+ctrl+c"
+previous_workspace = "prefix+shift+tab"
+next_workspace = "prefix+tab"
+cycle_pane_next = ""
+cycle_pane_previous = ""
 rename_workspace = "prefix+shift+w"
-close_workspace = "prefix+shift+d"
+close_workspace = "prefix+ctrl+w"
 
 # Session controls
 detach = "prefix+d"
@@ -142,8 +144,8 @@ reload_config = "prefix+shift+r"
 
 # Navigate-mode movement. These local shortcuts win while navigate mode is open.
 # They are independent from focus_pane_*. Do not include prefix+, esc, enter, tab, or 1..9 here.
-navigate_workspace_up = "up"
-navigate_workspace_down = "down"
+navigate_workspace_up = "k"
+navigate_workspace_down = "j"
 navigate_pane_left = "h"         # left arrow always focuses the pane to the left
 navigate_pane_down = "j"
 navigate_pane_up = "k"
