@@ -87,11 +87,11 @@ close_tab = "prefix+shift+x"
 
 # Workspace controls
 workspace_picker = "prefix+w"
-new_workspace = "prefix+shift+n"
+new_workspace = "prefix+ctrl+c"
 previous_workspace = "prefix+shift+left"
 next_workspace = "prefix+tab"
 rename_workspace = "prefix+shift+w"
-close_workspace = "prefix+shift+d"
+close_workspace = "prefix+ctrl+w"
 
 # Session controls
 detach = "prefix+d"
