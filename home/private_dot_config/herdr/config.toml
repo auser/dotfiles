@@ -147,8 +147,8 @@ reload_config = "prefix+shift+r"
 navigate_workspace_up = "k"
 navigate_workspace_down = "j"
 navigate_pane_left = "h"         # left arrow always focuses the pane to the left
-navigate_pane_down = "j"
-navigate_pane_up = "k"
+navigate_pane_down = ""
+navigate_pane_up = ""
 navigate_pane_right = "l"        # right arrow always focuses the pane to the right
 
 # Custom commands use the same binding syntax.
