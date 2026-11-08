@@ -167,7 +167,7 @@ navigate_pane_right = "l"        # right arrow always focuses the pane to the ri
 # workspaces = "" # e.g. "ctrl+shift" makes ctrl+shift+1..9 switch workspaces directly
 # agents = ""     # e.g. "alt" makes alt+1..9 focus agent rows directly
 
-# [worktrees]
+[worktrees]
 directory = "~/.herdr/worktrees"
 
 [ui]
