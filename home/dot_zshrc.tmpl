@@ -148,10 +148,6 @@ alias ta='tmux attach -t'
 alias tl='tmux list-sessions'
 alias tk='tmux kill-session -t'
 
-# tailscale
-alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
-
-
 # 1Password integration
 {{ if and (hasKey . "onepasswordAccount") .personal -}}
 if (( $+commands[op] )); then
