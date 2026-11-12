@@ -258,6 +258,7 @@ delivery = "herdr"
 
 # Play sounds when agents change state in background workspaces
 [ui.sound]
+enabled = false
 # enabled = true
 # Optional custom mp3 sound files. Relative paths are resolved from this config file's directory.
 # path = "sounds/notification.mp3"   # one mp3 file for all sound notifications
